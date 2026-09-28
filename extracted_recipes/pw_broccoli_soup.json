@@ -1,0 +1,118 @@
+{
+  "source_url": "https://www.thepioneerwoman.com/food-cooking/recipes/a12083/delicious-creamy-mashed-potatoes/",
+  "title": "Creamy Mashed Potatoes",
+  "description": "Make Ree Drummond's mashed potatoes ahead, and pop 'em in the oven just before serving! Butter, cream, and cream cheese make this side dish recipe even better.",
+  "author": "Ree Drummond",
+  "recipe_yield": "10 serving(s)",
+  "prep_time": "1 hr",
+  "cook_time": "30 min",
+  "total_time": "1 hr 30 min",
+  "cuisine": [
+    "Potato Cuisine",
+    "Butter Cuisine",
+    "Thanksgiving Recipe Cuisine",
+    "Cheese Cuisine",
+    "Spice Cuisine",
+    "Pepper Cuisine",
+    "Thanksgiving Cuisine"
+  ],
+  "category": [
+    "Christmas",
+    "feed a crowd",
+    "Thanksgiving",
+    "comfort food",
+    "dinner",
+    "side dish",
+    "snack"
+  ],
+  "keywords": [
+    "content-type: Recipe",
+    "locale: US",
+    "displayType: recipe",
+    "shortTitle: Make-Ahead Mashed Potatoes",
+    "contentId: 685ae7ba-b166-48dc-9e2d-f8e8584ab5e3",
+    "subsection: Recipes",
+    "collection: Thanksgiving",
+    "collection: Cowboy Food",
+    "collection: Potatoes",
+    "collection: Comfort Food",
+    "collection: Sides",
+    "sponsored: false",
+    "isSyndicated: false",
+    "Recipes, Cooking, Food",
+    "OCCASION: Christmas",
+    "OCCASION: feed a crowd",
+    "OCCASION: Thanksgiving",
+    "CATEGORY: comfort food",
+    "CATEGORY: dinner",
+    "CATEGORY: side dish",
+    "CATEGORY: snack",
+    "TOTALTIME: 01:30:00",
+    "FILTERTIME: >1HR"
+  ],
+  "images": [
+    "https://hips.hearstapps.com/hmg-prod/images/mashed-potatoes-recipe-1671212198.jpeg?crop=0.671xw:1.00xh;0.184xw,0&resize=1200:*",
+    "https://hips.hearstapps.com/hmg-prod/images/mashed-potatoes-recipe-1671212198.jpeg?crop=0.8891666666666667xw:1xh;center,top&resize=1200:*",
+    "https://hips.hearstapps.com/hmg-prod/images/mashed-potatoes-recipe-1671212198.jpeg?crop=1xw:0.8434864104967198xh;center,top&resize=1200:*"
+  ],
+  "ingredient_sections": [
+    {
+      "name": null,
+      "items": [
+        "5 lb. russet or Yukon Gold potatoes",
+        "3/4 c. butter, plus more for topping",
+        "1 (8-oz.) package cream cheese, softened",
+        "1/2 c. half-and-half",
+        "1/4 c. heavy cream",
+        "1/2 to 1 tsp. Lawry's Seasoned Salt",
+        "2 tsp. black pepper",
+        "1/2 tsp. kosher salt, plus more to taste"
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {
+      "name": null,
+      "steps": [
+        "Peel and cut the potatoes into pieces that are generally the same size. Bring a large pot of water to a simmer and add the potatoes. Bring to a boil and cook for 30 to 35 minutes. When they're cooked through, a fork should easily slide into the potatoes with no resistance, and the potatoes should almost, but not totally, fall apart.",
+        "Drain the potatoes in a large colander. When the potatoes have finished draining, place them back into the dry pot and put the pot on the stove. Mash the potatoes over low heat, allowing all the steam to escape, before adding in all the other ingredients.",
+        "Turn off the stove and add the butter, cream cheese, half-and-half, and cream. Mash, mash, mash! Next, add the seasoned salt, pepper, and kosher salt. Taste and add more seasonings as needed.",
+        "Stir well, and place in a medium-sized baking dish. Throw a few pats of butter over the top of the potatoes and place them into a 350ºF oven to heat until the butter is melted and the potatoes are warmed through."
+      ]
+    }
+  ],
+  "ingredients": [
+    "5 lb. russet or Yukon Gold potatoes",
+    "3/4 c. butter, plus more for topping",
+    "1 (8-oz.) package cream cheese, softened",
+    "1/2 c. half-and-half",
+    "1/4 c. heavy cream",
+    "1/2 to 1 tsp. Lawry's Seasoned Salt",
+    "2 tsp. black pepper",
+    "1/2 tsp. kosher salt, plus more to taste"
+  ],
+  "instructions": [
+    "Peel and cut the potatoes into pieces that are generally the same size. Bring a large pot of water to a simmer and add the potatoes. Bring to a boil and cook for 30 to 35 minutes. When they're cooked through, a fork should easily slide into the potatoes with no resistance, and the potatoes should almost, but not totally, fall apart.",
+    "Drain the potatoes in a large colander. When the potatoes have finished draining, place them back into the dry pot and put the pot on the stove. Mash the potatoes over low heat, allowing all the steam to escape, before adding in all the other ingredients.",
+    "Turn off the stove and add the butter, cream cheese, half-and-half, and cream. Mash, mash, mash! Next, add the seasoned salt, pepper, and kosher salt. Taste and add more seasonings as needed.",
+    "Stir well, and place in a medium-sized baking dish. Throw a few pats of butter over the top of the potatoes and place them into a 350ºF oven to heat until the butter is melted and the potatoes are warmed through."
+  ],
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "calories": " 414 Calories",
+    "fatContent": "25 g",
+    "saturatedFatContent": "15 g",
+    "transFatContent": "0 g",
+    "cholesterolContent": "70 mg",
+    "sodiumContent": "365 mg",
+    "carbohydrateContent": "37 g",
+    "fiberContent": "5 g",
+    "sugarContent": "3 g",
+    "proteinContent": "7 g"
+  },
+  "extraction_method": "json-ld",
+  "confidence": 1.0,
+  "warnings": [
+    "JavaScript/browser rendering was used."
+  ]
+}

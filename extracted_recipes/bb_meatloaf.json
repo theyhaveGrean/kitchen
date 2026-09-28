@@ -1,0 +1,97 @@
+{
+  "source_url": "https://www.budgetbytes.com/classic-homemade-meatloaf/",
+  "title": "Classic Meatloaf",
+  "description": "This easy meatloaf recipe is just like the traditional meatloaf grandma used to make. Tender and juicy with the perfect tomato glaze!",
+  "author": "Beth Moncel",
+  "recipe_yield": "7, 7 slices",
+  "prep_time": "15 min",
+  "cook_time": "50 min",
+  "total_time": "65 min",
+  "cuisine": [
+    "American"
+  ],
+  "category": [
+    "Dinner",
+    "Main Course"
+  ],
+  "keywords": [
+    "Comfort Food, Ground Beef Recipes, meatloaf"
+  ],
+  "images": [
+    "https://www.budgetbytes.com/wp-content/uploads/2024/12/classic-meatloaf-slices.jpg",
+    "https://www.budgetbytes.com/wp-content/uploads/2024/12/classic-meatloaf-slices-500x500.jpg",
+    "https://www.budgetbytes.com/wp-content/uploads/2024/12/classic-meatloaf-slices-500x375.jpg",
+    "https://www.budgetbytes.com/wp-content/uploads/2024/12/classic-meatloaf-slices-480x270.jpg"
+  ],
+  "ingredient_sections": [
+    {
+      "name": null,
+      "items": [
+        "1 large egg ($0.18)",
+        "⅓ cup milk ($0.09)",
+        "1 tsp Worcestershire sauce ($0.02)",
+        "½ cup plain breadcrumbs ($0.16)",
+        "1 tsp Italian seasoning ($0.10)",
+        "½ tsp garlic powder ($0.05)",
+        "1 tsp salt ($0.02)",
+        "¼ tsp black pepper (freshly cracked, $0.05)",
+        "½ cup minced onion ($0.22)",
+        "1½ lbs. ground beef (80/20, $7.95*)",
+        "½ cup ketchup ($0.30)",
+        "1 Tbsp brown sugar ($0.03**)",
+        "1 Tbsp Worcestershire sauce ($0.05)",
+        "1 tsp yellow mustard ($0.01)"
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {
+      "name": null,
+      "steps": [
+        "Preheat the oven to 350ºF. In a small bowl whisk together the egg, milk, and Worcestershire sauce. In a separate small bowl, stir together the breadcrumbs, Italian seasoning, garlic powder, salt, and pepper. Mince the onion.",
+        "Add the ground beef, egg mixture, breadcrumb mixture, and minced onion to a large bowl. Use your hands to mix the ingredients together until evenly combined. Avoid over mixing.",
+        "Place the meat mixture on a rimmed baking dish and shape it into a loaf that is approximately 4-inches wide, 8-inches long, and 2-inches tall.",
+        "In a separate small bowl, stir together the glaze ingredients (ketchup, brown sugar, Worcestershire sauce, and mustard). Spread the glaze evenly over the top and sides of the meatloaf.",
+        "Bake the meatloaf for 50-55 minutes, or until the internal temperature reaches 165ºF. Allow it to rest for 5-10 minutes after baking, then slice and serve."
+      ]
+    }
+  ],
+  "ingredients": [
+    "1 large egg ($0.18)",
+    "⅓ cup milk ($0.09)",
+    "1 tsp Worcestershire sauce ($0.02)",
+    "½ cup plain breadcrumbs ($0.16)",
+    "1 tsp Italian seasoning ($0.10)",
+    "½ tsp garlic powder ($0.05)",
+    "1 tsp salt ($0.02)",
+    "¼ tsp black pepper (freshly cracked, $0.05)",
+    "½ cup minced onion ($0.22)",
+    "1½ lbs. ground beef (80/20, $7.95*)",
+    "½ cup ketchup ($0.30)",
+    "1 Tbsp brown sugar ($0.03**)",
+    "1 Tbsp Worcestershire sauce ($0.05)",
+    "1 tsp yellow mustard ($0.01)"
+  ],
+  "instructions": [
+    "Preheat the oven to 350ºF. In a small bowl whisk together the egg, milk, and Worcestershire sauce. In a separate small bowl, stir together the breadcrumbs, Italian seasoning, garlic powder, salt, and pepper. Mince the onion.",
+    "Add the ground beef, egg mixture, breadcrumb mixture, and minced onion to a large bowl. Use your hands to mix the ingredients together until evenly combined. Avoid over mixing.",
+    "Place the meat mixture on a rimmed baking dish and shape it into a loaf that is approximately 4-inches wide, 8-inches long, and 2-inches tall.",
+    "In a separate small bowl, stir together the glaze ingredients (ketchup, brown sugar, Worcestershire sauce, and mustard). Spread the glaze evenly over the top and sides of the meatloaf.",
+    "Bake the meatloaf for 50-55 minutes, or until the internal temperature reaches 165ºF. Allow it to rest for 5-10 minutes after baking, then slice and serve."
+  ],
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "servingSize": "1 slice",
+    "calories": "328 kcal",
+    "carbohydrateContent": "15 g",
+    "proteinContent": "19 g",
+    "fatContent": "21 g",
+    "sodiumContent": "676 mg",
+    "fiberContent": "1 g"
+  },
+  "extraction_method": "json-ld",
+  "confidence": 1.0,
+  "warnings": [
+    "Static HTTP fetch returned 403; browser fallback was used."
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "source_url": "https://www.kingarthurbaking.com/recipes/whole-grain-banana-bread-recipe",
+  "title": "Whole Grain Banana Bread",
+  "description": "This one-bowl banana bread — our 2018 Recipe of the Year — uses the simplest ingredients, but is incredibly moist and flavorful. While the recipe calls for a 50/50 mix of flours (all-purpose and whole wheat), we often make the bread 100% whole wheat, and honestly? No one can tell, it's that good! And not only is this bread delicious — it's versatile.",
+  "author": "King Arthur Test Kitchen",
+  "recipe_yield": "12, one 9\" x 5\" loaf",
+  "prep_time": "10 min",
+  "cook_time": "1 hr 15 min",
+  "total_time": "1 hr 25 min",
+  "cuisine": [],
+  "category": [],
+  "keywords": [
+    "Quick Bread;;Banana;;Quick & easy;;Dairy-free;;Whole Grain"
+  ],
+  "images": [
+    "https://www.kingarthurbaking.com/sites/default/files/2022-09/whole-grain-banana-bread-3_0822.jpg"
+  ],
+  "ingredient_sections": [
+    {
+      "name": null,
+      "items": [
+        "2 cups (454g) mashed banana (about 5 medium)",
+        "1/2 cup (99g) vegetable oil",
+        "1 cup (213g) light brown sugar or dark brown sugar, packed",
+        "2 large eggs",
+        "1 teaspoon King Arthur Pure Vanilla Extract",
+        "1 cup (120g) King Arthur Unbleached All-Purpose Flour",
+        "1 cup (113g) King Arthur Golden Wheat Flour",
+        "1 teaspoon baking soda",
+        "1/2 teaspoon baking powder",
+        "3/4 teaspoon table salt",
+        "1 teaspoon ground cinnamon",
+        "1/2 cup (57g) chopped walnuts, toasted if desired; optional*",
+        "1 tablespoon (13g) granulated sugar",
+        "1/2 teaspoon ground cinnamon"
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {
+      "name": null,
+      "steps": [
+        "Preheat the oven to 350°F with a rack in the center position.",
+        "Lightly grease a 9\" x 5\" loaf pan; if your pan is glass or stoneware, reduce the oven temperature to 325°F.",
+        "In a large bowl, stir together the mashed banana, oil, sugar, eggs, and vanilla.",
+        "Weigh your flours; or measure them by gently spooning into a cup, then sweeping off any excess.",
+        "Mix the flours, baking soda, baking powder, salt, cinnamon, and chopped walnuts into the banana mixture.",
+        "Scrape the bottom and sides of the bowl and mix again to thoroughly combine the ingredients.",
+        "Scoop the batter into the prepared pan. Mix together the sugar and cinnamon, and sprinkle over the batter.",
+        "Bake the bread for about 60 to 75 minutes, until the bread feels set on the top, and a paring knife (or other thin knife) inserted into the center comes out clean, or with just a few moist crumbs (but no wet batter). If you have a digital thermometer, the bread's temperature at the center should register about 205°F. If the bread appears to be browning too quickly, tent it with aluminum foil for the final 15 to 20 minutes of baking. Note: If baking in a glass or stoneware pan, increase the baking time by 10 to 15 minutes.",
+        "Remove the bread from the oven.",
+        "Cool it in the pan for 15 minutes, then loosen the edges, and turn it out of the pan onto a rack to cool completely.",
+        "Storage information: Store leftover bread, tightly wrapped, at room temperature for several days. Freeze for longer storage."
+      ]
+    }
+  ],
+  "ingredients": [
+    "2 cups (454g) mashed banana (about 5 medium)",
+    "1/2 cup (99g) vegetable oil",
+    "1 cup (213g) light brown sugar or dark brown sugar, packed",
+    "2 large eggs",
+    "1 teaspoon King Arthur Pure Vanilla Extract",
+    "1 cup (120g) King Arthur Unbleached All-Purpose Flour",
+    "1 cup (113g) King Arthur Golden Wheat Flour",
+    "1 teaspoon baking soda",
+    "1/2 teaspoon baking powder",
+    "3/4 teaspoon table salt",
+    "1 teaspoon ground cinnamon",
+    "1/2 cup (57g) chopped walnuts, toasted if desired; optional*",
+    "1 tablespoon (13g) granulated sugar",
+    "1/2 teaspoon ground cinnamon"
+  ],
+  "instructions": [
+    "Preheat the oven to 350°F with a rack in the center position.",
+    "Lightly grease a 9\" x 5\" loaf pan; if your pan is glass or stoneware, reduce the oven temperature to 325°F.",
+    "In a large bowl, stir together the mashed banana, oil, sugar, eggs, and vanilla.",
+    "Weigh your flours; or measure them by gently spooning into a cup, then sweeping off any excess.",
+    "Mix the flours, baking soda, baking powder, salt, cinnamon, and chopped walnuts into the banana mixture.",
+    "Scrape the bottom and sides of the bowl and mix again to thoroughly combine the ingredients.",
+    "Scoop the batter into the prepared pan. Mix together the sugar and cinnamon, and sprinkle over the batter.",
+    "Bake the bread for about 60 to 75 minutes, until the bread feels set on the top, and a paring knife (or other thin knife) inserted into the center comes out clean, or with just a few moist crumbs (but no wet batter). If you have a digital thermometer, the bread's temperature at the center should register about 205°F. If the bread appears to be browning too quickly, tent it with aluminum foil for the final 15 to 20 minutes of baking. Note: If baking in a glass or stoneware pan, increase the baking time by 10 to 15 minutes.",
+    "Remove the bread from the oven.",
+    "Cool it in the pan for 15 minutes, then loosen the edges, and turn it out of the pan onto a rack to cool completely.",
+    "Storage information: Store leftover bread, tightly wrapped, at room temperature for several days. Freeze for longer storage."
+  ],
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "servingSize": "102g",
+    "calories": "290 calories",
+    "carbohydrateContent": "42g",
+    "cholesterolContent": "30mg",
+    "fiberContent": "3g",
+    "proteinContent": "5g",
+    "sodiumContent": "240mg",
+    "sugarContent": "24g",
+    "fatContent": "13g",
+    "saturatedFatContent": "1.5g",
+    "transFatContent": "0g"
+  },
+  "extraction_method": "json-ld",
+  "confidence": 1.0,
+  "warnings": []
+}

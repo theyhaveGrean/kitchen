@@ -1,0 +1,86 @@
+{
+  "source_url": "https://www.onceuponachef.com/recipes/best-brownie-recipe.html",
+  "title": "Fudgy Brownies",
+  "description": "A timeless brownie recipe that's been winning over home bakers for decades.",
+  "author": "{'@id': 'https://www.onceuponachef.com/#/schema/person/829261b7c0b9b6741e7b06018085d23f'}",
+  "recipe_yield": "24, 24 (2-inch) brownies",
+  "prep_time": "15 min",
+  "cook_time": "45 min",
+  "total_time": "60 min",
+  "cuisine": [
+    "American"
+  ],
+  "category": [
+    "Bars and Brownies",
+    "Dessert"
+  ],
+  "keywords": [
+    "brownie recipe"
+  ],
+  "images": [
+    "https://www.onceuponachef.com/images/2019/06/The-Best-Brownie-Recipe.jpg",
+    "https://www.onceuponachef.com/images/2019/06/The-Best-Brownie-Recipe-500x500.jpg",
+    "https://www.onceuponachef.com/images/2019/06/The-Best-Brownie-Recipe-500x375.jpg",
+    "https://www.onceuponachef.com/images/2019/06/The-Best-Brownie-Recipe-480x270.jpg"
+  ],
+  "ingredient_sections": [
+    {
+      "name": null,
+      "items": [
+        "1 cup (2 sticks) unsalted butter",
+        "8 oz bittersweet or semisweet chocolate, (roughly chopped (I use Ghirardelli bars))",
+        "4 large eggs",
+        "½ teaspoon salt",
+        "1 cup granulated sugar",
+        "1 cup (packed) dark brown sugar",
+        "2 teaspoons vanilla extract",
+        "1 cup all-purpose flour, (spooned into measuring cup and leveled-off)"
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {
+      "name": null,
+      "steps": [
+        "Preheat the oven to 350°F (175°C) and set a rack in the middle position. Line a 9 x 13-in (23 x 33-cm) pan with parchment paper (bring parchment up sides of pan so there is a slight overhang) and grease with butter or nonstick cooking spray.",
+        "Place the butter in a medium microwave-safe bowl and melt in the microwave until bubbling. Add the chocolate and whisk until the chocolate is completely melted. The heat from the butter should be enough to melt the chocolate completely, but if not, place the chocolate-butter mixture in the microwave and heat for 20 seconds or so, then whisk again. (Alternatively, combine the butter and chocolate in a heat proof bowl and set over a pan of simmering water. Stir occasionally until melted.)",
+        "Whisk the eggs in a large bowl. Add the salt, granulated sugar, brown sugar, and vanilla; whisk until smooth (be sure no lumps of brown sugar remain). Whisk in the chocolate-butter mixture, then add the flour and whisk until the batter is uniform.",
+        "Pour the batter into the prepared pan and spread evenly. Bake for about 45 minutes, until the top has formed a shiny crust and the batter is moderately firm. Cool completely in the pan on a rack.",
+        "Use the parchment overhang to lift the brownies out of the pan, transfer them to a cutting board, and separate the parchment from the edges. Using a sharp knife, trim away the edges and cut the brownies into 24 (2-in) squares."
+      ]
+    }
+  ],
+  "ingredients": [
+    "1 cup (2 sticks) unsalted butter",
+    "8 oz bittersweet or semisweet chocolate, (roughly chopped (I use Ghirardelli bars))",
+    "4 large eggs",
+    "½ teaspoon salt",
+    "1 cup granulated sugar",
+    "1 cup (packed) dark brown sugar",
+    "2 teaspoons vanilla extract",
+    "1 cup all-purpose flour, (spooned into measuring cup and leveled-off)"
+  ],
+  "instructions": [
+    "Preheat the oven to 350°F (175°C) and set a rack in the middle position. Line a 9 x 13-in (23 x 33-cm) pan with parchment paper (bring parchment up sides of pan so there is a slight overhang) and grease with butter or nonstick cooking spray.",
+    "Place the butter in a medium microwave-safe bowl and melt in the microwave until bubbling. Add the chocolate and whisk until the chocolate is completely melted. The heat from the butter should be enough to melt the chocolate completely, but if not, place the chocolate-butter mixture in the microwave and heat for 20 seconds or so, then whisk again. (Alternatively, combine the butter and chocolate in a heat proof bowl and set over a pan of simmering water. Stir occasionally until melted.)",
+    "Whisk the eggs in a large bowl. Add the salt, granulated sugar, brown sugar, and vanilla; whisk until smooth (be sure no lumps of brown sugar remain). Whisk in the chocolate-butter mixture, then add the flour and whisk until the batter is uniform.",
+    "Pour the batter into the prepared pan and spread evenly. Bake for about 45 minutes, until the top has formed a shiny crust and the batter is moderately firm. Cool completely in the pan on a rack.",
+    "Use the parchment overhang to lift the brownies out of the pan, transfer them to a cutting board, and separate the parchment from the edges. Using a sharp knife, trim away the edges and cut the brownies into 24 (2-in) squares."
+  ],
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "calories": "212 kcal",
+    "fatContent": "11 g",
+    "carbohydrateContent": "27 g",
+    "proteinContent": "2 g",
+    "saturatedFatContent": "7 g",
+    "sugarContent": "22 g",
+    "fiberContent": "1 g",
+    "sodiumContent": "66 mg",
+    "cholesterolContent": "51 mg",
+    "servingSize": "1 serving"
+  },
+  "extraction_method": "json-ld",
+  "confidence": 1.0,
+  "warnings": []
+}

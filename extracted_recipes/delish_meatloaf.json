@@ -1,0 +1,135 @@
+{
+  "source_url": "https://www.delish.com/cooking/recipe-ideas/a23480870/keto-meatloaf-recipe/",
+  "title": "Bacon-Wrapped Keto Meatloaf",
+  "description": "Not only is this a keto-friendly dinner, it's a much needed revamp. Everyone, including those who are not afraid of carbs, will love this bacon-wrapped meatloaf recipe.",
+  "author": "Lauren Miyashiro",
+  "recipe_yield": "6 serving(s)",
+  "prep_time": "15 min",
+  "cook_time": "PT0S",
+  "total_time": "1 hr 15 min",
+  "cuisine": [
+    "Oil Cuisine",
+    "Beef Cuisine",
+    "Garlic Cuisine",
+    "Onion Cuisine",
+    "Bacon Cuisine",
+    "Celery Cuisine",
+    "Spice Cuisine",
+    "Pepper Cuisine",
+    "Herb Cuisine",
+    "Oregano Cuisine",
+    "Cheese Cuisine",
+    "Keto Diet Cuisine",
+    "Low-Carb Diet Cuisine",
+    "Low Carb Diet Cuisine"
+  ],
+  "category": [
+    "gluten-free",
+    "low-carb",
+    "low sugar",
+    "nut-free",
+    "weeknight meals",
+    "baking",
+    "dinner",
+    "meat"
+  ],
+  "keywords": [
+    "content-type: Recipe",
+    "locale: US",
+    "displayType: recipe",
+    "shortTitle: Keto Meatloaf",
+    "contentId: ad9c5e04-f1db-4e75-a822-6720666ccd9a",
+    "subsection: Recipes",
+    "collection: Keto",
+    "sponsored: false",
+    "isSyndicated: false",
+    "bacon wrapped meatloaf, keto meatloaf, keto meatloaf recipe",
+    "NUTRITION: gluten-free",
+    "NUTRITION: low-carb",
+    "NUTRITION: low sugar",
+    "NUTRITION: nut-free",
+    "OCCASION: weeknight meals",
+    "CATEGORY: baking",
+    "CATEGORY: dinner",
+    "CATEGORY: meat",
+    "TOTALTIME: 01:15:00",
+    "FILTERTIME: >1HR"
+  ],
+  "images": [
+    "https://hips.hearstapps.com/hmg-prod/images/delish-keto-meatloaf-horizontal-1538689284.jpg?crop=0.6667320133307195xw:1xh;center,top&resize=1200:*",
+    "https://hips.hearstapps.com/hmg-prod/images/delish-keto-meatloaf-horizontal-1538689284.jpg?crop=0.8889760177742927xw:1xh;center,top&resize=1200:*",
+    "https://hips.hearstapps.com/hmg-prod/images/delish-keto-meatloaf-horizontal-1538689284.jpg?crop=1xw:0.8436673037341959xh;center,top&resize=1200:*"
+  ],
+  "ingredient_sections": [
+    {
+      "name": null,
+      "items": [
+        "Cooking spray",
+        "1 tbsp. extra-virgin olive oil",
+        "1 medium onion, chopped",
+        "1 stalk celery, chopped",
+        "3 cloves garlic, minced",
+        "1 tsp. dried oregano",
+        "1 tsp. chili powder",
+        "2 lb. ground beef",
+        "1 c. shredded cheddar",
+        "1/2 c. almond flour",
+        "1/4 c. grated Parmesan",
+        "2 eggs",
+        "1 tbsp. low-sodium soy sauce",
+        "Kosher salt",
+        "Freshly ground black pepper",
+        "6 thin strips bacon"
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {
+      "name": null,
+      "steps": [
+        "Preheat oven to 400°. Grease a medium baking dish with cooking spray. In a medium skillet over medium heat, heat oil. Add onion and celery and cook until soft, 5 minutes. Stir in garlic, oregano, and chili powder and cook until fragrant, 1 minute. Let mixture cool slightly.",
+        "In a large bowl, combine ground beef, vegetable mixture, cheese, almond flour, Parmesan, eggs, soy sauce, and season with salt and pepper. Shape into a large loaf in baking dish, then lay bacon slices on top.",
+        "Cook until bacon is crispy and beef is cooked through, about 1 hour. If bacon is cooking too quickly, cover dish with foil."
+      ]
+    }
+  ],
+  "ingredients": [
+    "Cooking spray",
+    "1 tbsp. extra-virgin olive oil",
+    "1 medium onion, chopped",
+    "1 stalk celery, chopped",
+    "3 cloves garlic, minced",
+    "1 tsp. dried oregano",
+    "1 tsp. chili powder",
+    "2 lb. ground beef",
+    "1 c. shredded cheddar",
+    "1/2 c. almond flour",
+    "1/4 c. grated Parmesan",
+    "2 eggs",
+    "1 tbsp. low-sodium soy sauce",
+    "Kosher salt",
+    "Freshly ground black pepper",
+    "6 thin strips bacon"
+  ],
+  "instructions": [
+    "Preheat oven to 400°. Grease a medium baking dish with cooking spray. In a medium skillet over medium heat, heat oil. Add onion and celery and cook until soft, 5 minutes. Stir in garlic, oregano, and chili powder and cook until fragrant, 1 minute. Let mixture cool slightly.",
+    "In a large bowl, combine ground beef, vegetable mixture, cheese, almond flour, Parmesan, eggs, soy sauce, and season with salt and pepper. Shape into a large loaf in baking dish, then lay bacon slices on top.",
+    "Cook until bacon is crispy and beef is cooked through, about 1 hour. If bacon is cooking too quickly, cover dish with foil."
+  ],
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "calories": " 682 Calories",
+    "fatContent": "55 g",
+    "saturatedFatContent": "19 g",
+    "transFatContent": "2 g",
+    "cholesterolContent": "194 mg",
+    "sodiumContent": "582 mg",
+    "carbohydrateContent": "5 g",
+    "fiberContent": "2 g",
+    "sugarContent": "2 g",
+    "proteinContent": "39 g"
+  },
+  "extraction_method": "json-ld",
+  "confidence": 1.0,
+  "warnings": []
+}

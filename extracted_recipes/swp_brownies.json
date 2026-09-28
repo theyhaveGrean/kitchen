@@ -1,0 +1,96 @@
+{
+  "source_url": "https://www.spendwithpennies.com/homemade-brownies/",
+  "title": "Homemade Brownies",
+  "description": "These homemade brownies are perfectly decadent, delicious, and loaded with chocolate chips!",
+  "author": "{'@id': 'https://www.spendwithpennies.com/#/schema/person/1212dd6ee15c360b58032f7b23d46110'}",
+  "recipe_yield": "16, 16 brownies",
+  "prep_time": "15 min",
+  "cook_time": "25 min",
+  "total_time": "40 min",
+  "cuisine": [
+    "American"
+  ],
+  "category": [
+    "Dessert",
+    "Snack"
+  ],
+  "keywords": [
+    "Brownies, homemade brownie recipe, homemade brownies, homemade brownies recipe"
+  ],
+  "images": [
+    "https://www.spendwithpennies.com/wp-content/uploads/2022/03/Homemade-Brownies.jpeg",
+    "https://www.spendwithpennies.com/wp-content/uploads/2022/03/Homemade-Brownies-500x500.jpeg",
+    "https://www.spendwithpennies.com/wp-content/uploads/2022/03/Homemade-Brownies-500x375.jpeg",
+    "https://www.spendwithpennies.com/wp-content/uploads/2022/03/Homemade-Brownies-480x270.jpeg"
+  ],
+  "ingredient_sections": [
+    {
+      "name": null,
+      "items": [
+        "½ cup butter (melted)",
+        "2 tablespoons vegetable oil",
+        "1⅓ cups granulated sugar",
+        "⅔ cup unsweetened cocoa powder",
+        "2 large eggs (room temperature)",
+        "1 teaspoon vanilla extract",
+        "1 teaspoon espresso powder (or instant coffee)",
+        "½ teaspoon salt",
+        "½ cup all-purpose flour",
+        "1 cup semi-sweet chocolate chips (plus more for topping)"
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {
+      "name": null,
+      "steps": [
+        "Preheat oven to 350°F. Line a 9x9 pan with foil and coat with cooking spray.",
+        "Combine melted butter, oil, sugar, and cocoa powder in a large bowl. Stir until smooth.",
+        "Mix in the eggs, vanilla, espresso powder, and salt.",
+        "Slowly stir in the flour (batter should be thick) and gently fold in the chocolate chips.",
+        "Spread the batter into the prepared pan & top with more chocolate chips if desired.",
+        "Bake for 21-25 minutes or until they become glossy around the edges and a toothpick comes out clean when inserted 1-inch from the edge.",
+        "Let cool before cutting."
+      ]
+    }
+  ],
+  "ingredients": [
+    "½ cup butter (melted)",
+    "2 tablespoons vegetable oil",
+    "1⅓ cups granulated sugar",
+    "⅔ cup unsweetened cocoa powder",
+    "2 large eggs (room temperature)",
+    "1 teaspoon vanilla extract",
+    "1 teaspoon espresso powder (or instant coffee)",
+    "½ teaspoon salt",
+    "½ cup all-purpose flour",
+    "1 cup semi-sweet chocolate chips (plus more for topping)"
+  ],
+  "instructions": [
+    "Preheat oven to 350°F. Line a 9x9 pan with foil and coat with cooking spray.",
+    "Combine melted butter, oil, sugar, and cocoa powder in a large bowl. Stir until smooth.",
+    "Mix in the eggs, vanilla, espresso powder, and salt.",
+    "Slowly stir in the flour (batter should be thick) and gently fold in the chocolate chips.",
+    "Spread the batter into the prepared pan & top with more chocolate chips if desired.",
+    "Bake for 21-25 minutes or until they become glossy around the edges and a toothpick comes out clean when inserted 1-inch from the edge.",
+    "Let cool before cutting."
+  ],
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "calories": "227 kcal",
+    "carbohydrateContent": "28 g",
+    "proteinContent": "3 g",
+    "fatContent": "13 g",
+    "saturatedFatContent": "7 g",
+    "transFatContent": "1 g",
+    "cholesterolContent": "36 mg",
+    "sodiumContent": "133 mg",
+    "fiberContent": "2 g",
+    "sugarContent": "21 g",
+    "unsaturatedFatContent": "5 g",
+    "servingSize": "1 serving"
+  },
+  "extraction_method": "json-ld",
+  "confidence": 1.0,
+  "warnings": []
+}

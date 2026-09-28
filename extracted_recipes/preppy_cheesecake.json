@@ -1,0 +1,102 @@
+{
+  "source_url": "https://preppykitchen.com/cheesecake-recipe/",
+  "title": "Cheesecake Recipe",
+  "description": "Try this creamy cheesecake in a crunchy graham cracker crust that's beyond delicious. Getting the perfect no-crack bake is easier than you think, and you don’t need a water bath!",
+  "author": "{'@id': 'https://preppykitchen.com/#/schema/person/26390e871ce5a252a5ab2b095ad87099'}",
+  "recipe_yield": "12, 12 servings",
+  "prep_time": "10 min",
+  "cook_time": "60 min",
+  "total_time": "430 min",
+  "cuisine": [
+    "American"
+  ],
+  "category": [
+    "Dessert"
+  ],
+  "keywords": [
+    "cheesecake recipe, classic cheesecake recipe, how to make cheesecake"
+  ],
+  "images": [
+    "https://preppykitchen.com/wp-content/uploads/2022/07/Cheesecake-Recipe-new.jpg",
+    "https://preppykitchen.com/wp-content/uploads/2022/07/Cheesecake-Recipe-new-500x500.jpg",
+    "https://preppykitchen.com/wp-content/uploads/2022/07/Cheesecake-Recipe-new-500x375.jpg",
+    "https://preppykitchen.com/wp-content/uploads/2022/07/Cheesecake-Recipe-new-480x270.jpg"
+  ],
+  "ingredient_sections": [
+    {
+      "name": null,
+      "items": [
+        "1½ cups graham cracker crumbs ((180g))",
+        "¼ cup unsalted butter (melted)",
+        "2 tablespoons granulated sugar",
+        "3 (8-ounce/227g) blocks cream cheese (room temperature)",
+        "1 cup granulated sugar ((200g))",
+        "¼ teaspoon salt",
+        "2 teaspoons vanilla extract ((10mL))",
+        "1 teaspoon lemon juice",
+        "3 large eggs (room temperature)",
+        "½ cup sour cream (room temperature (120g))"
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {
+      "name": "For the Crust:",
+      "steps": [
+        "Preheat the oven to 350F.",
+        "In a medium bowl, combine the cracker crumbs, melted butter, and sugar. Stir together until the mixture feels like wet sand. Pour into a 9-inch springform pan. (If your pan isn’t non-stick, you can lightly spray it with baking spray before adding the crumb mixture.) Press the crumbs into the bottom and slightly up the sides of the pan using the bottom of a glass or measuring cup. Place on a baking sheet.",
+        "Bake for 10 minutes. Remove from the oven and let cool while making the filling."
+      ]
+    },
+    {
+      "name": "For the Filling:",
+      "steps": [
+        "Place the cream cheese in a large mixing bowl or the bowl of a stand mixer with the whip attachment. Beat on medium-low speed until creamy and smooth, about 1 minute. Add the sugar, salt, vanilla, and lemon juice. Beat until the mixture is well combined and completely smooth. Stop and scrape down the bowl a few times during mixing.",
+        "With the mixer on medium-low speed, add in the eggs one at a time. Stop and scrape down the bowl between additions. Once the eggs are well combined, mix in the sour cream until well incorporated. Pour the batter into the cooled crust.",
+        "Bake for 15 minutes. Reduce the oven temperature to 300F and continue baking for another 30 to 35 minutes or until the edges of the filling are just slightly puffed and the center wobbles slightly when gently shaken.",
+        "Turn off the oven and leave the cheesecake in the oven with the door closed for 1 hour. Remove the cheesecake and let cool at room temperature for another hour, then chill for at least 6 hours or up to 3 days before serving. (If refrigerating for several days, loosely cover after the cheesecake is fully chilled.)"
+      ]
+    }
+  ],
+  "ingredients": [
+    "1½ cups graham cracker crumbs ((180g))",
+    "¼ cup unsalted butter (melted)",
+    "2 tablespoons granulated sugar",
+    "3 (8-ounce/227g) blocks cream cheese (room temperature)",
+    "1 cup granulated sugar ((200g))",
+    "¼ teaspoon salt",
+    "2 teaspoons vanilla extract ((10mL))",
+    "1 teaspoon lemon juice",
+    "3 large eggs (room temperature)",
+    "½ cup sour cream (room temperature (120g))"
+  ],
+  "instructions": [
+    "Preheat the oven to 350F.",
+    "In a medium bowl, combine the cracker crumbs, melted butter, and sugar. Stir together until the mixture feels like wet sand. Pour into a 9-inch springform pan. (If your pan isn’t non-stick, you can lightly spray it with baking spray before adding the crumb mixture.) Press the crumbs into the bottom and slightly up the sides of the pan using the bottom of a glass or measuring cup. Place on a baking sheet.",
+    "Bake for 10 minutes. Remove from the oven and let cool while making the filling.",
+    "Place the cream cheese in a large mixing bowl or the bowl of a stand mixer with the whip attachment. Beat on medium-low speed until creamy and smooth, about 1 minute. Add the sugar, salt, vanilla, and lemon juice. Beat until the mixture is well combined and completely smooth. Stop and scrape down the bowl a few times during mixing.",
+    "With the mixer on medium-low speed, add in the eggs one at a time. Stop and scrape down the bowl between additions. Once the eggs are well combined, mix in the sour cream until well incorporated. Pour the batter into the cooled crust.",
+    "Bake for 15 minutes. Reduce the oven temperature to 300F and continue baking for another 30 to 35 minutes or until the edges of the filling are just slightly puffed and the center wobbles slightly when gently shaken.",
+    "Turn off the oven and leave the cheesecake in the oven with the door closed for 1 hour. Remove the cheesecake and let cool at room temperature for another hour, then chill for at least 6 hours or up to 3 days before serving. (If refrigerating for several days, loosely cover after the cheesecake is fully chilled.)"
+  ],
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "calories": "388 kcal",
+    "carbohydrateContent": "30 g",
+    "proteinContent": "6 g",
+    "fatContent": "27 g",
+    "saturatedFatContent": "15 g",
+    "cholesterolContent": "120 mg",
+    "sodiumContent": "317 mg",
+    "fiberContent": "0.4 g",
+    "sugarContent": "24 g",
+    "transFatContent": "0.2 g",
+    "unsaturatedFatContent": "8 g",
+    "servingSize": "1 serving"
+  },
+  "extraction_method": "json-ld",
+  "confidence": 1.0,
+  "warnings": [
+    "Static HTTP fetch returned 403; browser fallback was used."
+  ]
+}

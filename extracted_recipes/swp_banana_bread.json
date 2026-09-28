@@ -1,0 +1,95 @@
+{
+  "source_url": "https://www.spendwithpennies.com/classic-banana-bread/",
+  "title": "Banana Bread Recipe",
+  "description": "Soft and tender banana bread with sweet banana flavor and a touch of warm cinnamon in every bite.",
+  "author": "{'@id': 'https://www.spendwithpennies.com/#/schema/person/1212dd6ee15c360b58032f7b23d46110'}",
+  "recipe_yield": "12, 12 slices",
+  "prep_time": "15 min",
+  "cook_time": "60 min",
+  "total_time": "75 min",
+  "cuisine": [
+    "American"
+  ],
+  "category": [
+    "Bread",
+    "Breakfast",
+    "Dessert"
+  ],
+  "keywords": [
+    "banana bread, banana bread recipe, moist banana bread"
+  ],
+  "images": [
+    "https://www.spendwithpennies.com/wp-content/uploads/2025/12/1200-Banana-Bread-Recipe-SpendWithPennies.jpg",
+    "https://www.spendwithpennies.com/wp-content/uploads/2025/12/1200-Banana-Bread-Recipe-SpendWithPennies-500x500.jpg",
+    "https://www.spendwithpennies.com/wp-content/uploads/2025/12/1200-Banana-Bread-Recipe-SpendWithPennies-500x375.jpg",
+    "https://www.spendwithpennies.com/wp-content/uploads/2025/12/1200-Banana-Bread-Recipe-SpendWithPennies-480x270.jpg"
+  ],
+  "ingredient_sections": [
+    {
+      "name": null,
+      "items": [
+        "1⅓ cups mashed bananas (about 4 small bananas)",
+        "2 cups all-purpose flour",
+        "1 teaspoon baking soda",
+        "½ teaspoon salt",
+        "½ teaspoon cinnamon",
+        "½ cup unsalted butter (softened, or vegetable oil)",
+        "½ cup brown sugar",
+        "¼ cup granulated sugar",
+        "2 large eggs (room temperature)",
+        "1 teaspoon vanilla extract"
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {
+      "name": null,
+      "steps": [
+        "Preheat the oven to 350°F. Grease and flour (or line with parchment paper) a loaf pan.",
+        "Mash the bananas with a fork to make 1 ⅓ cups mashed banana.",
+        "In a small bowl, whisk together flour, baking soda, salt, and cinnamon. Set aside.",
+        "In a separate medium bowl, add butter, brown sugar, and sugar. Mix with a hand mixer on medium speed until fluffy, about 2 minutes. Add the eggs, one at a time, and the vanilla, and mix well. Stir in mashed bananas.",
+        "Add the dry ingredients to the banana mixture and stir just until combined, do not overmix.",
+        "Pour the batter into the prepared loaf pan and bake for 45 to 60 minutes or until a toothpick comes out clean. Do not overbake.",
+        "Cool in the pan for 5 minutes. Remove from the pan and cool completely on a wire rack."
+      ]
+    }
+  ],
+  "ingredients": [
+    "1⅓ cups mashed bananas (about 4 small bananas)",
+    "2 cups all-purpose flour",
+    "1 teaspoon baking soda",
+    "½ teaspoon salt",
+    "½ teaspoon cinnamon",
+    "½ cup unsalted butter (softened, or vegetable oil)",
+    "½ cup brown sugar",
+    "¼ cup granulated sugar",
+    "2 large eggs (room temperature)",
+    "1 teaspoon vanilla extract"
+  ],
+  "instructions": [
+    "Preheat the oven to 350°F. Grease and flour (or line with parchment paper) a loaf pan.",
+    "Mash the bananas with a fork to make 1 ⅓ cups mashed banana.",
+    "In a small bowl, whisk together flour, baking soda, salt, and cinnamon. Set aside.",
+    "In a separate medium bowl, add butter, brown sugar, and sugar. Mix with a hand mixer on medium speed until fluffy, about 2 minutes. Add the eggs, one at a time, and the vanilla, and mix well. Stir in mashed bananas.",
+    "Add the dry ingredients to the banana mixture and stir just until combined, do not overmix.",
+    "Pour the batter into the prepared loaf pan and bake for 45 to 60 minutes or until a toothpick comes out clean. Do not overbake.",
+    "Cool in the pan for 5 minutes. Remove from the pan and cool completely on a wire rack."
+  ],
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "calories": "221 kcal",
+    "carbohydrateContent": "33 g",
+    "proteinContent": "3 g",
+    "fatContent": "9 g",
+    "saturatedFatContent": "5 g",
+    "cholesterolContent": "48 mg",
+    "sodiumContent": "269 mg",
+    "fiberContent": "1 g",
+    "sugarContent": "15 g",
+    "servingSize": "1 serving"
+  },
+  "extraction_method": "json-ld",
+  "confidence": 1.0,
+  "warnings": []
+}

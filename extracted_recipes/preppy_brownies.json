@@ -1,0 +1,87 @@
+{
+  "source_url": "https://preppykitchen.com/brownie-recipe/",
+  "title": "Brownie Recipe",
+  "description": "Easy homemade brownies will have you ditching store-bought mixes for good. Loaded with decadent chocolate flavor, these brownies are gooey and thick with crispy edges.",
+  "author": "{'@id': 'https://preppykitchen.com/#/schema/person/26390e871ce5a252a5ab2b095ad87099'}",
+  "recipe_yield": "16, 16 brownies",
+  "prep_time": "10 min",
+  "cook_time": "35 min",
+  "total_time": "45 min",
+  "cuisine": [
+    "American"
+  ],
+  "category": [
+    "Dessert"
+  ],
+  "keywords": [
+    "brownie recipe, Brownies, how to make brownies"
+  ],
+  "images": [
+    "https://preppykitchen.com/wp-content/uploads/2023/09/Brownie-Recipe-Recipe-Card.jpg",
+    "https://preppykitchen.com/wp-content/uploads/2023/09/Brownie-Recipe-Recipe-Card-500x500.jpg",
+    "https://preppykitchen.com/wp-content/uploads/2023/09/Brownie-Recipe-Recipe-Card-500x375.jpg",
+    "https://preppykitchen.com/wp-content/uploads/2023/09/Brownie-Recipe-Recipe-Card-480x270.jpg"
+  ],
+  "ingredient_sections": [
+    {
+      "name": null,
+      "items": [
+        "1 cup unsalted butter ((226g))",
+        "2 cups granulated sugar ((400g))",
+        "¾ cup unsweetened cocoa powder ((75g))",
+        "3 large eggs (room temperature)",
+        "1 tablespoon vanilla extract",
+        "1 teaspoon salt",
+        "1 cup all-purpose flour ((120g))",
+        "1½ cups semisweet chocolate chips ((270g))"
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {
+      "name": null,
+      "steps": [
+        "Preheat the oven to 350°F. Lightly grease an 8x8-inch baking pan with baking spray and line it with parchment paper.",
+        "In a large microwave-safe bowl, melt the butter in the microwave in 20-second intervals stirring between each one until fully melted, about 2 minutes. Add the sugar and cocoa and whisk vigorously for 30 seconds. (This forms the crackly top!) Whisk in the eggs, vanilla, and salt.",
+        "Add the flour and chocolate chips and mix together with a spatula until just combined. Spread the batter into the prepared pan. (You can sprinkle the top with more chocolate chips, if desired.)",
+        "Bake for about 35 to 40 minutes for super fudgy brownies, or up to 55 minutes for cakey brownies. (Test them by inserting a toothpick into the center. For fudgy brownies, it should have a little smear of batter or several moist crumbs. For cakey brownies, it should only have a few crumbs and be mostly clean.) Let the brownies cool completely in the pan before slicing."
+      ]
+    }
+  ],
+  "ingredients": [
+    "1 cup unsalted butter ((226g))",
+    "2 cups granulated sugar ((400g))",
+    "¾ cup unsweetened cocoa powder ((75g))",
+    "3 large eggs (room temperature)",
+    "1 tablespoon vanilla extract",
+    "1 teaspoon salt",
+    "1 cup all-purpose flour ((120g))",
+    "1½ cups semisweet chocolate chips ((270g))"
+  ],
+  "instructions": [
+    "Preheat the oven to 350°F. Lightly grease an 8x8-inch baking pan with baking spray and line it with parchment paper.",
+    "In a large microwave-safe bowl, melt the butter in the microwave in 20-second intervals stirring between each one until fully melted, about 2 minutes. Add the sugar and cocoa and whisk vigorously for 30 seconds. (This forms the crackly top!) Whisk in the eggs, vanilla, and salt.",
+    "Add the flour and chocolate chips and mix together with a spatula until just combined. Spread the batter into the prepared pan. (You can sprinkle the top with more chocolate chips, if desired.)",
+    "Bake for about 35 to 40 minutes for super fudgy brownies, or up to 55 minutes for cakey brownies. (Test them by inserting a toothpick into the center. For fudgy brownies, it should have a little smear of batter or several moist crumbs. For cakey brownies, it should only have a few crumbs and be mostly clean.) Let the brownies cool completely in the pan before slicing."
+  ],
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "calories": "349 kcal",
+    "carbohydrateContent": "42 g",
+    "proteinContent": "4 g",
+    "fatContent": "20 g",
+    "saturatedFatContent": "12 g",
+    "transFatContent": "0.5 g",
+    "cholesterolContent": "66 mg",
+    "sodiumContent": "163 mg",
+    "fiberContent": "3 g",
+    "sugarContent": "31 g",
+    "unsaturatedFatContent": "6 g",
+    "servingSize": "1 serving"
+  },
+  "extraction_method": "json-ld",
+  "confidence": 1.0,
+  "warnings": [
+    "Static HTTP fetch returned 403; browser fallback was used."
+  ]
+}

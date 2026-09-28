@@ -1,0 +1,86 @@
+{
+  "source_url": "https://minimalistbaker.com/vegan-gluten-free-chocolate-chip-cookies/",
+  "title": "Classic Vegan Gluten-Free Chocolate Chip Cookies",
+  "description": "Classic chocolate chip cookies made vegan and gluten-free! Chewy on the inside with crisp buttery edges. Just 1 bowl and 8 ingredients required!",
+  "author": "Minimalist Baker",
+  "recipe_yield": "18, 18 (cookies)",
+  "prep_time": "45 min",
+  "cook_time": "10 min",
+  "total_time": "55 min",
+  "cuisine": [
+    "Gluten-Free",
+    "Vegan"
+  ],
+  "category": [
+    "Dessert"
+  ],
+  "keywords": [
+    "best gluten free chocolate chip cookies, gluten-free chocolate chip cookies, vegan gluten free chocolate chip cookies"
+  ],
+  "images": [
+    "https://minimalistbaker.com/wp-content/uploads/2022/09/Chocolate-Chip-Cookies-SQUARE.jpg",
+    "https://minimalistbaker.com/wp-content/uploads/2022/09/Chocolate-Chip-Cookies-SQUARE-500x500.jpg",
+    "https://minimalistbaker.com/wp-content/uploads/2022/09/Chocolate-Chip-Cookies-SQUARE-500x375.jpg",
+    "https://minimalistbaker.com/wp-content/uploads/2022/09/Chocolate-Chip-Cookies-SQUARE-480x270.jpg"
+  ],
+  "ingredient_sections": [
+    {
+      "name": null,
+      "items": [
+        "1 Tbsp flaxseed meal ((to make a flax egg))",
+        "2 ½ Tbsp water ((to make a flax egg))",
+        "3/4 cup packed brown sugar",
+        "1/2 cup softened vegan butter",
+        "2 tsp vanilla extract",
+        "1 heaping cup MB 1:1 Gluten-Free Flour Blend* ((1 cup + 2 Tbsp as original recipe is written))",
+        "1 tsp baking powder",
+        "1 tsp sea salt",
+        "1 cup semi-sweet chocolate chips or chunks"
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {
+      "name": null,
+      "steps": [
+        "To a medium mixing bowl add flaxseed meal and water. Let the mixture gel for 5 minutes. Next add brown sugar and softened vegan butter. Beat with a hand mixer (or stand mixer) on medium-high for about 1 minute until creamed. Add vanilla and beat again for 20 seconds.",
+        "Next add gluten-free flour, baking powder, and salt. Stir on low until just mixed. Finally, fold in the chocolate chips with a rubber spatula. Refrigerate the dough for 30 minutes.",
+        "Meanwhile, preheat your oven to 350 degrees F (176 C) and line 2 baking sheets with parchment paper. When the dough is done chilling, use a cookie scoop to scoop out ~18 cookies, keeping them in mound shapes and spacing 2 inches apart (adjust amount of cookies if altering the default number of servings). Bake for 10-14 minutes — until edges are golden and centers are soft. Option to sprinkle with flaky salt for extra flavor!",
+        "Let them rest on the baking sheet to cool for 5 minutes before transferring to a wire rack to fully cool (or you can eat them right away!). Store in an airtight container for 3-5 days or in the freezer for up to 1 month."
+      ]
+    }
+  ],
+  "ingredients": [
+    "1 Tbsp flaxseed meal ((to make a flax egg))",
+    "2 ½ Tbsp water ((to make a flax egg))",
+    "3/4 cup packed brown sugar",
+    "1/2 cup softened vegan butter",
+    "2 tsp vanilla extract",
+    "1 heaping cup MB 1:1 Gluten-Free Flour Blend* ((1 cup + 2 Tbsp as original recipe is written))",
+    "1 tsp baking powder",
+    "1 tsp sea salt",
+    "1 cup semi-sweet chocolate chips or chunks"
+  ],
+  "instructions": [
+    "To a medium mixing bowl add flaxseed meal and water. Let the mixture gel for 5 minutes. Next add brown sugar and softened vegan butter. Beat with a hand mixer (or stand mixer) on medium-high for about 1 minute until creamed. Add vanilla and beat again for 20 seconds.",
+    "Next add gluten-free flour, baking powder, and salt. Stir on low until just mixed. Finally, fold in the chocolate chips with a rubber spatula. Refrigerate the dough for 30 minutes.",
+    "Meanwhile, preheat your oven to 350 degrees F (176 C) and line 2 baking sheets with parchment paper. When the dough is done chilling, use a cookie scoop to scoop out ~18 cookies, keeping them in mound shapes and spacing 2 inches apart (adjust amount of cookies if altering the default number of servings). Bake for 10-14 minutes — until edges are golden and centers are soft. Option to sprinkle with flaky salt for extra flavor!",
+    "Let them rest on the baking sheet to cool for 5 minutes before transferring to a wire rack to fully cool (or you can eat them right away!). Store in an airtight container for 3-5 days or in the freezer for up to 1 month."
+  ],
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "servingSize": "1 cookie",
+    "calories": "164 kcal",
+    "carbohydrateContent": "22.4 g",
+    "proteinContent": "1.2 g",
+    "fatContent": "8.1 g",
+    "saturatedFatContent": "5.6 g",
+    "sodiumContent": "189 mg",
+    "fiberContent": "1 g",
+    "sugarContent": "13.7 g",
+    "unsaturatedFatContent": "0.3 g"
+  },
+  "extraction_method": "json-ld",
+  "confidence": 1.0,
+  "warnings": []
+}

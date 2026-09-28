@@ -1,0 +1,99 @@
+{
+  "source_url": "https://www.kingarthurbaking.com/recipes/soft-dinner-rolls-recipe",
+  "title": "Soft Dinner Rolls",
+  "description": "These classic rolls are practically a requirement at holiday dinners. Soft and buttery, use them for swiping up that last delectable bit of gravy on your plate (and for making the best sandwiches ever from the leftovers).",
+  "author": "Susan Reid",
+  "recipe_yield": "16, 16 rolls",
+  "prep_time": "23 min",
+  "cook_time": "22 min",
+  "total_time": "2 hr 45 min",
+  "cuisine": [],
+  "category": [],
+  "keywords": [
+    "Sandwich buns & dinner rolls;;Christmas;;Thanksgiving"
+  ],
+  "images": [
+    "https://www.kingarthurbaking.com/sites/default/files/2019-10/soft-dinner-rolls.jpg"
+  ],
+  "ingredient_sections": [
+    {
+      "name": null,
+      "items": [
+        "2 1/2 teaspoons (7g) instant yeast or active dry yeast",
+        "3 tablespoons (39g) granulated sugar",
+        "1 1/4 teaspoons (8g) table salt",
+        "3 cups (360g) King Arthur Unbleached All-Purpose Flour",
+        "1/4 cup (46g) potato flour or 1/2 cup (46g) dried potato flakes (instant mashed potatoes)",
+        "1/4 cup plus 1 tablespoon (71g) lukewarm water (potato water, if you have any saved)",
+        "3/4 cup (170g) milk, lukewarm",
+        "3 tablespoons (43g) butter, softened or melted"
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {
+      "name": null,
+      "steps": [
+        "To make the dough: Weigh your flour; or measure it by gently spooning it into a cup, then sweeping off any excess.",
+        "In a large bowl, combine all of the ingredients, mixing until a soft dough forms.",
+        "Knead the dough at low speed with a mixer for 6 minutes or by hand on a lightly floured surface for 8 minutes, until smooth and satiny.",
+        "The dough should bounce back when poked",
+        "Place the dough in a greased bowl, cover, and let rise for 1 to 2 hours, until doubled.",
+        "Turn the dough out on a floured work surface and deflate it. Divide it into 16 equal pieces, weighing about 45 grams each. Round each into a smooth ball.",
+        "Lightly grease a metal 9\" x 13\" pan or two 9\" round cake pans.",
+        "Place the rolls in the prepared pan(s), cover, and let rise for 1 hour, until puffy-looking and just barely touching each other.",
+        "Toward the end of the rise time, preheat the oven to 350°F.",
+        "When the rolls have risen, uncover, and bake for 20 to 22 minutes, until golden brown.",
+        "Remove from the oven and place the pan(s) on a rack.",
+        "While still warm, brush the tops with more melted butter,if desired.",
+        "Serve warm or let cool completely, wrap, and store to enjoy later.",
+        "Serve the rolls warm, or store them in an airtight container at room temperature for several days.",
+        "Freeze for up to a month."
+      ]
+    }
+  ],
+  "ingredients": [
+    "2 1/2 teaspoons (7g) instant yeast or active dry yeast",
+    "3 tablespoons (39g) granulated sugar",
+    "1 1/4 teaspoons (8g) table salt",
+    "3 cups (360g) King Arthur Unbleached All-Purpose Flour",
+    "1/4 cup (46g) potato flour or 1/2 cup (46g) dried potato flakes (instant mashed potatoes)",
+    "1/4 cup plus 1 tablespoon (71g) lukewarm water (potato water, if you have any saved)",
+    "3/4 cup (170g) milk, lukewarm",
+    "3 tablespoons (43g) butter, softened or melted"
+  ],
+  "instructions": [
+    "To make the dough: Weigh your flour; or measure it by gently spooning it into a cup, then sweeping off any excess.",
+    "In a large bowl, combine all of the ingredients, mixing until a soft dough forms.",
+    "Knead the dough at low speed with a mixer for 6 minutes or by hand on a lightly floured surface for 8 minutes, until smooth and satiny.",
+    "The dough should bounce back when poked",
+    "Place the dough in a greased bowl, cover, and let rise for 1 to 2 hours, until doubled.",
+    "Turn the dough out on a floured work surface and deflate it. Divide it into 16 equal pieces, weighing about 45 grams each. Round each into a smooth ball.",
+    "Lightly grease a metal 9\" x 13\" pan or two 9\" round cake pans.",
+    "Place the rolls in the prepared pan(s), cover, and let rise for 1 hour, until puffy-looking and just barely touching each other.",
+    "Toward the end of the rise time, preheat the oven to 350°F.",
+    "When the rolls have risen, uncover, and bake for 20 to 22 minutes, until golden brown.",
+    "Remove from the oven and place the pan(s) on a rack.",
+    "While still warm, brush the tops with more melted butter,if desired.",
+    "Serve warm or let cool completely, wrap, and store to enjoy later.",
+    "Serve the rolls warm, or store them in an airtight container at room temperature for several days.",
+    "Freeze for up to a month."
+  ],
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "servingSize": "1 roll, 52g",
+    "calories": "124 calories",
+    "carbohydrateContent": "22g",
+    "cholesterolContent": "6mg",
+    "fiberContent": "1g",
+    "proteinContent": "3g",
+    "sodiumContent": "189mg",
+    "sugarContent": "3g",
+    "fatContent": "3g",
+    "saturatedFatContent": "1g",
+    "transFatContent": "1g"
+  },
+  "extraction_method": "json-ld",
+  "confidence": 1.0,
+  "warnings": []
+}

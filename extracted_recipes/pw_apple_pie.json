@@ -1,0 +1,123 @@
+{
+  "source_url": "https://www.thepioneerwoman.com/food-cooking/recipes/a11725/garlic-cheese-bread/",
+  "title": "Garlic Cheese Bread",
+  "description": "Ree Drummond's garlic cheese bread is the best-ever side to soups and pasta recipes. It's made with garlic, butter, cheese, green onion, and mayo.",
+  "author": "Ree Drummond",
+  "recipe_yield": "4 serving(s)",
+  "prep_time": "15 min",
+  "cook_time": "10 min",
+  "total_time": "25 min",
+  "cuisine": [
+    "Bread Cuisine",
+    "Garlic Cuisine",
+    "Cheese Cuisine",
+    "Butter Cuisine",
+    "Condiment Cuisine",
+    "Mayonnaise Cuisine",
+    "Onion Cuisine",
+    "Green Onion Cuisine",
+    "Cheddar Cheese Cuisine",
+    "Parmesan Cheese Cuisine",
+    "French Bread Cuisine",
+    "Monterey Jack Cheese Cuisine",
+    "European Cuisine",
+    "French Cuisine"
+  ],
+  "category": [
+    "date night",
+    "dinner party",
+    "Sunday lunch",
+    "weeknight meals",
+    "baking",
+    "main dish"
+  ],
+  "keywords": [
+    "content-type: Recipe",
+    "locale: US",
+    "displayType: recipe",
+    "shortTitle: How to Make the Best-Ever Garlic Cheese Bread",
+    "contentId: ab8f3561-6be7-4377-a976-c69f81d78e1e",
+    "subsection: Recipes",
+    "collection: Breads",
+    "collection: Cowboy Food",
+    "collection: Freezer Meals",
+    "sponsored: false",
+    "isSyndicated: false",
+    "Recipes, Cooking, Food",
+    "OCCASION: date night",
+    "OCCASION: dinner party",
+    "OCCASION: Sunday lunch",
+    "OCCASION: weeknight meals",
+    "CATEGORY: baking",
+    "CATEGORY: main dish",
+    "TOTALTIME: 00:25:00",
+    "FILTERTIME: <30MINS"
+  ],
+  "images": [
+    "https://hips.hearstapps.com/thepioneerwoman/wp-content/uploads/2010/07/3321945944_b6bcb688091.jpg?crop=0.478xw:0.716xh;0.276xw,0.113xh&resize=1200:*",
+    "https://hips.hearstapps.com/thepioneerwoman/wp-content/uploads/2010/07/3321945944_b6bcb688091.jpg?crop=0.888xw:1xh;center,top&resize=1200:*",
+    "https://hips.hearstapps.com/thepioneerwoman/wp-content/uploads/2010/07/3321945944_b6bcb688091.jpg?crop=1xw:0.8445945945945946xh;center,top&resize=1200:*"
+  ],
+  "ingredient_sections": [
+    {
+      "name": null,
+      "items": [
+        "3 1/2 c. grated cheddar cheese",
+        "3/4 c. monterey jack cheese, grated",
+        "1/2 c. grated parmesan cheese",
+        "1/2 c. (real) mayonnaise",
+        "4 green onions, white and light green parts minced",
+        "1 loaf crusty French bread",
+        "1/2 c. (1 stick) butter, divided",
+        "4 cloves garlic, finely minced, divided"
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {
+      "name": null,
+      "steps": [
+        "In a medium bowl, mix the cheddar, monterey jack, and parmesan with the mayonnaise and green onion. Add dash of salt to taste and set aside or keep in fridge until you need it.",
+        "Cut the loaf of bread in half, then cut each half into half again.",
+        "Working with one piece of bread at a time, melt 2 tablespoons of butter in a skillet and add one-fourth of the minced garlic. Place 1 of the pieces of bread face down in the skillet, swirling it to soak up the butter and garlic. Allow the bread to toast in the skillet, removing the garlic if it starts to get too brown. Repeat with remaining butter, garlic, and bread.",
+        "Spread the cheese mixture on the toasted loaves and bake in a 425°F oven until the cheese is hot and bubbly, about 10 minutes.",
+        "Slice and serve. Then get on the Stairmaster. Pronto."
+      ]
+    }
+  ],
+  "ingredients": [
+    "3 1/2 c. grated cheddar cheese",
+    "3/4 c. monterey jack cheese, grated",
+    "1/2 c. grated parmesan cheese",
+    "1/2 c. (real) mayonnaise",
+    "4 green onions, white and light green parts minced",
+    "1 loaf crusty French bread",
+    "1/2 c. (1 stick) butter, divided",
+    "4 cloves garlic, finely minced, divided"
+  ],
+  "instructions": [
+    "In a medium bowl, mix the cheddar, monterey jack, and parmesan with the mayonnaise and green onion. Add dash of salt to taste and set aside or keep in fridge until you need it.",
+    "Cut the loaf of bread in half, then cut each half into half again.",
+    "Working with one piece of bread at a time, melt 2 tablespoons of butter in a skillet and add one-fourth of the minced garlic. Place 1 of the pieces of bread face down in the skillet, swirling it to soak up the butter and garlic. Allow the bread to toast in the skillet, removing the garlic if it starts to get too brown. Repeat with remaining butter, garlic, and bread.",
+    "Spread the cheese mixture on the toasted loaves and bake in a 425°F oven until the cheese is hot and bubbly, about 10 minutes.",
+    "Slice and serve. Then get on the Stairmaster. Pronto."
+  ],
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "calories": " 1247 Calories",
+    "fatContent": "98 g",
+    "saturatedFatContent": "47 g",
+    "transFatContent": "0 g",
+    "cholesterolContent": "221 mg",
+    "sodiumContent": "1746 mg",
+    "carbohydrateContent": "44 g",
+    "fiberContent": "2 g",
+    "sugarContent": "5 g",
+    "proteinContent": "48 g"
+  },
+  "extraction_method": "json-ld",
+  "confidence": 1.0,
+  "warnings": [
+    "JavaScript/browser rendering was used."
+  ]
+}

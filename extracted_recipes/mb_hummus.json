@@ -1,0 +1,82 @@
+{
+  "source_url": "https://minimalistbaker.com/best-ever-5-minute-microwave-hummus/",
+  "title": "Easy 5-Minute Microwave Hummus",
+  "description": "6-ingredient hummus that comes together in 5 minutes and is magically transformed into the best hummus thanks to the MICROWAVE! Trust me. It’s the best hummus I’ve ever made at home!",
+  "author": "Minimalist Baker",
+  "recipe_yield": "8",
+  "prep_time": "1 min",
+  "cook_time": "4 min",
+  "total_time": "5 min",
+  "cuisine": [
+    "Gluten-Free",
+    "Mediterranean-Inspired",
+    "Middle Eastern-Inspired",
+    "Vegan"
+  ],
+  "category": [
+    "Appetizer",
+    "Side",
+    "Snack"
+  ],
+  "keywords": [
+    "microwave hummus"
+  ],
+  "images": [
+    "https://minimalistbaker.com/wp-content/uploads/2014/05/5-minute-microwave-hummus-SQUARE.jpg"
+  ],
+  "ingredient_sections": [
+    {
+      "name": null,
+      "items": [
+        "1 15-ounce can chickpeas ((NOT drained))",
+        "2-4 cloves garlic ((depending on how garlicky you prefer it))",
+        "1/2 cup tahini",
+        "2 Tbsp fresh lemon juice",
+        "3/4-1 tsp sea salt ((depending on how salty you prefer it))",
+        "1-2 Tbsp extra virgin olive oil"
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {
+      "name": null,
+      "steps": [
+        "Microwave undrained chickpeas and whole garlic cloves in a mixing bowl for 4-5 minutes.",
+        "NOTE: Reserve 1/2 of the chickpea liquid to add in as needed while blending. Add the other 1/2 of the chickpea liquid with the chickpeas and garlic to a blender or food processor and process with lemon juice, salt and tahini. Stream in olive oil while mixing.",
+        "Process until smooth and creamy, scraping down sides as needed. Add more of the reserved chickpea liquid as needed for creamier texture.",
+        "Taste and adjust seasonings as you prefer. I found 3/4 tsp of salt to be the perfect amount (amount as original recipe is written // refer to the lower end of range if altering batch size).",
+        "Garnish with a little more olive oil and paprika, and serve with veggies, crackers and pita. Leftovers keep in the refrigerator for up to 1 week or more. It tastes even better refrigerated, as it has time to thicken up and develop in flavor."
+      ]
+    }
+  ],
+  "ingredients": [
+    "1 15-ounce can chickpeas ((NOT drained))",
+    "2-4 cloves garlic ((depending on how garlicky you prefer it))",
+    "1/2 cup tahini",
+    "2 Tbsp fresh lemon juice",
+    "3/4-1 tsp sea salt ((depending on how salty you prefer it))",
+    "1-2 Tbsp extra virgin olive oil"
+  ],
+  "instructions": [
+    "Microwave undrained chickpeas and whole garlic cloves in a mixing bowl for 4-5 minutes.",
+    "NOTE: Reserve 1/2 of the chickpea liquid to add in as needed while blending. Add the other 1/2 of the chickpea liquid with the chickpeas and garlic to a blender or food processor and process with lemon juice, salt and tahini. Stream in olive oil while mixing.",
+    "Process until smooth and creamy, scraping down sides as needed. Add more of the reserved chickpea liquid as needed for creamier texture.",
+    "Taste and adjust seasonings as you prefer. I found 3/4 tsp of salt to be the perfect amount (amount as original recipe is written // refer to the lower end of range if altering batch size).",
+    "Garnish with a little more olive oil and paprika, and serve with veggies, crackers and pita. Leftovers keep in the refrigerator for up to 1 week or more. It tastes even better refrigerated, as it has time to thicken up and develop in flavor."
+  ],
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "servingSize": "1 serving",
+    "calories": "157 kcal",
+    "carbohydrateContent": "12.9 g",
+    "proteinContent": "5.2 g",
+    "fatContent": "10 g",
+    "saturatedFatContent": "1.4 g",
+    "sodiumContent": "239 mg",
+    "fiberContent": "1.4 g",
+    "sugarContent": "2.7 g"
+  },
+  "extraction_method": "json-ld",
+  "confidence": 1.0,
+  "warnings": []
+}

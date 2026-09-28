@@ -1,0 +1,94 @@
+{
+  "source_url": "https://www.onceuponachef.com/recipes/chicken-marsala.html",
+  "title": "Chicken Marsala",
+  "description": "Chicken Marsala is an Italian-American dish of golden pan-fried chicken cutlets and mushrooms in a rich Marsala wine sauce.",
+  "author": "{'@id': 'https://www.onceuponachef.com/#/schema/person/d09ca52c9e790675f71c46404845af62'}",
+  "recipe_yield": "4",
+  "prep_time": "15 min",
+  "cook_time": "30 min",
+  "total_time": "45 min",
+  "cuisine": [
+    "Italian"
+  ],
+  "category": [
+    "Chicken",
+    "Main Course"
+  ],
+  "keywords": [
+    "chicken marsala"
+  ],
+  "images": [
+    "https://www.onceuponachef.com/images/2018/01/Chicken-Marsala-scaled.jpg",
+    "https://www.onceuponachef.com/images/2018/01/Chicken-Marsala-scaled-500x500.jpg",
+    "https://www.onceuponachef.com/images/2018/01/Chicken-Marsala-scaled-500x375.jpg",
+    "https://www.onceuponachef.com/images/2018/01/Chicken-Marsala-scaled-480x270.jpg"
+  ],
+  "ingredient_sections": [
+    {
+      "name": null,
+      "items": [
+        "1½ pounds boneless skinless chicken breasts, (pounded ¼-in (6-mm) thick (see note), or chicken tenderloins)",
+        "3 tablespoons all-purpose flour",
+        "Salt",
+        "Freshly ground black pepper",
+        "1 tablespoon olive oil",
+        "3 tablespoons unsalted butter, (divided)",
+        "1 (8-oz) package pre-sliced bella or button mushrooms",
+        "3 tablespoons finely chopped shallots, (from 1 medium shallot)",
+        "2 cloves garlic, (minced)",
+        "⅔ cup chicken broth",
+        "⅔ cup dry Marsala wine",
+        "⅔ cup heavy cream",
+        "2 teaspoons chopped fresh thyme",
+        "2 tablespoons chopped fresh Italian parsley, (for serving (optional))"
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {
+      "name": null,
+      "steps": [
+        "Place the flour, ¾ teaspoon salt, and ¼ teaspoon pepper in a ziplock bag. Add the chicken to the bag; seal bag tightly and shake to coat chicken evenly. Set aside.",
+        "Heat the oil and 2 tablespoons of the butter in a large skillet over medium-high heat. (Use a stainless steel pan for the best browning. Nonstick will work too, but you won’t get that nice golden color on the chicken.) Place the flour-dusted chicken in the pan, shaking off any excess first, and cook, turning once, until the chicken is golden and just barely cooked through, about 5 to 6 minutes total. Transfer the chicken to a plate and set aside.",
+        "Melt the remaining tablespoon of butter in the pan. Add the mushrooms and cook, stirring frequently, until the mushrooms begin to brown, 3 to 4 minutes. Add the shallots, garlic, and ¼ teaspoon of salt; cook for 1 to 2 minutes more. Add the broth, Marsala, heavy cream, thyme, ¼ teaspoon salt, and ⅛ teaspoon of pepper; use a wooden spoon to scrape any brown bits from the pan into the liquid. Bring the liquid to a boil, then reduce the heat to medium and gently boil, uncovered, until the sauce is reduced by about half, slightly thickened, and darkened in color, 10 to 15 minutes (you’re going for a thin cream sauce; it won’t start to thicken until the very end of the cooking time). Add the chicken back to the pan, along with any juices that accumulated on the plate. Reduce the heat to low and simmer until the chicken is warmed through and the sauce thickens a bit more, 2 to 3 minutes. Sprinkle with parsley, if using, and serve."
+      ]
+    }
+  ],
+  "ingredients": [
+    "1½ pounds boneless skinless chicken breasts, (pounded ¼-in (6-mm) thick (see note), or chicken tenderloins)",
+    "3 tablespoons all-purpose flour",
+    "Salt",
+    "Freshly ground black pepper",
+    "1 tablespoon olive oil",
+    "3 tablespoons unsalted butter, (divided)",
+    "1 (8-oz) package pre-sliced bella or button mushrooms",
+    "3 tablespoons finely chopped shallots, (from 1 medium shallot)",
+    "2 cloves garlic, (minced)",
+    "⅔ cup chicken broth",
+    "⅔ cup dry Marsala wine",
+    "⅔ cup heavy cream",
+    "2 teaspoons chopped fresh thyme",
+    "2 tablespoons chopped fresh Italian parsley, (for serving (optional))"
+  ],
+  "instructions": [
+    "Place the flour, ¾ teaspoon salt, and ¼ teaspoon pepper in a ziplock bag. Add the chicken to the bag; seal bag tightly and shake to coat chicken evenly. Set aside.",
+    "Heat the oil and 2 tablespoons of the butter in a large skillet over medium-high heat. (Use a stainless steel pan for the best browning. Nonstick will work too, but you won’t get that nice golden color on the chicken.) Place the flour-dusted chicken in the pan, shaking off any excess first, and cook, turning once, until the chicken is golden and just barely cooked through, about 5 to 6 minutes total. Transfer the chicken to a plate and set aside.",
+    "Melt the remaining tablespoon of butter in the pan. Add the mushrooms and cook, stirring frequently, until the mushrooms begin to brown, 3 to 4 minutes. Add the shallots, garlic, and ¼ teaspoon of salt; cook for 1 to 2 minutes more. Add the broth, Marsala, heavy cream, thyme, ¼ teaspoon salt, and ⅛ teaspoon of pepper; use a wooden spoon to scrape any brown bits from the pan into the liquid. Bring the liquid to a boil, then reduce the heat to medium and gently boil, uncovered, until the sauce is reduced by about half, slightly thickened, and darkened in color, 10 to 15 minutes (you’re going for a thin cream sauce; it won’t start to thicken until the very end of the cooking time). Add the chicken back to the pan, along with any juices that accumulated on the plate. Reduce the heat to low and simmer until the chicken is warmed through and the sauce thickens a bit more, 2 to 3 minutes. Sprinkle with parsley, if using, and serve."
+  ],
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "calories": "537 kcal",
+    "fatContent": "32 g",
+    "carbohydrateContent": "12 g",
+    "proteinContent": "43 g",
+    "saturatedFatContent": "16 g",
+    "sugarContent": "4 g",
+    "fiberContent": "1 g",
+    "sodiumContent": "877 mg",
+    "cholesterolContent": "203 mg",
+    "servingSize": "1 serving"
+  },
+  "extraction_method": "json-ld",
+  "confidence": 1.0,
+  "warnings": []
+}

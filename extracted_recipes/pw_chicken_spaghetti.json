@@ -1,0 +1,141 @@
+{
+  "source_url": "https://www.thepioneerwoman.com/food-cooking/recipes/a11729/chicken-spaghetti-recipe/",
+  "title": "Chicken Spaghetti",
+  "description": "This chicken spaghetti is a classic Pioneer Woman casserole recipe with tender chicken, pasta, peppers, pimentos, and a creamy sharp cheddar sauce.",
+  "author": "Ree Drummond",
+  "recipe_yield": "8 serving(s)",
+  "prep_time": "30 min",
+  "cook_time": "45 min",
+  "total_time": "1 hr 15 min",
+  "cuisine": [
+    "Poultry Cuisine",
+    "Chicken Cuisine",
+    "Spaghetti Cuisine",
+    "Cheese Cuisine",
+    "Cheddar Cheese Cuisine",
+    "Onion Cuisine",
+    "Capsicum Pepper Cuisine",
+    "Green Pepper Cuisine",
+    "Chili Pepper Cuisine",
+    "Pimento Cuisine",
+    "Broth Cuisine",
+    "Spice Cuisine",
+    "Pepper Cuisine",
+    "Cayenne Pepper Cuisine",
+    "Seasoned Salt Cuisine",
+    "American (US) Cuisine",
+    "Southern Cuisine",
+    "Soul Food Cuisine",
+    "American Cuisine"
+  ],
+  "category": [
+    "autumn",
+    "dinner party",
+    "easy chicken",
+    "feed a crowd",
+    "Sunday lunch",
+    "weeknight meals",
+    "winter",
+    "comfort food",
+    "dinner",
+    "main dish",
+    "poultry"
+  ],
+  "keywords": [
+    "content-type: Recipe",
+    "locale: US",
+    "displayType: recipe",
+    "shortTitle: Chicken Spaghetti",
+    "contentId: 7cab751c-abd5-486b-83fd-4a90ad59d272",
+    "subsection: Recipes",
+    "collection: Casseroles",
+    "collection: Comfort Food",
+    "collection: Chicken",
+    "collection: Pasta",
+    "collection: Main Courses",
+    "collection: Freezer Meals",
+    "sponsored: false",
+    "isSyndicated: false",
+    "Recipes, Cooking, Food",
+    "OCCASION: autumn",
+    "OCCASION: dinner party",
+    "OCCASION: easy chicken",
+    "OCCASION: feed a crowd",
+    "OCCASION: Sunday lunch",
+    "OCCASION: weeknight meals",
+    "OCCASION: winter",
+    "CATEGORY: comfort food",
+    "CATEGORY: dinner",
+    "CATEGORY: main dish",
+    "CATEGORY: poultry",
+    "TOTALTIME: 01:15:00",
+    "FILTERTIME: >1HR"
+  ],
+  "images": [
+    "https://hips.hearstapps.com/hmg-prod/images/chicken-spaghetti-recipe-1633614178.jpg?crop=0.673xw:1.00xh;0.0293xw,0&resize=1200:*",
+    "https://hips.hearstapps.com/hmg-prod/images/chicken-spaghetti-recipe-1633614178.jpg?crop=0.8891666666666667xw:1xh;center,top&resize=1200:*",
+    "https://hips.hearstapps.com/hmg-prod/images/chicken-spaghetti-recipe-1633614178.jpg?crop=1xw:0.8434864104967198xh;center,top&resize=1200:*"
+  ],
+  "ingredient_sections": [
+    {
+      "name": null,
+      "items": [
+        "2 c. cooked chicken",
+        "3 c. spaghetti, uncooked and broken into 2-inch pieces",
+        "2 cans cream of mushroom soup",
+        "3 c. grated sharp cheddar cheese",
+        "1/4 c. finely diced green pepper",
+        "1/4 c. finely diced onion",
+        "1 (4-ounce) jar diced pimentos, drained",
+        "2 c. reserved chicken broth from pot",
+        "1 tsp. Lawry's Seasoned Salt",
+        "1/8 tsp. to 1/4 tsp. cayenne pepper",
+        "Salt and pepper, to taste"
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {
+      "name": null,
+      "steps": [
+        "Cook 1 cut-up fryer chicken and pick out the meat to make 2 cups.",
+        "Cook spaghetti in same chicken broth until al dente. Do not overcook. When spaghetti is cooked, combine with remaining ingredients except additional 1 cup sharp cheddar.",
+        "Place mixture in casserole pan and top with remaining sharp cheddar. Cover and freeze up to 6 months, cover and refrigerate up to 2 days, or bake immediately: 350°F for 45 minutes until bubbly. (If the cheese on top starts to get too cooked, cover with foil.)"
+      ]
+    }
+  ],
+  "ingredients": [
+    "2 c. cooked chicken",
+    "3 c. spaghetti, uncooked and broken into 2-inch pieces",
+    "2 cans cream of mushroom soup",
+    "3 c. grated sharp cheddar cheese",
+    "1/4 c. finely diced green pepper",
+    "1/4 c. finely diced onion",
+    "1 (4-ounce) jar diced pimentos, drained",
+    "2 c. reserved chicken broth from pot",
+    "1 tsp. Lawry's Seasoned Salt",
+    "1/8 tsp. to 1/4 tsp. cayenne pepper",
+    "Salt and pepper, to taste"
+  ],
+  "instructions": [
+    "Cook 1 cut-up fryer chicken and pick out the meat to make 2 cups.",
+    "Cook spaghetti in same chicken broth until al dente. Do not overcook. When spaghetti is cooked, combine with remaining ingredients except additional 1 cup sharp cheddar.",
+    "Place mixture in casserole pan and top with remaining sharp cheddar. Cover and freeze up to 6 months, cover and refrigerate up to 2 days, or bake immediately: 350°F for 45 minutes until bubbly. (If the cheese on top starts to get too cooked, cover with foil.)"
+  ],
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "calories": " 494 Calories",
+    "fatContent": "24 g",
+    "saturatedFatContent": "11 g",
+    "transFatContent": "0 g",
+    "cholesterolContent": "77 mg",
+    "sodiumContent": "964 mg",
+    "carbohydrateContent": "38 g",
+    "fiberContent": "2 g",
+    "sugarContent": "3 g",
+    "proteinContent": "28 g"
+  },
+  "extraction_method": "json-ld",
+  "confidence": 1.0,
+  "warnings": []
+}

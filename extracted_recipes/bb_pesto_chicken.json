@@ -1,0 +1,85 @@
+{
+  "source_url": "https://www.budgetbytes.com/creamy-pesto-chicken/",
+  "title": "Creamy Pesto Chicken",
+  "description": "Creamy pesto chicken is a fast, easy, and impressive main dish for dinner, whether you just want to treat yourself or impress guests!",
+  "author": "{'@id': 'https://www.budgetbytes.com/#/schema/person/de533a4dad507aefcf8ea04e131701f9'}",
+  "recipe_yield": "4",
+  "prep_time": "10 min",
+  "cook_time": "25 min",
+  "total_time": "35 min",
+  "cuisine": [
+    "American"
+  ],
+  "category": [
+    "Dinner",
+    "Main Course"
+  ],
+  "keywords": [
+    "Chicken Breast Recipe, Creamy Chicken, easy chicken recipe, Pesto Chicken"
+  ],
+  "images": [
+    "https://www.budgetbytes.com/wp-content/uploads/2022/03/Creamy-Pesto-Chicken-skillet.jpg",
+    "https://www.budgetbytes.com/wp-content/uploads/2022/03/Creamy-Pesto-Chicken-skillet-500x500.jpg",
+    "https://www.budgetbytes.com/wp-content/uploads/2022/03/Creamy-Pesto-Chicken-skillet-500x375.jpg",
+    "https://www.budgetbytes.com/wp-content/uploads/2022/03/Creamy-Pesto-Chicken-skillet-480x270.jpg"
+  ],
+  "ingredient_sections": [
+    {
+      "name": null,
+      "items": [
+        "2 boneless, skinless chicken breast (about 1.3 lb/600g total) ($6.59)",
+        "1/8 tsp salt ($0.01)",
+        "1/8 tsp pepper ($0.01)",
+        "2 Tbsp olive oil, divided ($0.32)",
+        "2 cloves garlic, minced ($0.16)",
+        "1 pint grape tomatoes, sliced in half ($2.00)",
+        "1/2 cup heavy cream* ($0.62)",
+        "1/4 cup pesto ($0.99)"
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {
+      "name": null,
+      "steps": [
+        "Fillet the chicken breasts into two thinner pieces (or pound the chicken to an even thickness then cut each breast in half to create four portions). Season the chicken with a pinch of salt and pepper on both sides.",
+        "Heat a large skillet over medium heat. Once hot, add 1 Tbsp oil and swirl to coat the surface. Add the chicken to the skillet and cook on each side until golden brown and cooked through (about 7-10 minutes total). Remove the chicken to a clean plate.",
+        "Turn the heat down to medium-low. Add the remaining olive oil to the skillet along with the minced garlic and halved grape tomatoes. Sauté for about five minutes, or until the tomatoes start to soften and lose their shape.",
+        "Add the heavy cream and pesto to the skillet with the tomatoes and stir to combine. Allow the sauce to come up to a simmer. Taste the sauce and adjust the salt or pepper to your liking.",
+        "Add the chicken back to the skillet with the tomatoes and sauce, turning to coat the chicken. Allow the chicken to simmer in the sauce for just a few minutes more to heat through. Serve hot."
+      ]
+    }
+  ],
+  "ingredients": [
+    "2 boneless, skinless chicken breast (about 1.3 lb/600g total) ($6.59)",
+    "1/8 tsp salt ($0.01)",
+    "1/8 tsp pepper ($0.01)",
+    "2 Tbsp olive oil, divided ($0.32)",
+    "2 cloves garlic, minced ($0.16)",
+    "1 pint grape tomatoes, sliced in half ($2.00)",
+    "1/2 cup heavy cream* ($0.62)",
+    "1/4 cup pesto ($0.99)"
+  ],
+  "instructions": [
+    "Fillet the chicken breasts into two thinner pieces (or pound the chicken to an even thickness then cut each breast in half to create four portions). Season the chicken with a pinch of salt and pepper on both sides.",
+    "Heat a large skillet over medium heat. Once hot, add 1 Tbsp oil and swirl to coat the surface. Add the chicken to the skillet and cook on each side until golden brown and cooked through (about 7-10 minutes total). Remove the chicken to a clean plate.",
+    "Turn the heat down to medium-low. Add the remaining olive oil to the skillet along with the minced garlic and halved grape tomatoes. Sauté for about five minutes, or until the tomatoes start to soften and lose their shape.",
+    "Add the heavy cream and pesto to the skillet with the tomatoes and stir to combine. Allow the sauce to come up to a simmer. Taste the sauce and adjust the salt or pepper to your liking.",
+    "Add the chicken back to the skillet with the tomatoes and sauce, turning to coat the chicken. Allow the chicken to simmer in the sauce for just a few minutes more to heat through. Serve hot."
+  ],
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "servingSize": "1 serving",
+    "calories": "415 kcal",
+    "carbohydrateContent": "7 g",
+    "proteinContent": "34 g",
+    "fatContent": "28 g",
+    "sodiumContent": "403 mg",
+    "fiberContent": "2 g"
+  },
+  "extraction_method": "json-ld",
+  "confidence": 1.0,
+  "warnings": [
+    "Static HTTP fetch returned 403; browser fallback was used."
+  ]
+}

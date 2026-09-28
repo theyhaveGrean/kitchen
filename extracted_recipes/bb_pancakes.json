@@ -1,0 +1,93 @@
+{
+  "source_url": "https://www.budgetbytes.com/homemade-pancakes/",
+  "title": "Fluffy Homemade Pancakes",
+  "description": "This easy homemade pancake recipe makes the most delicious and fluffy stack of pancakes around! Perfect for a cozy weekend breakfast.",
+  "author": "{'@id': 'https://www.budgetbytes.com/#/schema/person/de533a4dad507aefcf8ea04e131701f9'}",
+  "recipe_yield": "4, 4 servings (2 each)",
+  "prep_time": "10 min",
+  "cook_time": "20 min",
+  "total_time": "45 min",
+  "cuisine": [
+    "American"
+  ],
+  "category": [
+    "Breakfast",
+    "Brunch"
+  ],
+  "keywords": [
+    "Fluffy Pancakes, Homemade Pancakes, pancakes"
+  ],
+  "images": [
+    "https://www.budgetbytes.com/wp-content/uploads/2025/06/1-Fluffy-Homemade-Pancakes-Front-Butter-and-Syrup.jpg",
+    "https://www.budgetbytes.com/wp-content/uploads/2025/06/1-Fluffy-Homemade-Pancakes-Front-Butter-and-Syrup-500x500.jpg",
+    "https://www.budgetbytes.com/wp-content/uploads/2025/06/1-Fluffy-Homemade-Pancakes-Front-Butter-and-Syrup-500x375.jpg",
+    "https://www.budgetbytes.com/wp-content/uploads/2025/06/1-Fluffy-Homemade-Pancakes-Front-Butter-and-Syrup-480x270.jpg"
+  ],
+  "ingredient_sections": [
+    {
+      "name": null,
+      "items": [
+        "1 cup all-purpose flour (150g, $0.17*)",
+        "1½ tsp baking powder (8g, $0.07**)",
+        "½ tsp salt (4g, $0.02)",
+        "¾ cup milk (warm, $0.15***)",
+        "2 Tbsp butter (melted, $0.19)",
+        "1 large egg ($0.18)",
+        "2 Tbsp granulated sugar (25g, $0.04)",
+        "½ tsp vanilla extract ($0.25)",
+        "4 tsp cooking oil ($0.05****)"
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {
+      "name": null,
+      "steps": [
+        "Gather and prepare all ingredients.",
+        "Whisk together the flour, baking powder, and salt in a medium-sized bowl.",
+        "In a separate medium-sized bowl, whisk together the milk, egg, melted butter, sugar, and vanilla extract.",
+        "Pour the wet ingredients into the bowl of dry ingredients and stir until just combined. DO NOT overmix. The batter should be thick yet still pourable, with a few lumps remaining. If it isn’t pourable, add an additional 1-2 tablespoons of milk until it reaches the right consistency. A batter that’s too thick can turn out slightly dry once cooked.",
+        "Next, let the batter rest for 15 minutes. This allows the flour to hydrate fully, relaxes the gluten, and activates the baking powder, resulting in tender, thicker, and more evenly cooked pancakes.",
+        "Heat a large skillet or griddle over medium. Once hot, add enough cooking oil to coat the surface (I use about ½ tsp per pancake). Add the batter to the hot griddle, ¼ cup at a time. Use the back of the measuring cup to spread the batter into a 4.5-inch diameter circle.",
+        "Cook until bubbles form over the surface and begin to pop, the edges look dry, and the bottom is golden brown, about 1-2 minutes. Flip them and cook on the second side until golden brown, for about 30 seconds.",
+        "Repeat with the remaining batter, adding more oil to the skillet between batches or as needed, until all the pancakes have been cooked. Keep them warm on a plate under a towel or in a warm oven until all the remaining batter is cooked. Serve warm with your favorite toppings!"
+      ]
+    }
+  ],
+  "ingredients": [
+    "1 cup all-purpose flour (150g, $0.17*)",
+    "1½ tsp baking powder (8g, $0.07**)",
+    "½ tsp salt (4g, $0.02)",
+    "¾ cup milk (warm, $0.15***)",
+    "2 Tbsp butter (melted, $0.19)",
+    "1 large egg ($0.18)",
+    "2 Tbsp granulated sugar (25g, $0.04)",
+    "½ tsp vanilla extract ($0.25)",
+    "4 tsp cooking oil ($0.05****)"
+  ],
+  "instructions": [
+    "Gather and prepare all ingredients.",
+    "Whisk together the flour, baking powder, and salt in a medium-sized bowl.",
+    "In a separate medium-sized bowl, whisk together the milk, egg, melted butter, sugar, and vanilla extract.",
+    "Pour the wet ingredients into the bowl of dry ingredients and stir until just combined. DO NOT overmix. The batter should be thick yet still pourable, with a few lumps remaining. If it isn’t pourable, add an additional 1-2 tablespoons of milk until it reaches the right consistency. A batter that’s too thick can turn out slightly dry once cooked.",
+    "Next, let the batter rest for 15 minutes. This allows the flour to hydrate fully, relaxes the gluten, and activates the baking powder, resulting in tender, thicker, and more evenly cooked pancakes.",
+    "Heat a large skillet or griddle over medium. Once hot, add enough cooking oil to coat the surface (I use about ½ tsp per pancake). Add the batter to the hot griddle, ¼ cup at a time. Use the back of the measuring cup to spread the batter into a 4.5-inch diameter circle.",
+    "Cook until bubbles form over the surface and begin to pop, the edges look dry, and the bottom is golden brown, about 1-2 minutes. Flip them and cook on the second side until golden brown, for about 30 seconds.",
+    "Repeat with the remaining batter, adding more oil to the skillet between batches or as needed, until all the pancakes have been cooked. Keep them warm on a plate under a towel or in a warm oven until all the remaining batter is cooked. Serve warm with your favorite toppings!"
+  ],
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "servingSize": "2 pancakes",
+    "calories": "279 kcal",
+    "carbohydrateContent": "33 g",
+    "proteinContent": "7 g",
+    "fatContent": "13 g",
+    "sodiumContent": "536 mg",
+    "fiberContent": "1 g"
+  },
+  "extraction_method": "json-ld",
+  "confidence": 1.0,
+  "warnings": [
+    "Static HTTP fetch returned 403; browser fallback was used."
+  ]
+}

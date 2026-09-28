@@ -1,0 +1,122 @@
+{
+  "source_url": "https://www.delish.com/cooking/recipe-ideas/a45570/best-ever-guacamole-recipe/",
+  "title": "Best Guacamole",
+  "description": "This easy guacamole recipe is the perfect base to jump off of, whether you prefer to keep it simple or go crazy with the mix-ins.",
+  "author": "Lena Abraham",
+  "recipe_yield": "6 serving(s)",
+  "prep_time": "10 min",
+  "cook_time": "PT0S",
+  "total_time": "10 min",
+  "cuisine": [
+    "Avocado Cuisine",
+    "Dip Cuisine",
+    "Guacamole Cuisine",
+    "Onion Cuisine",
+    "Capsicum Pepper Cuisine",
+    "Chili Pepper Cuisine",
+    "Jalapeno Cuisine",
+    "Lime Cuisine",
+    "Herb Cuisine",
+    "Cilantro Cuisine",
+    "Chips Cuisine",
+    "Tortilla Chips Cuisine",
+    "Latin American Cuisine",
+    "Mexican Cuisine",
+    "American Cuisine",
+    "Tex Mex Cuisine"
+  ],
+  "category": [
+    "gluten-free",
+    "healthy",
+    "vegetarian",
+    "Cinco de Mayo",
+    "feed a crowd",
+    "Super Bowl",
+    "appetizers"
+  ],
+  "keywords": [
+    "content-type: Expanded Recipe",
+    "locale: US",
+    "displayType: recipe",
+    "shortTitle: Best Guacamole",
+    "contentId: 4fbeef0b-b0b3-467d-b580-a69329bf363e",
+    "subsection: Recipes",
+    "collection: Appetizers",
+    "collection: Latest & Greatest Recipes",
+    "collection: Sides",
+    "collection: Side Dishes",
+    "collection: America's Most Delish",
+    "collection: Game Day Recipes",
+    "sponsored: false",
+    "isSyndicated: false",
+    "guacamole, guacamole recipe, guacamole recipe easy, guacamole dip, simple guacamole recipe, best guacamole dip, guac recipe, what's in guacamole, guacamole with mayo, guacamole recipe with mayo",
+    "NUTRITION: gluten-free",
+    "NUTRITION: healthy",
+    "NUTRITION: vegetarian",
+    "OCCASION: Cinco de Mayo",
+    "OCCASION: feed a crowd",
+    "OCCASION: Super Bowl",
+    "CATEGORY: appetizers",
+    "TOTALTIME: 00:10:00",
+    "FILTERTIME: <30MINS"
+  ],
+  "images": [
+    "https://hips.hearstapps.com/hmg-prod/images/guacamole-index-641e009dd015d.jpg?crop=0.503xw:1.00xh;0.252xw,0&resize=1200:*",
+    "https://hips.hearstapps.com/hmg-prod/images/guacamole-index-641e009dd015d.jpg?crop=0.6666666666666666xw:1xh;center,top&resize=1200:*",
+    "https://hips.hearstapps.com/hmg-prod/images/guacamole-index-641e009dd015d.jpg?crop=0.888888888888889xw:1xh;center,top&resize=1200:*"
+  ],
+  "ingredient_sections": [
+    {
+      "name": null,
+      "items": [
+        "3 avocados, pitted",
+        "1 small jalapeño, seeds removed if desired, finely chopped",
+        "1/4 c. chopped fresh cilantro, plus more for serving",
+        "1/4 c. small white or red onion, finely chopped",
+        "1 lime, juiced",
+        "1/2 tsp. (or more) kosher salt",
+        "Tortilla chips, for serving"
+      ]
+    }
+  ],
+  "instruction_sections": [
+    {
+      "name": null,
+      "steps": [
+        "In a large bowl, mix avocados, jalapeño, cilantro, onion, lime juice, and salt, then slowly turn bowl as you run a fork through mixture (this will ensure guacamole stays chunky) until desired consistency is reached; season with salt, if needed.",
+        "Top with more cilantro. Serve with tortilla chips alongside."
+      ]
+    }
+  ],
+  "ingredients": [
+    "3 avocados, pitted",
+    "1 small jalapeño, seeds removed if desired, finely chopped",
+    "1/4 c. chopped fresh cilantro, plus more for serving",
+    "1/4 c. small white or red onion, finely chopped",
+    "1 lime, juiced",
+    "1/2 tsp. (or more) kosher salt",
+    "Tortilla chips, for serving"
+  ],
+  "instructions": [
+    "In a large bowl, mix avocados, jalapeño, cilantro, onion, lime juice, and salt, then slowly turn bowl as you run a fork through mixture (this will ensure guacamole stays chunky) until desired consistency is reached; season with salt, if needed.",
+    "Top with more cilantro. Serve with tortilla chips alongside."
+  ],
+  "nutrition": {
+    "@type": "NutritionInformation",
+    "calories": " 217 Calories",
+    "fatContent": "17 g",
+    "saturatedFatContent": "2 g",
+    "transFatContent": "0 g",
+    "cholesterolContent": "0 mg",
+    "sodiumContent": "196 mg",
+    "carbohydrateContent": "10 g",
+    "fiberContent": "8 g",
+    "sugarContent": "1 g",
+    "proteinContent": "3 g"
+  },
+  "extraction_method": "json-ld",
+  "confidence": 1.0,
+  "warnings": [
+    "JavaScript/browser rendering was used."
+  ]
+}
