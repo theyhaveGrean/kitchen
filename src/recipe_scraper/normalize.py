@@ -2,9 +2,12 @@ from __future__ import annotations
 
 import html
 import re
-from typing import Any, Iterable
+from collections.abc import Iterable
+from typing import Any
 
+from .ingredient_cleanup import clean_all
 from .models import Recipe
+from .structured_ingredients import parse_ingredients
 
 
 def clean_text(value: Any) -> str:
@@ -42,7 +45,7 @@ def recipe_to_dict(recipe: Recipe, *, include_debug: bool = False) -> dict[str, 
     payload: dict[str, Any] = {
         "title": clean_text(recipe.title) or None,
         "link": recipe.source_url,
-        "ingredients": dedupe_recipe_lines(recipe.ingredients),
+        "ingredients": parse_ingredients(clean_all(dedupe_recipe_lines(recipe.ingredients))),
         "recipe": dedupe_recipe_lines(recipe.instructions),
     }
     if include_debug:

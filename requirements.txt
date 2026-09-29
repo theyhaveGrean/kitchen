@@ -1,0 +1,2 @@
+# Full local development setup: fetch, rewrite, GUI, tests, lint, and type checks.
+-e .[all]
