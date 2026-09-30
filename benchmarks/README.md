@@ -1,34 +1,26 @@
 # Benchmarks
 
-Datasets live in `datasets/`; generated output belongs in `results/` and is ignored by Git.
+Datasets live in `datasets/`; generated results go in Git-ignored `results/`.
 
 ```bash
 python benchmarks/run.py
 python benchmarks/run.py benchmarks/datasets/torture_50.csv --output-dir benchmarks/results/torture
 ```
 
-The torture set mixes live pages and deterministic local fixtures. Pytest only uses deterministic fixtures by default so ordinary test runs do not depend on the network.
+The torture dataset combines difficult live pages and deterministic local fixtures. Ordinary pytest runs use saved fixtures and do not require network access. See [../docs/benchmarking.md](../docs/benchmarking.md) for dataset guidance and result interpretation.
 
-The comparison GUI can run extraction, ingredient normalization, and LLM rewriting
-with per-recipe progress:
+## Comparison GUI
+
+Run:
 
 ```bash
 python scripts/compare_results.py
 ```
 
-Click **Run full pipeline** to fetch and extract the selected dataset rows. Extraction writes to `benchmarks/results/latest`.
-Set **Start at** to `1` and **Count** to `10` to process the first ten dataset rows;
-set **Count** to **All** to run from the chosen start row through the end.
-Successful recipes from that run are cleaned and parsed with Ingredient Parser,
-then rewritten into `benchmarks/results/rewritten`.
-Both extraction and rewritten JSON use `quantity`, `unit`, `ingredient`, and
-`preparation_type` inside each ingredient. The GUI shows both stages'
-output and refreshes the recipe list as results arrive. The rewrite stage requires
-`OPENAI_API_KEY` and uses `OPENAI_MODEL` if set.
+**Run full pipeline** fetches and extracts the selected dataset rows into `benchmarks/results/latest`. **Start at** is 1-based; **Count** selects a number of rows or **All** through the end. Successful recipes are ingredient-normalized and rewritten into `benchmarks/results/rewritten`. The GUI displays extraction and rewritten output and updates its recipe list as results arrive.
 
-To process files already saved in `benchmarks/results/latest` without fetching,
-click **Post-process saved results**. This runs ingredient normalization and
-instruction rewriting for every `*.json` file in that directory and writes
-results to `benchmarks/results/rewritten`. Invalid files are reported individually
-in the log while other files continue processing. This action also requires
-`OPENAI_API_KEY` and uses `OPENAI_MODEL` if set.
+Both stages use ingredient objects with `quantity`, `unit`, `ingredient`, and `preparation_type`. Rewriting requires `OPENAI_API_KEY` and uses `OPENAI_MODEL` when set.
+
+**Post-process saved results** skips fetching and processes each `*.json` in `benchmarks/results/latest`, continuing past invalid files and reporting them in the log. It writes to `benchmarks/results/rewritten` and has the same API-key and model requirements.
+
+Both actions now also generate validated semantic graphs in `benchmarks/results/graphs`. The GUI's **Graph** tab renders a cached graph and shows its edges and warnings. Graph generation defaults to `gpt-5.6-luna`; set `OPENAI_GRAPH_MODEL` to change it. See [../docs/graph.md](../docs/graph.md).

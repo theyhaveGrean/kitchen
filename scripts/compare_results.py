@@ -10,8 +10,9 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from PyQt6.QtCore import QProcess, Qt
+from PyQt6.QtCore import QByteArray, QProcess, Qt
 from PyQt6.QtGui import QCloseEvent
+from PyQt6.QtSvgWidgets import QSvgWidget
 from PyQt6.QtWidgets import (
     QApplication,
     QFrame,
@@ -25,6 +26,7 @@ from PyQt6.QtWidgets import (
     QScrollArea,
     QSpinBox,
     QSplitter,
+    QTabWidget,
     QVBoxLayout,
     QWidget,
 )
@@ -36,6 +38,13 @@ BENCHMARK_SCRIPT = PROJECT_ROOT / "benchmarks" / "run.py"
 REWRITE_SCRIPT = PROJECT_ROOT / "scripts" / "test_openai.py"
 BENCHMARK_SUMMARY = LATEST_DIR / "batch_results.csv"
 PROGRESS_LINE = re.compile(r"^\[(\d+)/(\d+)\]\s+(.+)$")
+GRAPH_SCRIPT = PROJECT_ROOT / "scripts" / "graph_recipe.py"
+GRAPH_DIR = PROJECT_ROOT / "benchmarks" / "results" / "graphs"
+
+sys.path.insert(0, str(PROJECT_ROOT / "src"))
+from recipe_scraper.graph_pipeline import load_cached_graph, source_ingredient_lines  # noqa: E402
+from recipe_scraper.graph_render import graph_debug_text, render_svg  # noqa: E402
+from recipe_scraper.llm import graph_model  # noqa: E402
 
 
 def load_recipe(path: Path | None) -> dict[str, Any] | str:
@@ -209,6 +218,26 @@ class ResultsWindow(QMainWindow):
         self._summary_written = False
         self._rewrite_status: dict[str, str] = {}
 
+        self.graph_button = QPushButton("Generate graph")
+        self.graph_button.clicked.connect(self.generate_selected_graph)
+        self.graph_status = QLabel("Select a rewritten recipe")
+        self.graph_svg = QSvgWidget()
+        self.graph_scroll = QScrollArea()
+        self.graph_scroll.setWidget(self.graph_svg)
+        self.graph_debug = QPlainTextEdit()
+        self.graph_debug.setReadOnly(True)
+        graph_panel = QWidget()
+        graph_layout = QVBoxLayout(graph_panel)
+        graph_row = QHBoxLayout()
+        graph_row.addWidget(self.graph_button)
+        graph_row.addWidget(self.graph_status, 1)
+        graph_layout.addLayout(graph_row)
+        graph_layout.addWidget(self.graph_scroll, 1)
+        graph_layout.addWidget(self.graph_debug, 0)
+        self.graph_process = QProcess(self)
+        self.graph_process.setWorkingDirectory(str(PROJECT_ROOT))
+        self.graph_process.finished.connect(self.graph_finished)
+
         results_splitter = QSplitter(Qt.Orientation.Horizontal)
         results_splitter.addWidget(latest_panel)
         results_splitter.addWidget(rewritten_panel)
@@ -217,7 +246,10 @@ class ResultsWindow(QMainWindow):
 
         main_splitter = QSplitter(Qt.Orientation.Horizontal)
         main_splitter.addWidget(self.recipe_list)
-        main_splitter.addWidget(results_splitter)
+        tabs = QTabWidget()
+        tabs.addTab(results_splitter, "Recipe")
+        tabs.addTab(graph_panel, "Graph")
+        main_splitter.addWidget(tabs)
         main_splitter.setStretchFactor(0, 0)
         main_splitter.setStretchFactor(1, 1)
         body = QWidget()
@@ -492,6 +524,9 @@ class ResultsWindow(QMainWindow):
         if self.benchmark_process.state() != QProcess.ProcessState.NotRunning:
             self.benchmark_process.kill()
             self.benchmark_process.waitForFinished(2000)
+        if self.graph_process.state() != QProcess.ProcessState.NotRunning:
+            self.graph_process.kill()
+            self.graph_process.waitForFinished(2000)
         super().closeEvent(event)
 
     def show_selected(self, current: Any, _previous: Any = None) -> None:
@@ -517,6 +552,59 @@ class ResultsWindow(QMainWindow):
         )
         self.update_column(self.latest_ingredients, self.latest_steps, latest)
         self.update_column(self.rewritten_ingredients, self.rewritten_steps, rewritten)
+        self.show_graph(filename, latest, rewritten)
+
+    def show_graph(self, filename: str, latest: dict[str, Any] | str, rewritten: dict[str, Any] | str) -> None:
+        self.graph_svg.load(QByteArray())
+        self.graph_debug.clear()
+        if not isinstance(rewritten, dict):
+            self.graph_status.setText("No rewritten recipe available")
+            self.graph_button.setEnabled(False)
+            return
+        self.graph_button.setEnabled(self.graph_process.state() == QProcess.ProcessState.NotRunning)
+        original = source_ingredient_lines(latest) if isinstance(latest, dict) else None
+        try:
+            cached = load_cached_graph(GRAPH_DIR / filename, rewritten, original)
+        except ValueError as exc:
+            self.graph_status.setText(f"Graph input invalid: {exc}")
+            return
+        if cached is None:
+            self.graph_status.setText("No current graph cached. Select Generate graph.")
+            return
+        graph, warnings = cached
+        svg = render_svg(graph)
+        self.graph_svg.load(QByteArray(svg.encode("utf-8")))
+        self.graph_svg.setFixedSize(self.graph_svg.renderer().defaultSize())
+        self.graph_debug.setPlainText(graph_debug_text(graph) + "\n" + "\n".join(warnings))
+        self.graph_status.setText(f"{len(graph.nodes)} nodes · {len(graph.edges)} edges · {len(warnings)} warnings")
+
+    def generate_selected_graph(self) -> None:
+        selected = self.recipe_list.currentItem()
+        if selected is None or self.graph_process.state() != QProcess.ProcessState.NotRunning:
+            return
+        filename = selected.data(Qt.ItemDataRole.UserRole)
+        latest_path, rewritten_path = self.paths.get(filename, (None, None))
+        if rewritten_path is None:
+            return
+        arguments = ["-u", str(GRAPH_SCRIPT), str(rewritten_path), "--output", str(GRAPH_DIR / filename)]
+        if latest_path:
+            arguments.extend(["--source", str(latest_path)])
+        self.graph_button.setEnabled(False)
+        self.graph_status.setText(f"Generating graph with {graph_model()}...")
+        self.graph_process.start(sys.executable, arguments)
+
+    def graph_finished(self, exit_code: int, _status: QProcess.ExitStatus) -> None:
+        selected = self.recipe_list.currentItem()
+        if selected is None:
+            return
+        filename = selected.data(Qt.ItemDataRole.UserRole)
+        latest_path, rewritten_path = self.paths.get(filename, (None, None))
+        if exit_code == 0:
+            self.show_graph(filename, load_recipe(latest_path), load_recipe(rewritten_path))
+        else:
+            error = bytes(self.graph_process.readAllStandardError()).decode("utf-8", errors="replace")
+            self.graph_status.setText(error.strip()[-300:] or "Graph generation failed")
+            self.graph_button.setEnabled(True)
 
     @staticmethod
     def replace_content(host: QWidget, content: QWidget) -> None:

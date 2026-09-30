@@ -1,23 +1,18 @@
 import argparse
 import csv
-from pathlib import Path
 import json
-import os
 import sys
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from recipe_scraper.ingredient_cleanup import clean_all
-from recipe_scraper.structured_ingredients import ingredient_to_line, parse_ingredients
-
-from dotenv import load_dotenv
-from openai import OpenAI
-
-
-load_dotenv()
-
-client = OpenAI()
+from recipe_scraper.graph_pipeline import get_or_generate_graph  # noqa: E402
+from recipe_scraper.llm import rewrite_instructions  # noqa: E402
+from recipe_scraper.structured_ingredients import (  # noqa: E402
+    ingredient_to_line,
+    parse_ingredients,
+)
 
 PROMPT_PATH = Path("prompts/luna_recipe_rewrite.md")
 
@@ -28,39 +23,6 @@ OUTPUT_DIR = Path("benchmarks/results/rewritten")
 
 def load_prompt() -> str:
     return PROMPT_PATH.read_text(encoding="utf-8").strip()
-
-
-def rewrite_recipe(instructions: list[str], prompt: str) -> list[str]:
-    recipe_json = json.dumps(instructions, ensure_ascii=False, indent=2)
-
-    response = client.responses.create(
-        model=os.getenv("OPENAI_MODEL", "gpt-5.6-luna"),
-        reasoning={"effort": "none"},
-        input=f"""\
-{prompt}
-
-## Recipe
-
-Rewrite the following recipe instructions.
-
-Return ONLY a valid JSON array of strings.
-Keep the same logical step order.
-
-{recipe_json}
-""",
-    )
-
-    text = response.output_text.strip()
-
-    rewritten = json.loads(text)
-
-    if not isinstance(rewritten, list):
-        raise ValueError("Model output was not a JSON array.")
-
-    if not all(isinstance(step, str) for step in rewritten):
-        raise ValueError("Model output contained non-string recipe steps.")
-
-    return rewritten
 
 
 def process_file(
@@ -80,9 +42,9 @@ def process_file(
     if not isinstance(ingredients, list) or not all(isinstance(item, (str, dict)) for item in ingredients):
         raise ValueError(f"{path}: missing or invalid 'ingredients' field")
     lines = [item if isinstance(item, str) else ingredient_to_line(item) for item in ingredients]
-    normalized_ingredients = parse_ingredients(clean_all(lines))
+    normalized_ingredients = parse_ingredients(lines)
 
-    rewritten = rewrite_recipe(instructions, prompt)
+    rewritten = rewrite_instructions(instructions, prompt)
 
     title = data.get("title")
     link = data.get("link")
@@ -98,13 +60,16 @@ def process_file(
         "recipe": rewritten,
     }
 
-    output_dir.mkdir(parents=True, exist_ok=True)
-
     output_path = output_dir / path.name
-
+    graph_path = output_dir.parent / "graphs" / path.name
+    graph, warnings, cached = get_or_generate_graph(graph_path, output, lines)
+    output_dir.mkdir(parents=True, exist_ok=True)
     with output_path.open("w", encoding="utf-8") as file:
         json.dump(output, file, ensure_ascii=False, indent=2)
-
+    print(
+        f"Graph {graph_path.name}: {len(graph.nodes)} nodes, {len(graph.edges)} edges, "
+        f"{len(warnings)} warnings{' (cached)' if cached else ''}"
+    )
     print(f"{path.name} -> {output_path}")
 
 

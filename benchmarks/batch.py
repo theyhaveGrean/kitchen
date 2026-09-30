@@ -223,7 +223,8 @@ def write_summary(path: Path, results: list[dict[str, Any]]) -> None:
     ]
     with path.open("w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
-        writer.writeheader(); writer.writerows(results)
+        writer.writeheader()
+        writer.writerows(results)
 
 
 def main() -> int:

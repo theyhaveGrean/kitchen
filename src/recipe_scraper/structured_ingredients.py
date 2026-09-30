@@ -8,8 +8,14 @@ from fractions import Fraction
 from math import isclose
 from typing import TypedDict
 
-from ingredient_parser import parse_ingredient
-from ingredient_parser.dataclasses import CompositeIngredientAmount, IngredientAmount
+from ingredient_parser import parse_ingredient, parse_multiple_ingredients
+from ingredient_parser.dataclasses import (
+    CompositeIngredientAmount,
+    IngredientAmount,
+    ParsedIngredient,
+)
+
+from .ingredient_cleanup import clean_all, clean_ingredient
 
 _UNIT_LABELS = {
     "teaspoon": "tsp",
@@ -71,9 +77,8 @@ def _normalized_amount(amount: IngredientAmount) -> tuple[str, str | None]:
     return result, _UNIT_LABELS.get(unit_name, unit_name) if unit_name else None
 
 
-def parse_ingredient_line(line: str) -> StructuredIngredient:
-    """Keep cooking information while omitting parser comments and metadata."""
-    parsed = parse_ingredient(line, separate_names=False)
+def _serialize_ingredient(parsed: ParsedIngredient, line: str) -> StructuredIngredient:
+    """Map Ingredient Parser's result to the four product fields."""
     name = " or ".join(part.text for part in parsed.name).strip()
     if not name:
         return {"quantity": None, "unit": None, "ingredient": line, "preparation_type": None}
@@ -101,7 +106,7 @@ def parse_ingredient_line(line: str) -> StructuredIngredient:
     elif amounts:
         quantity = ", ".join(amount.text for amount in amounts)
 
-    preparation = parsed.preparation.text.strip() if parsed.preparation else None
+    preparation = parsed.preparation.text.strip(" ()") if parsed.preparation else None
     for note in (parsed.purpose, parsed.comment):
         if note and _REQUIRED_NOTE.search(note.text):
             preparation = ", ".join(part for part in (preparation, note.text.strip()) if part)
@@ -115,8 +120,18 @@ def parse_ingredient_line(line: str) -> StructuredIngredient:
     }
 
 
+def parse_ingredient_line(line: str) -> StructuredIngredient:
+    cleaned = clean_ingredient(line)
+    return _serialize_ingredient(parse_ingredient(cleaned, separate_names=False), cleaned)
+
+
 def parse_ingredients(lines: list[str]) -> list[StructuredIngredient]:
-    return [parse_ingredient_line(line) for line in lines]
+    cleaned = clean_all(lines)
+    # Ingredient Parser 2.8's batch default is "us", while parse_ingredient accepts "us_customary".
+    parsed = parse_multiple_ingredients(
+        cleaned, separate_names=False, volumetric_units_system="us_customary"
+    )
+    return [_serialize_ingredient(item, line) for item, line in zip(parsed, cleaned, strict=True)]
 
 
 def ingredient_to_line(item: Mapping[str, str | None]) -> str:

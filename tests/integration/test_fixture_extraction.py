@@ -5,9 +5,9 @@ from pathlib import Path
 
 import pytest
 
+from benchmarks.batch import meets_expectations
 from recipe_scraper import extract_from_html
 from recipe_scraper.normalize import recipe_to_dict
-from benchmarks.batch import meets_expectations
 
 ROOT = Path(__file__).resolve().parents[2]
 DATASET = ROOT / "benchmarks/datasets/torture_50.csv"

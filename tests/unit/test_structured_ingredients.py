@@ -1,4 +1,8 @@
-from recipe_scraper.structured_ingredients import ingredient_to_line, parse_ingredient_line
+from recipe_scraper.structured_ingredients import (
+    ingredient_to_line,
+    parse_ingredient_line,
+    parse_ingredients,
+)
 
 
 def test_parse_ingredient_keeps_preparation_and_discards_comment() -> None:
@@ -51,3 +55,44 @@ def test_parser_keeps_fraction_range_and_ounce_kind() -> None:
     assert parse_ingredient_line("3-4 tsp oil")["quantity"] == "3-4"
     assert parse_ingredient_line("1 oz cheese")["unit"] == "oz"
     assert parse_ingredient_line("1 fl oz juice")["unit"] == "fl oz"
+
+
+def test_parser_handles_parenthetical_preparation_and_multiple_amounts() -> None:
+    assert parse_ingredient_line("2 onions (finely chopped)") == {
+        "quantity": "2",
+        "unit": None,
+        "ingredient": "onions",
+        "preparation_type": "finely chopped",
+    }
+    assert parse_ingredient_line("1 lb chicken (6 pieces)") == {
+        "quantity": "1 lb, 6 pieces",
+        "unit": None,
+        "ingredient": "chicken",
+        "preparation_type": None,
+    }
+
+
+def test_batch_parser_removes_shopping_annotations() -> None:
+    lines = [
+        "1 lb chicken breast - $8.99",
+        "2 cups flour (SKU: 123)",
+        "15 oz ricotta ($3.39)",
+        "1/4 tsp freshly cracked black pepper ($0.05)",
+        "1 handful chopped parsley (optional, for garnish) ($0.20)",
+    ]
+    assert parse_ingredients(lines) == [parse_ingredient_line(line) for line in lines]
+    assert parse_ingredients(lines)[2:] == [
+        {"quantity": "15", "unit": "oz", "ingredient": "ricotta", "preparation_type": None},
+        {
+            "quantity": "1/4",
+            "unit": "tsp",
+            "ingredient": "black pepper",
+            "preparation_type": "freshly cracked",
+        },
+        {
+            "quantity": "1",
+            "unit": "handful",
+            "ingredient": "parsley",
+            "preparation_type": "chopped, for garnish",
+        },
+    ]

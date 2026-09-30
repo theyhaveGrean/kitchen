@@ -13,8 +13,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from recipe_scraper.ingredient_cleanup import clean_all
-from recipe_scraper.structured_ingredients import ingredient_to_line, parse_ingredients
+from recipe_scraper.structured_ingredients import (  # noqa: E402
+    ingredient_to_line,
+    parse_ingredients,
+)
 
 
 def main() -> None:
@@ -35,7 +37,7 @@ def main() -> None:
         if not isinstance(ingredients, list) or not all(isinstance(item, (str, dict)) for item in ingredients):
             raise ValueError(f"{path}: invalid ingredients")
         lines = [item if isinstance(item, str) else ingredient_to_line(item) for item in ingredients]
-        data["ingredients"] = parse_ingredients(clean_all(lines))
+        data["ingredients"] = parse_ingredients(lines)
         target = args.output_dir / path.name
         target.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         print(f"{path.name} -> {target}")

@@ -1,32 +1,29 @@
 # Recipe Rewrite Instructions
 
-Rewrite recipe instructions into concise, direct cooking prose.
+Rewrite the supplied recipe steps as concise, direct cooking instructions.
 
-## Rules
+## Requirements
 
-- Preserve all cooking-critical information.
-- Preserve ingredients, quantities, temperatures, times, equipment, actions, conditions, and meaningful ordering.
-- Do not invent information.
-- Remove unnecessary commentary, repetition, and editorial filler.
-- Remove irrelevant warnings or comparisons that do not affect how the recipe is cooked.
-- Use short, imperative cooking instructions.
-- Keep logically related actions together.
-- Do not summarize away useful procedural detail.
-- Do not add headings, notes, commentary, or explanations.
-- Separate steps with multiple substeps into multiple simpler steps.
+- Preserve ingredients, quantities, temperatures, times, equipment, actions, conditions, and meaningful step order.
+- Do not invent details or remove useful procedural information.
+- Remove redundant wording, editorial filler, and comparisons that do not affect cooking.
+- Use short imperative steps. Split multi-part steps when that makes them easier to follow; keep related actions together.
+- Return no headings, notes, or explanations.
 
 ## Example
-### Input
-1. Preheat your oven to 325°F and lightly coat an 8x8-inch baking dish with cooking spray. For easier cleanup and cleaner slices later, line the pan with parchment paper, leaving a little extra hanging over the sides so you can lift the brownies out once they’ve cooled. Give the parchment a quick spray as well to make sure nothing sticks.
 
-### Output
-1. Preheat oven to 325°F
-2. Lightly coat an 8x8 inch dish with cooking spray, line with parchment, and spray again.
+Input:
 
+```text
+Preheat your oven to 325°F and lightly coat an 8x8-inch baking dish with cooking spray. For easier cleanup, line it with parchment, leaving overhang to lift the brownies after cooling. Spray the parchment too.
+```
 
-## Output
+Output:
 
-Return only a valid JSON array of instruction strings.
+```json
+["Preheat oven to 325°F.", "Lightly coat an 8x8-inch dish with cooking spray. Line with parchment and spray again."]
+```
 
-Do not return Markdown.
-Do not wrap the JSON in a code block.
+## Output format
+
+Return only a valid JSON array of instruction strings. Do not use Markdown or a code fence.
