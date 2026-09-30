@@ -16,6 +16,6 @@ def test_public_payload_is_intentionally_small():
     assert recipe_to_dict(recipe) == {
         "title": "Test",
         "link": "https://example.test/r",
-        "ingredients": ["1 egg"],
+        "ingredients": [{"quantity": "1", "unit": None, "ingredient": "egg", "preparation_type": None}],
         "recipe": ["Mix."],
     }

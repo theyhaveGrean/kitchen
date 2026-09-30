@@ -11,8 +11,9 @@ import html
 import json
 import re
 import sys
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 from urllib.parse import urljoin
 
 from .fetch.web import fetch_with_scrapling

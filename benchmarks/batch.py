@@ -223,7 +223,8 @@ def write_summary(path: Path, results: list[dict[str, Any]]) -> None:
     ]
     with path.open("w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
-        writer.writeheader(); writer.writerows(results)
+        writer.writeheader()
+        writer.writerows(results)
 
 
 def main() -> int:
@@ -234,7 +235,12 @@ def main() -> int:
     parser.add_argument("--timeout", type=int, default=60, help="Per-page Scrapling timeout in seconds; 0 disables it")
     parser.add_argument("--python", default=sys.executable)
     parser.add_argument("--stop-on-error", action="store_true")
+    parser.add_argument("--start", type=int, default=1, help="1-based first dataset row to run")
+    parser.add_argument("--limit", type=int, help="Maximum number of dataset rows to run")
     args = parser.parse_args()
+
+    if args.start < 1 or (args.limit is not None and args.limit < 1):
+        parser.error("--start and --limit must be positive")
 
     csv_path = Path(args.csv_file).expanduser().resolve()
     output_dir = Path(args.output_dir).expanduser().resolve()
@@ -246,8 +252,11 @@ def main() -> int:
     except Exception as exc:
         print(f"Could not read test CSV: {exc}", file=sys.stderr)
         return 2
+    rows = rows[args.start - 1:]
+    if args.limit is not None:
+        rows = rows[:args.limit]
     if not rows:
-        print("No test rows found.", file=sys.stderr)
+        print("No test rows selected.", file=sys.stderr)
         return 2
 
     output_dir.mkdir(parents=True, exist_ok=True)

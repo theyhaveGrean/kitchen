@@ -1,78 +1,60 @@
 # Recipe Scraper
 
-A recipe extraction package with deterministic pytest coverage and separate live/regression benchmarks.
+Recipe Scraper turns recipe URLs into consistent JSON for downstream kitchen applications. It prefers deterministic extraction and normalization, using an LLM only for instruction rewriting. See [pipeline](docs/pipeline.md), [schema](docs/schema.md), [architecture](docs/architecture.md), and [benchmarking](docs/benchmarking.md) for details.
 
-## Repository layout
+The comparison workflow can also use GPT-5.6 Luna to turn a rewritten recipe into a validated, cached cooking graph. The app renders that graph from JSON; see [recipe graphs](docs/graph.md).
 
-```text
-src/recipe_scraper/     importable package
-tests/                  pytest unit + deterministic integration tests
-benchmarks/             live/torture datasets and benchmark runner
-scripts/                developer convenience entry points
-.github/workflows/       CI
+## Output
+
+```json
+{
+  "title": "Recipe title",
+  "link": "https://example.com/recipe",
+  "ingredients": [
+    {"quantity": "1", "unit": "cup", "ingredient": "flour", "preparation_type": null}
+  ],
+  "recipe": ["Preheat oven to 350°F.", "Mix flour and bake until golden."]
+}
 ```
 
-## Install
-
-For local extraction and development:
+## Install and configure
 
 ```bash
-python -m pip install -e ".[fetch,dev]"
+python -m pip install -r requirements.txt
 scrapling install
 ```
 
-The base package deliberately does not require Scrapling so fixture/unit tests can run without browser dependencies.
+Ingredient parsing uses `ingredient_parser_nlp` and NLTK tagger data. For offline use, download the tagger once:
 
-## Extract a recipe
+```bash
+python -c "import nltk; nltk.download('averaged_perceptron_tagger_eng')"
+```
 
-After installation:
+LLM rewriting requires `OPENAI_API_KEY`; `OPENAI_MODEL` optionally selects the model. Keep `.env` out of version control.
+
+## Run
 
 ```bash
 recipe-scraper "https://example.com/recipe"
 recipe-scraper "https://example.com/recipe" -o recipe.json
 ```
 
-From a checkout without installing the console script:
+From a checkout, use `python scripts/extract_recipe.py URL`.
 
-```bash
-python scripts/extract_recipe.py "https://example.com/recipe"
-```
+## Development
 
-Product JSON remains intentionally small:
-
-```json
-{
-  "title": "Recipe title",
-  "link": "https://example.com/recipe",
-  "ingredients": ["1 cup flour", "2 eggs"],
-  "recipe": ["Mix the ingredients.", "Bake until done."]
-}
-```
-
-Ingredients and steps are de-duplicated before serialization. Extraction diagnostics are available only through the private benchmark debug flag.
-
-## Tests
+Run deterministic tests with `pytest`; they do not require live recipe websites. Before committing, run:
 
 ```bash
 pytest
-pytest tests/unit
-pytest tests/integration
+ruff check .
+mypy .
 ```
 
-All 30 local torture fixtures are represented as deterministic pytest integration cases. Normal test runs do not require live websites.
-
-## Benchmarks
-
-100 live recipe pages:
-
-```bash
-python benchmarks/run.py
-```
-
-50-case torture suite (20 live + 30 local fixtures):
+The standard live benchmark is `python benchmarks/run.py`. Run the torture set with:
 
 ```bash
 python benchmarks/run.py benchmarks/datasets/torture_50.csv --output-dir benchmarks/results/torture
 ```
 
-Generated benchmark output is ignored under `benchmarks/results/`.
+Benchmark output goes under `benchmarks/results/` and is not committed. See [benchmarks/README.md](benchmarks/README.md) for the comparison GUI and saved-result workflow.

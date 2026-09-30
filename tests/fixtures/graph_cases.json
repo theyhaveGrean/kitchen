@@ -1,0 +1,42 @@
+[
+  {
+    "case": "simple",
+    "recipe": {"title": "Fried Egg", "link": "https://example.test/egg", "ingredients": [{"quantity": "1", "unit": null, "ingredient": "egg", "preparation_type": null}, {"quantity": "1", "unit": "tsp", "ingredient": "butter", "preparation_type": null}], "recipe": ["Melt butter in a skillet over medium heat.", "Crack in the egg and fry until the white sets.", "Serve the fried egg."]}
+  },
+  {
+    "case": "pasta_separate_sauce",
+    "recipe": {"title": "Pasta with Tomato Sauce", "link": "https://example.test/pasta", "ingredients": [{"quantity": "200", "unit": "g", "ingredient": "pasta", "preparation_type": null}, {"quantity": "1", "unit": "cup", "ingredient": "tomatoes", "preparation_type": "chopped"}, {"quantity": "1", "unit": "tbsp", "ingredient": "olive oil", "preparation_type": null}], "recipe": ["Boil the pasta in water until tender, then drain.", "Separately simmer the tomatoes with olive oil to make a sauce.", "Toss the drained pasta with the sauce and serve."]}
+  },
+  {
+    "case": "cake_batter",
+    "recipe": {"title": "Vanilla Cake", "link": "https://example.test/cake", "ingredients": [{"quantity": "2", "unit": "cups", "ingredient": "flour", "preparation_type": null}, {"quantity": "1", "unit": "cup", "ingredient": "milk", "preparation_type": null}, {"quantity": "2", "unit": null, "ingredient": "eggs", "preparation_type": null}], "recipe": ["Whisk flour, milk, and eggs into a batter.", "Pour the batter into a pan and bake at 350°F for 30 minutes.", "Cool the cake and serve."]}
+  },
+  {
+    "case": "bread_dough",
+    "recipe": {"title": "Simple Bread", "link": "https://example.test/bread", "ingredients": [{"quantity": "3", "unit": "cups", "ingredient": "flour", "preparation_type": null}, {"quantity": "1", "unit": "cup", "ingredient": "water", "preparation_type": null}, {"quantity": "1", "unit": "tsp", "ingredient": "yeast", "preparation_type": null}], "recipe": ["Mix flour, water, and yeast into dough.", "Knead the dough, then let it rise for 1 hour.", "Bake the risen dough at 400°F for 30 minutes."]}
+  },
+  {
+    "case": "stir_fry_parallel",
+    "recipe": {"title": "Chicken Stir Fry", "link": "https://example.test/stir-fry", "ingredients": [{"quantity": "1", "unit": "lb", "ingredient": "chicken", "preparation_type": "sliced"}, {"quantity": "1", "unit": "cup", "ingredient": "broccoli", "preparation_type": "chopped"}, {"quantity": "1", "unit": "tbsp", "ingredient": "oil", "preparation_type": null}], "recipe": ["Cook the chicken in half the oil until browned; set it aside.", "Stir-fry the broccoli in the remaining oil.", "Return the chicken to the pan and toss with the broccoli."]}
+  },
+  {
+    "case": "marinade",
+    "recipe": {"title": "Marinated Chicken", "link": "https://example.test/marinade", "ingredients": [{"quantity": "1", "unit": "lb", "ingredient": "chicken", "preparation_type": null}, {"quantity": "2", "unit": "tbsp", "ingredient": "soy sauce", "preparation_type": null}, {"quantity": "1", "unit": "tbsp", "ingredient": "lemon juice", "preparation_type": null}], "recipe": ["Mix soy sauce and lemon juice into a marinade.", "Coat the chicken with the marinade and chill for 30 minutes.", "Roast the marinated chicken at 400°F until cooked through."]}
+  },
+  {
+    "case": "divided_remaining",
+    "recipe": {"title": "Garlic Rice", "link": "https://example.test/rice", "ingredients": [{"quantity": "2", "unit": "cups", "ingredient": "rice", "preparation_type": null}, {"quantity": "2", "unit": "tbsp", "ingredient": "butter", "preparation_type": "divided"}, {"quantity": "2", "unit": "cloves", "ingredient": "garlic", "preparation_type": "minced"}], "recipe": ["Toast rice in half the butter.", "Cook the rice with water until tender.", "Cook garlic in the remaining butter, then fold it into the rice."]}
+  },
+  {
+    "case": "topping_garnish",
+    "recipe": {"title": "Berry Yogurt", "link": "https://example.test/yogurt", "ingredients": [{"quantity": "1", "unit": "cup", "ingredient": "yogurt", "preparation_type": null}, {"quantity": "1/2", "unit": "cup", "ingredient": "berries", "preparation_type": null}, {"quantity": "1", "unit": "tsp", "ingredient": "honey", "preparation_type": null}], "recipe": ["Spoon yogurt into a bowl.", "Toss berries with honey separately.", "Top the yogurt with the sweetened berries and serve."]}
+  },
+  {
+    "case": "reserved_sauce",
+    "recipe": {"title": "Glazed Tofu", "link": "https://example.test/tofu", "ingredients": [{"quantity": "1", "unit": "lb", "ingredient": "tofu", "preparation_type": "cubed"}, {"quantity": "3", "unit": "tbsp", "ingredient": "soy sauce", "preparation_type": null}, {"quantity": "1", "unit": "tbsp", "ingredient": "honey", "preparation_type": null}], "recipe": ["Whisk soy sauce and honey into a glaze. Reserve half.", "Toss the tofu with the remaining glaze and fry until crisp.", "Drizzle the reserved glaze over the tofu and serve."]}
+  },
+  {
+    "case": "ambiguous_reference",
+    "recipe": {"title": "Ambiguous Vegetables", "link": "https://example.test/ambiguous", "ingredients": [{"quantity": "1", "unit": null, "ingredient": "onion", "preparation_type": null}, {"quantity": "1", "unit": null, "ingredient": "carrot", "preparation_type": null}], "recipe": ["Chop the onion and carrot separately.", "Set one aside and cook the other until soft.", "Combine them and serve."]}
+  }
+]
