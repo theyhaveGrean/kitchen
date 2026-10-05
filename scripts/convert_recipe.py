@@ -1,0 +1,11 @@
+"""Run the convert stage independently; use --help for options."""
+from __future__ import annotations
+
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
+from recipe_scraper.stage_cli import main  # noqa: E402
+
+if __name__ == "__main__":
+    raise SystemExit(main(["convert", *sys.argv[1:]]))

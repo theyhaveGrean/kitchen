@@ -47,18 +47,29 @@ def test_real_recipe_graph_semantics(case: dict[str, object], tmp_path: Path) ->
     final_id = next(node.id for node in graph.nodes if node.type == "final")
     if case["case"] != "ambiguous_reference":
         for index in range(1, len(recipe["ingredients"]) + 1):
-            assert reaches(graph, f"ingredient_{index}", final_id)
+            assert reaches(graph, f"ing_{index:03d}", final_id)
     if case["case"] in {"pasta_separate_sauce", "cake_batter", "bread_dough", "marinade"}:
         assert any(node.type == "intermediate" for node in graph.nodes)
     if case["case"] in {"pasta_separate_sauce", "stir_fry_parallel"}:
         first_consumers = {
             ingredient_id: {edge.target for edge in graph.edges if edge.source == ingredient_id and edge.type == "input"}
-            for ingredient_id in ("ingredient_1", "ingredient_2")
+            for ingredient_id in ("ing_001", "ing_002")
         }
-        assert first_consumers["ingredient_1"]
-        assert first_consumers["ingredient_2"]
-        assert first_consumers["ingredient_1"].isdisjoint(first_consumers["ingredient_2"])
+        assert first_consumers["ing_001"]
+        assert first_consumers["ing_002"]
+        assert first_consumers["ing_001"].isdisjoint(first_consumers["ing_002"])
     if case["case"] == "divided_remaining":
-        assert len({edge.target for edge in graph.edges if edge.source == "ingredient_2"}) >= 2
+        assert len({edge.target for edge in graph.edges if edge.source == "ing_002"}) >= 2
     if case["case"] == "ambiguous_reference":
         assert graph.unresolved_references
+    if case["case"] == "structured_parameters":
+        bake = next(node for node in graph.nodes if node.action == "bake")
+        assert bake.duration is not None and bake.temperature is not None
+        assert bake.duration.model_dump() == {"min": 10, "nominal": None, "max": 15, "unit": "minute"}
+        assert bake.temperature.model_dump() == {"min": 350, "nominal": None, "max": 375, "unit": "F"}
+        assert "9×9-inch baking pan" in bake.equipment
+        assert bake.completion_condition == "until golden brown"
+        mix = next(node for node in graph.nodes if node.action == "mix")
+        assert mix.completion_condition == "until smooth"
+        svg = render_svg(graph)
+        assert "baking pan" not in svg and "mixing bowl" not in svg

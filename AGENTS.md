@@ -26,6 +26,10 @@ Read only the documentation relevant to the task.
 ## Core Rules
 
 - Prefer Schema.org Recipe JSON-LD for extraction.
+- Keep extraction deterministic and preserve CanonicalRecipe source text.
+- Infer minimal SemanticRecipe directly from source; never require prose rewriting before inference.
+- Compile graph nodes, labels, products, edges, source lookups, and presentation deterministically.
+- Cache extraction, semantics, and optional AI prose independently.
 - Keep extraction separate from LLM rewriting.
 - Do not use an LLM for deterministic parsing, arithmetic, or unit conversion.
 - All extractors must produce the canonical recipe schema defined in `docs/schema.md`.

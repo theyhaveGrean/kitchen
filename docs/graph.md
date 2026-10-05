@@ -1,31 +1,33 @@
-# Recipe graphs
+# Compiled Recipe Graphs
 
-The comparison pipeline generates a semantic cooking graph after instruction rewriting:
+`RecipeGraph` is a deterministic presentation/API representation of a validated `SemanticRecipe`, not AI output. The old full-graph model prompt and generation function have been removed.
 
-```text
-structured rewritten recipe → GPT-5.6 Luna → RecipeGraph JSON → validation → cache → SVG/UI
-```
+The compiler creates one ingredient node per canonical ingredient, one operation node per semantic material action, one intermediate (`op_001_out`) per consumed material output, and one final dish from the terminal operation. Ingredient IDs remain `ing_001` etc.; operation IDs remain sequential `op_001` etc. The final label is the canonical title. Source instruction text is recovered by step index. Prep actions use deterministic `prep_001` IDs and display separately without invented material links.
 
-Luna receives only the compact recipe fields and, when available, original ingredient lines from the extraction result. It determines ingredient flow, operations, intermediates, dependencies, and references. Application code validates and renders the result. The graph lives in `benchmarks/results/graphs/NAME.json`; product recipe JSON retains the four fields in [schema.md](schema.md).
+## Graph invariants
 
-## Schema
+Nodes have `id`, `type`, `label`, nullable source ingredient fields, and nullable operation fields. Operation nodes require `action`; their label is the capitalized action alone. Ingredient/equipment/time/temperature descriptions never belong in the action label. Non-operation nodes have null cooking metadata and equipment `[]`.
 
-`RecipeGraph` has `nodes`, `edges`, `unresolved_references`, and `warnings`. Node types are `ingredient`, `operation`, `intermediate`, and `final`. Every node has an ID, type, label, and nullable fields for source ingredient ID, amount, unit, preparation, original text, instruction index and text, temperature, duration, and heat level. Edge types are `input` (ingredient or intermediate to operation), `output` (operation to intermediate or final), and `dependency` (operation to operation). An ingredient may feed multiple operations when divided or reused. Operations can run in parallel and combine later.
+Operation duration and temperature objects have all four fields: `min`, `nominal`, `max`, `unit`. Exact values repeat in all three numeric fields; ranges retain endpoints with null nominal; one-sided bounds retain only the stated bound; absent values are all null. Values are finite numeric values, ordered when present. Durations are nonnegative with second/minute/hour/day units; temperatures use F/C. Parameter phrases are copied by the model and parsed/converted by code. Qualitative timing such as overnight remains in semantic source metadata/source instructions when no safe numeric normalization exists.
 
-The validator rejects duplicate IDs, invalid references or edge direction, cycles, unknown or altered source ingredients, missing producers for products, invalid step indices or source instruction text, and a final product unreachable from any ingredient. It reports missing or unused ingredients, components disconnected from the final product, and unresolved references as warnings. On validation failure, the app gives Luna the errors and its prior graph for one correction attempt. It does not invent edges to repair uncertain semantics.
+Equipment and completion conditions remain in JSON but are not displayed in graph cells. Equipment is never a material intermediate. Internal target temperatures remain completion conditions rather than cooking heat.
 
-The graph cache key covers the structured recipe, original ingredient lines, model, prompt, and schema. Viewing a current graph only reads the cache. Changing any of those inputs triggers regeneration. `OPENAI_GRAPH_MODEL` selects the graph model; the default is `gpt-5.6-luna`. `OPENAI_API_KEY` is loaded server-side from the environment or `.env`.
+Input edges connect ingredients/intermediates to operations. Output edges connect operations to their derived material products. Material references determine edges; the model cannot emit edges. The compiler never makes up dependencies to force convergence. Invalid topology fails before compilation. `validate_graph` remains an invariant checker for legacy graph consumers; semantic validation is authoritative for new generation.
 
-The renderer converts the cached semantic graph through a `TRNDisplayGraph` into TRN geometry without another model call. The display graph collapses intermediate products into operation links; intermediate nodes remain in the cached `RecipeGraph`. Ingredients occupy rows on the left and extend to their first use; unmapped ingredients stay as short marked cells. Each operation is packed against its preceding operation on the same material path. Nearby boundaries on parallel branches align by widening the preceding operation, while distant branches retain independent positions. A completed branch extends to its merge when that space is free. Row heights follow wrapped ingredient text, and operation widths fit their labels and metadata. The final dish name appears as the chart title instead of a trailing cell. Global actions such as preheating appear in separate header bars. The SVG uses a grayscale palette and system sans serif font, with no node-link arrows or empty bordered placeholders.
+## Layout and table presentation
 
-## Use
+The existing deterministic display/layout/SVG modules collapse intermediate products into operation links. Ingredients occupy rows, parallel streams pack independently, and merging actions span their material rows. The final title is a header instead of an extra dish cell. Cells show short actions with compact time/temperature/heat details. The grayscale chart uses no node-link arrows or empty bordered placeholders.
 
-The comparison GUI's **Run full pipeline** and **Post-process saved results** actions generate graphs after rewriting. Its **Graph** tab displays the app-rendered SVG, edge list, warnings, and a **Generate graph** button for a selected rewritten recipe.
+A separate material table comes directly from laminar semantic ingredient groups. It uses row spans for merges. Reused/reserved streams or overlapping nonlaminar groups use the general graph instead; this choice never changes cooking semantics.
 
-To generate or inspect one saved recipe without rewriting:
+## Cache and migration
+
+Semantic caches are independently keyed by source content, schema, prompt content/versions, and both model tiers. Compiler or renderer changes reuse validated semantics with zero model calls. Graph JSON files are derived artifacts, accompanied by semantic sidecars for existing GUI/CLI workflows. Old graph-only caches are not authoritative and are regenerated from source semantics. Legacy four-field recipe JSON can still be imported, but ingredient originals reconstructed from parsed fields are marked as reconstructed; prefer preserved canonical sidecars.
 
 ```bash
-python scripts/graph_recipe.py benchmarks/results/rewritten/mb_pancakes.json --source benchmarks/results/latest/mb_pancakes.json --svg benchmarks/results/graphs/mb_pancakes.svg
+python scripts/infer_semantic_recipe.py canonical.json -o conversion.json
+python scripts/build_graph.py conversion.json -o graph.json --svg graph.svg --table recipe.html
+python scripts/graph_recipe.py source-recipe.json --output graph-cache.json --svg graph.svg
 ```
 
-The CLI prints a debug edge list and writes the validated graph cache and optional SVG. A real API evaluation covering ten recipe patterns is in `tests/integration/test_graph_live.py`; run it with `RUN_LIVE_GRAPH_TESTS=1 pytest tests/integration/test_graph_live.py` when network and API access are available. Ordinary tests skip those calls.
+When using the legacy graph command with `--source`, that source is authoritative; rewritten instructions are never used as the semantic input. Graph compilation and validation commands work completely offline with saved canonical/semantic artifacts.

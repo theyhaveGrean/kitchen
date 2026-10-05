@@ -3,11 +3,10 @@
 from __future__ import annotations
 
 import heapq
-import re
 from collections import defaultdict
 from dataclasses import dataclass
 
-from .graph import GraphNode, RecipeGraph
+from .graph import GraphNode, Measurement, RecipeGraph
 
 
 @dataclass(frozen=True)
@@ -124,34 +123,40 @@ def _ingredient_label(node: GraphNode) -> str:
     return f"{amount} {node.label}{preparation}".strip()
 
 
+def _format_measurement(value: Measurement, unit: str) -> str | None:
+    if value.min is not None and value.max is not None:
+        text = f"{value.min:g}" if value.min == value.max else f"{value.min:g}\u2013{value.max:g}"
+    elif value.nominal is not None:
+        text = f"{value.nominal:g}"
+    elif value.min is not None:
+        text = f"\u2265{value.min:g}"
+    elif value.max is not None:
+        text = f"\u2264{value.max:g}"
+    else:
+        return None
+    return f"{text}{unit}"
+
+
 def _operation_details(node: GraphNode) -> tuple[str, ...]:
-    return tuple(value for value in (node.temperature, node.duration, node.heat_level)
-                 if value and value.casefold() not in node.label.casefold())
-
-
-def _split_preheat(node: GraphNode) -> tuple[str, str] | None:
-    match = re.match(r"(?i)^preheat(?: the)? (oven|broiler) and (.+)$", node.label)
-    if match:
-        return f"Preheat {match.group(1)}", match.group(2).capitalize()
-    return None
+    details: list[str] = []
+    if node.temperature is not None and node.temperature.unit:
+        temperature = _format_measurement(node.temperature, f"\u00b0{node.temperature.unit}")
+        if temperature:
+            details.append(temperature)
+    if node.duration is not None and node.duration.unit:
+        unit = {"second": "s", "minute": "min", "hour": "h", "day": "d"}[node.duration.unit]
+        duration = _format_measurement(node.duration, f" {unit}")
+        if duration:
+            details.append(duration)
+    if node.heat_level:
+        details.append(node.heat_level)
+    return tuple(details)
 
 
 def _display_action(node: GraphNode) -> str:
-    split = _split_preheat(node)
-    if split:
-        return split[1]
-    label = node.label.strip()
-    for pattern, action in (
-        (r"(?i)^whisk\b", "Whisk"),
-        (r"(?i)^marinate\b", "Marinate"),
-        (r"(?i)^broil\b", "Broil"),
-        (r"(?i)^toast .*spices\b", "Toast spices"),
-        (r"(?i)^simmer\b", "Simmer"),
-        (r"(?i)^garnish and serve$", "Garnish + serve"),
-    ):
-        if re.search(pattern, label):
-            return action
-    return label
+    if node.action is None:
+        raise ValueError("Cannot display an operation without a cooking action")
+    return node.action.capitalize()
 
 
 def build_trn_display_graph(graph: RecipeGraph) -> TRNDisplayGraph:
@@ -177,7 +182,7 @@ def build_trn_display_graph(graph: RecipeGraph) -> TRNDisplayGraph:
     ) for node in graph.nodes if node.type == "ingredient")
     operations = tuple(DisplayOperation(
         id=node.id, label=_display_action(node), source_label=node.label,
-        step_index=node.step_index, details=() if _split_preheat(node) else _operation_details(node),
+        step_index=node.step_index, details=_operation_details(node),
         ingredient_ids=frozenset(ancestry[node.id]),
         direct_ingredient_ids=tuple(source for source in incoming[node.id]
                                     if nodes[source].type == "ingredient"),
@@ -199,12 +204,11 @@ def build_trn_display_graph(graph: RecipeGraph) -> TRNDisplayGraph:
 
     original = {node.id: index for index, node in enumerate(graph.nodes)}
     header_nodes = [node for node in graph.nodes if node.type == "operation"
-                    and (not ancestry[node.id] or _split_preheat(node))]
+                    and not ancestry[node.id]]
     header_nodes.sort(key=lambda node: (node.step_index or 0, original[node.id]))
     headers = tuple(DisplayHeader(
         id=node.id,
-        label=" ".join(((_split_preheat(node) or (node.label, ""))[0]
-                        if node.id in displayed_ids else node.label, *_operation_details(node))),
+        label=" \u00b7 ".join((_display_action(node), *_operation_details(node))),
         step_index=node.step_index,
         stage_id=node.id if node.id in displayed_ids else None,
         target_ids=tuple(target for target in outgoing[node.id] if target in displayed_ids),

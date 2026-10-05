@@ -2,13 +2,86 @@
 
 from __future__ import annotations
 
+import math
+import re
 from collections import defaultdict, deque
-from typing import Any, Literal
+from typing import Any, Literal, Self
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt, ValidationError, model_validator
 
 NodeType = Literal["ingredient", "operation", "intermediate", "final"]
 EdgeType = Literal["input", "output", "dependency"]
+# Keep the action vocabulary open; validate its shape and reject metadata below.
+CookingAction = str
+_METADATA_ACTIONS = {
+    "oven", "pan", "bowl", "container", "blender", "mixer", "equipment", "temperature",
+    "duration", "time", "minute", "minutes", "hour", "hours", "second", "seconds",
+    "smooth", "tender", "golden", "ready", "done", "cooked", "prepared", "hot", "cold",
+}
+_EQUIPMENT_LABEL = re.compile(
+    r"^(?:(?:prepared|greased|heated|preheated|a|the)\s+)*"
+    r"(?:\d+(?:[×x-]\d+)?[ -]inch\s+)?"
+    r"(?:oven|broiler|(?:baking |mixing )?(?:pan|bowl)|Dutch oven|stand mixer|blender|"
+    r"pressure cooker|air fryer|container|equipment|temperature|duration|time|"
+    r"golden brown|tender|smooth)$", re.I,
+)
+
+
+def is_material_label(label: str) -> bool:
+    text = label.strip()
+    return (
+        bool(text)
+        and _EQUIPMENT_LABEL.fullmatch(text) is None
+        and re.fullmatch(
+            r"(?:until\s+)?(?:golden brown|tender|smooth|doubled in size|ready|done|hot|cold)",
+            text, re.I,
+        ) is None
+        and re.fullmatch(
+            r"\d+(?:\.\d+)?(?:\s*(?:[-–—]|to)\s*\d+(?:\.\d+)?)?\s*"
+            r"(?:°?\s*[FC]|degrees?(?:\s*[FC])?|seconds?|minutes?|hours?|days?)",
+            text, re.I,
+        ) is None
+    )
+
+
+class Measurement(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    min: StrictFloat | None
+    nominal: StrictFloat | None
+    max: StrictFloat | None
+
+    @model_validator(mode="after")
+    def check_bounds(self) -> Self:
+        values = [value for value in (self.min, self.nominal, self.max) if value is not None]
+        if any(not math.isfinite(value) for value in values):
+            raise ValueError("Measurement values must be finite")
+        if values != sorted(values):
+            raise ValueError("Measurement requires min <= nominal <= max")
+        return self
+
+
+class Duration(Measurement):
+    unit: Literal["second", "minute", "hour", "day"] | None
+
+    @model_validator(mode="after")
+    def check_duration(self) -> Self:
+        values = [value for value in (self.min, self.nominal, self.max) if value is not None]
+        if any(value < 0 for value in values):
+            raise ValueError("Duration cannot be negative")
+        if values and self.unit is None:
+            raise ValueError("Duration values require a unit")
+        return self
+
+
+class Temperature(Measurement):
+    unit: Literal["F", "C"] | None
+
+    @model_validator(mode="after")
+    def check_temperature(self) -> Self:
+        if any(value is not None for value in (self.min, self.nominal, self.max)) and self.unit is None:
+            raise ValueError("Temperature values require a unit")
+        return self
 
 
 class GraphNode(BaseModel):
@@ -22,11 +95,45 @@ class GraphNode(BaseModel):
     unit: str | None
     preparation: str | None
     original_text: str | None
-    step_index: int | None
+    step_index: StrictInt | None
     source_instruction: str | None
-    temperature: str | None
-    duration: str | None
+    action: CookingAction | None
+    temperature: Temperature | None
+    duration: Duration | None
+    equipment: list[str]
+    completion_condition: str | None
     heat_level: str | None
+
+    @model_validator(mode="after")
+    def check_operation_metadata(self) -> Self:
+        if self.type in {"intermediate", "final"} and not is_material_label(self.label):
+            raise ValueError("Product nodes must represent cooking material, not metadata or equipment")
+        if self.type == "operation":
+            if (self.action is None or self.action != self.action.casefold()
+                    or not self.action.strip() or self.action.split()[0] in _METADATA_ACTIONS
+                    or len(self.action.split()) > 4
+                    or not all(word.isalpha() for word in self.action.replace("-", " ").split())):
+                raise ValueError("Operation requires a meaningful cooking action")
+            if self.label != self.action.capitalize():
+                raise ValueError("Operation label must be the capitalized action alone")
+            if self.duration is None or self.temperature is None:
+                raise ValueError("Operations require structured duration and temperature objects")
+            if any(not item.strip() or item != item.strip() for item in self.equipment):
+                raise ValueError("Equipment entries must be non-empty and trimmed")
+            if len({item.casefold() for item in self.equipment}) != len(self.equipment):
+                raise ValueError("Duplicate equipment")
+            if self.completion_condition is not None and not self.completion_condition.strip():
+                raise ValueError("Completion condition must be non-empty or null")
+        elif any(value is not None for value in (
+            self.action, self.step_index, self.source_instruction, self.temperature,
+            self.duration, self.heat_level, self.completion_condition,
+        )) or self.equipment:
+            raise ValueError("Only operations may have cooking metadata")
+        if self.type != "ingredient" and any(value is not None for value in (
+            self.ingredient_id, self.quantity, self.unit, self.preparation, self.original_text,
+        )):
+            raise ValueError("Only ingredients may have source ingredient metadata")
+        return self
 
 
 class GraphEdge(BaseModel):
@@ -56,6 +163,8 @@ def validate_graph(
     graph: RecipeGraph, recipe: dict[str, Any], original_ingredients: list[str] | None = None
 ) -> list[str]:
     """Reject structural mistakes; report uncertain or unused material as warnings."""
+    from .graph_measurements import duration_supported, temperature_supported
+
     errors: list[str] = []
     warnings = list(graph.warnings)
     ingredients = recipe.get("ingredients")
@@ -110,6 +219,12 @@ def validate_graph(
     if len(final_nodes) != 1:
         errors.append("Graph must have exactly one final product")
     for node in graph.nodes:
+        # Recheck models even when callers mutated an already parsed graph.
+        try:
+            GraphNode.model_validate(node.model_dump(warnings=False))
+        except ValidationError as exc:
+            errors.append(f"Invalid node metadata: {node.id}: {exc}")
+            continue
         if node.type == "ingredient":
             ingredient = expected.get(node.ingredient_id or "")
             if ingredient is None or not isinstance(ingredient, dict):
@@ -142,6 +257,23 @@ def validate_graph(
                 errors.append(f"Operation has invalid step index: {node.id}")
             elif node.source_instruction != steps[node.step_index - 1]:
                 errors.append(f"Operation source instruction differs from recipe: {node.id}")
+            else:
+                source = steps[node.step_index - 1]
+                if node.duration is not None and not duration_supported(node.duration, source):
+                    errors.append(f"Duration is unsupported by source instruction: {node.id}")
+                # Preheating may supply a later operation's explicitly stated heat.
+                temperature_source = "\n".join(
+                    [source, *(step for step in steps[:node.step_index - 1] if "preheat" in step.casefold())]
+                )
+                if node.temperature is not None and not temperature_supported(node.temperature, temperature_source):
+                    errors.append(f"Temperature is unsupported by source instructions: {node.id}")
+                if node.completion_condition and node.completion_condition.casefold() not in source.casefold():
+                    errors.append(f"Completion condition differs from source instruction: {node.id}")
+                equipment_source = " ".join(steps).casefold()
+                inferred = {"bake": {"oven"}, "mix": {"bowl", "mixing bowl", "container"}}.get(node.action or "", set())
+                for equipment in node.equipment:
+                    if equipment.casefold() not in equipment_source and equipment.casefold() not in inferred:
+                        errors.append(f"Equipment is unsupported by source instructions: {node.id}: {equipment}")
 
     for ingredient_id in expected.keys() - seen_ingredients:
         warnings.append(f"Missing source ingredient {ingredient_id}")

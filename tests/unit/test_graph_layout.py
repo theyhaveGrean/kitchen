@@ -8,12 +8,15 @@ from recipe_scraper.graph_render import render_svg
 
 def node(node_id: str, kind: str, label: str, step: int | None = None) -> GraphNode:
     return GraphNode.model_validate({
-        "id": node_id, "type": kind, "label": label,
+        "id": node_id, "type": kind, "label": label.split()[0].capitalize() if kind == "operation" else label,
         "ingredient_id": node_id if kind == "ingredient" else None,
         "quantity": "1" if kind == "ingredient" else None,
         "unit": None, "preparation": None, "original_text": None,
         "step_index": step, "source_instruction": None,
-        "temperature": None, "duration": None, "heat_level": None,
+        "temperature": {"min": None, "nominal": None, "max": None, "unit": None} if kind == "operation" else None,
+        "duration": {"min": None, "nominal": None, "max": None, "unit": None} if kind == "operation" else None,
+        "action": label.split()[0].lower() if kind == "operation" else None,
+        "equipment": [], "completion_condition": None, "heat_level": None,
     })
 
 
@@ -85,7 +88,7 @@ def test_trn_layout_uses_ingredient_rows_and_rectangular_merges() -> None:
     assert layout.final.width < 112
     svg = render_svg(graph)
     assert "<path" not in svg and "<marker" not in svg
-    assert "red sauce" not in svg and "Preheat oven" in svg
+    assert "red sauce" not in svg and "Preheat" in svg
 
 
 def test_chicken_tikka_branches_pack_without_blank_cells() -> None:
@@ -146,8 +149,8 @@ def test_overlapping_side_branch_uses_unbordered_material_continuation() -> None
         ("c", "ingredient", "c", None),
         ("upper", "operation", "Whisk", 1),
         ("upper_product", "intermediate", "upper mixture", None),
-        ("lower", "operation", "Prepare pan", 2),
-        ("lower_product", "intermediate", "prepared pan", None),
+        ("lower", "operation", "Grease", 2),
+        ("lower_product", "intermediate", "greased mixture", None),
         ("merge", "operation", "Combine", 3),
         ("final", "final", "finished dish", None),
     ]
@@ -206,33 +209,39 @@ def test_unmapped_ingredient_does_not_flow_into_final() -> None:
     assert "not mapped" in lane.label
 
 
-def test_preheat_and_prepare_pan_uses_header_and_process_stage() -> None:
+def test_preheat_and_grease_are_separate_actions_without_equipment_cells() -> None:
     graph = branch_graph()
     preheat = next(item for item in graph.nodes if item.id == "preheat")
-    preheat.label = "Preheat oven and prepare pan"
-    graph.nodes.extend((node("oil", "ingredient", "oil"), node("pan", "intermediate", "prepared pan")))
+    preheat.equipment = ["oven"]
+    grease = node("grease", "operation", "Grease", 4)
+    grease.equipment = ["9x9-inch baking pan"]
+    graph.nodes.extend((node("oil", "ingredient", "oil"), grease))
     graph.edges.extend((
-        GraphEdge(source="oil", target="preheat", type="input"),
-        GraphEdge(source="preheat", target="pan", type="output"),
-        GraphEdge(source="pan", target="bake", type="input"),
+        GraphEdge(source="oil", target="grease", type="input"),
+        GraphEdge(source="grease", target="bake", type="dependency"),
     ))
     layout = build_trn_layout(build_trn_display_graph(graph))
-    stage = next(item for item in layout.operations if item.id == "preheat")
+    stage = next(item for item in layout.operations if item.id == "grease")
     lane = next(item for item in layout.ingredients if item.id == "oil")
-    assert stage.label == "Prepare pan"
+    assert stage.label == "Grease"
     assert lane.x + lane.width == stage.x
-    assert any(region.label.startswith("Preheat oven") for region in layout.global_operations)
+    assert any(region.label == "Preheat" for region in layout.global_operations)
+    svg = render_svg(graph)
+    assert "oven" not in svg and "baking pan" not in svg
 
 
 def test_short_cooking_actions_make_narrow_columns() -> None:
     graph = branch_graph()
     for item in graph.nodes:
         if item.id == "brown":
-            item.label = "Whisk marinade ingredients"
+            item.action = "whisk"
+            item.label = "Whisk"
         elif item.id == "simmer":
-            item.label = "Marinate chicken"
+            item.action = "marinate"
+            item.label = "Marinate"
         elif item.id == "boil":
-            item.label = "Broil chicken"
+            item.action = "broil"
+            item.label = "Broil"
     display = build_trn_display_graph(graph)
     layout = build_trn_layout(display)
     stages = {item.id: item for item in layout.operations}

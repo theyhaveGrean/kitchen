@@ -98,9 +98,9 @@ def titles_compatible(expected: str, actual: str) -> bool:
     return bool(expected_tokens) and set(expected_tokens).issubset(set(actual_tokens))
 
 def meets_expectations(row: dict[str, str], payload: dict[str, Any]) -> tuple[bool, str]:
-    ingredients = payload.get("ingredients") if isinstance(payload.get("ingredients"), list) else []
-    steps = payload.get("recipe") if isinstance(payload.get("recipe"), list) else []
-    debug = payload.get("_debug") if isinstance(payload.get("_debug"), dict) else {}
+    ingredients: list[Any] = payload.get("ingredients") or []
+    steps: list[Any] = payload.get("recipe") or []
+    debug: dict[str, Any] = payload.get("_debug") or {}
 
     min_ingredients = int(row.get("min_ingredients") or 0)
     min_steps = int(row.get("min_instructions") or 0)
@@ -115,7 +115,7 @@ def meets_expectations(row: dict[str, str], payload: dict[str, Any]) -> tuple[bo
         return False, f"expected title compatible with {expected_title!r}, got {actual_title!r}"
 
     methods = allowed_methods(row)
-    method = str(debug.get("extraction_method") or "")
+    method = str(debug.get("parser_method") or debug.get("extraction_method") or "")
     if methods and "any" not in methods and "none" not in methods and method not in methods:
         return False, f"expected method {'|'.join(sorted(methods))}, got {method or '<none>'}"
     return True, ""
@@ -137,7 +137,7 @@ def run_one(
             source_path = csv_relative if csv_relative.exists() else repo_relative
         source = str(source_path)
         if not source_path.exists():
-            result = {
+            missing_result: dict[str, Any] = {
                 "id": row.get("id", ""), "site": row.get("site", ""),
                 "recipe_name": row.get("recipe_name", ""), "source": row.get("source", ""),
                 "expected_outcome": row.get("expected_outcome", "pass"), "status": "failed",
@@ -145,7 +145,7 @@ def run_one(
                 "instruction_count": "", "title_extracted": "", "elapsed_seconds": "0.000",
                 "json_file": "", "error": f"Fixture not found: {source_path}",
             }
-            return result
+            return missing_result
 
     cmd = [python_executable, "-m", "recipe_scraper", source, "--timeout", str(timeout), "--debug-metadata"]
     if is_fixture:
@@ -200,18 +200,24 @@ def run_one(
         return result
 
     ok, expectation_error = meets_expectations(row, payload)
-    debug = payload.get("_debug") if isinstance(payload.get("_debug"), dict) else {}
-    ingredients = payload.get("ingredients") if isinstance(payload.get("ingredients"), list) else []
-    steps = payload.get("recipe") if isinstance(payload.get("recipe"), list) else []
+    debug: dict[str, Any] = payload.get("_debug") or {}
+    ingredients: list[Any] = payload.get("ingredients") or []
+    steps: list[Any] = payload.get("recipe") or []
     result.update({
         "status": "success" if ok else "failed",
         "extraction_method": debug.get("extraction_method", ""),
+        "browser_fallback_used": debug.get("browser_fallback_used", False),
         "ingredient_count": len(ingredients), "instruction_count": len(steps),
         "title_extracted": payload.get("title") or "", "error": expectation_error,
     })
     if ok:
         output_json.write_text(json.dumps(public_payload(payload), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         result["json_file"] = str(output_json)
+        if isinstance(payload.get("_canonical"), dict):
+            canonical_path = output_dir.parent / "canonical" / output_json.name
+            canonical_path.parent.mkdir(parents=True, exist_ok=True)
+            canonical_path.write_text(json.dumps(payload["_canonical"], ensure_ascii=False, indent=2), encoding="utf-8")
+            result["canonical_file"] = str(canonical_path)
     return result
 
 
@@ -219,7 +225,7 @@ def write_summary(path: Path, results: list[dict[str, Any]]) -> None:
     fields = [
         "id", "site", "recipe_name", "source", "expected_outcome", "status",
         "exit_code", "extraction_method", "ingredient_count", "instruction_count",
-        "title_extracted", "elapsed_seconds", "json_file", "error",
+        "title_extracted", "elapsed_seconds", "json_file", "canonical_file", "browser_fallback_used", "error",
     ]
     with path.open("w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
@@ -235,6 +241,7 @@ def main() -> int:
     parser.add_argument("--timeout", type=int, default=60, help="Per-page Scrapling timeout in seconds; 0 disables it")
     parser.add_argument("--python", default=sys.executable)
     parser.add_argument("--stop-on-error", action="store_true")
+    parser.add_argument("--fixtures-only", action="store_true", help="Run saved HTML rows without network")
     parser.add_argument("--start", type=int, default=1, help="1-based first dataset row to run")
     parser.add_argument("--limit", type=int, help="Maximum number of dataset rows to run")
     args = parser.parse_args()
@@ -252,6 +259,8 @@ def main() -> int:
     except Exception as exc:
         print(f"Could not read test CSV: {exc}", file=sys.stderr)
         return 2
+    if args.fixtures_only:
+        rows = [row for row in rows if row.get("test_kind", "").casefold() == "fixture"]
     rows = rows[args.start - 1:]
     if args.limit is not None:
         rows = rows[:args.limit]

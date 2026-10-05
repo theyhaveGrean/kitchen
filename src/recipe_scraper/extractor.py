@@ -9,16 +9,18 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import math
 import re
 import sys
+import time
 from collections.abc import Iterable
 from pathlib import Path
 from typing import Any
 from urllib.parse import urljoin
 
-from .fetch.web import fetch_with_scrapling
+from .cache import page_canonical_url
+from .fetch.web import fetch_static, fetch_with_scrapling
 from .models import Recipe
-from .normalize import recipe_to_dict
 from .validation import looks_like_recipe_roundup
 
 # Recipe text frequently contains Unicode fractions (⅓, ½), degree signs, curly
@@ -32,14 +34,18 @@ if hasattr(sys.stderr, "reconfigure"):
 
 from bs4 import BeautifulSoup, Tag
 
+ScraplingSelector: Any
 try:
-    from scrapling.parser import Selector as ScraplingSelector  # type: ignore
-except Exception:
+    from scrapling.parser import Selector as _ScraplingSelector
+    ScraplingSelector = _ScraplingSelector
+except ImportError:
     ScraplingSelector = None
 
+get_base_url: Any
 try:
     import extruct  # type: ignore
-    from w3lib.html import get_base_url  # type: ignore
+    from w3lib.html import get_base_url as _get_base_url
+    get_base_url = _get_base_url
 except Exception:
     extruct = None
     get_base_url = None
@@ -113,8 +119,7 @@ def scalar_text(value: Any) -> str | None:
     if isinstance(value, (int, float)):
         return str(value)
     if isinstance(value, list):
-        vals = [scalar_text(v) for v in value]
-        vals = [v for v in vals if v]
+        vals = [text for v in value if (text := scalar_text(v))]
         return ", ".join(vals) if vals else None
     if isinstance(value, dict):
         for key in ("name", "text", "value", "@value"):
@@ -291,6 +296,7 @@ def instruction_tree(value: Any, current_section: str | None = None):
     """
     Yield (section_name, step_text) while preserving HowToSection grouping.
     """
+    txt: str | None
     if value is None:
         return
 
@@ -447,7 +453,7 @@ def score_recipe(r: Recipe) -> float:
 def extract_jsonld(soup: BeautifulSoup, source_url: str | None) -> list[Recipe]:
     candidates: list[Recipe] = []
     for script in soup.find_all("script"):
-        script_type = (script.get("type") or "").lower()
+        script_type = str(script.get("type") or "").lower()
         if "ld+json" not in script_type:
             continue
         raw = script.string if script.string is not None else script.get_text()
@@ -494,33 +500,33 @@ def prop_value(node: Tag) -> str:
 
 def extract_itemprops(soup: BeautifulSoup, source_url: str | None) -> list[Recipe]:
     roots = []
-    for tag in soup.find_all(attrs={"itemtype": True}):
+    for tag in soup.find_all(None, attrs={"itemtype": True}):
         itemtype = " ".join(as_list(tag.get("itemtype")))
         if "schema.org/Recipe" in itemtype or itemtype.rstrip("/").endswith("/Recipe"):
             roots.append(tag)
 
     if not roots:
         # Some pages use itemprop fields without a Recipe root.
-        if soup.find(attrs={"itemprop": re.compile(r"recipeIngredient|ingredients", re.I)}):
+        if soup.find(None, attrs={"itemprop": re.compile(r"recipeIngredient|ingredients", re.I)}):
             roots = [soup]
 
     out: list[Recipe] = []
     for root in roots[:10]:
         def first_prop(*names: str) -> str | None:
             for name in names:
-                node = root.find(attrs={"itemprop": name})
+                node = root.find(None, attrs={"itemprop": name})
                 if node:
                     v = prop_value(node)
                     if v:
                         return v
             return None
 
-        ingredient_nodes = root.find_all(
+        ingredient_nodes = root.find_all(None,
             attrs={"itemprop": re.compile(r"^(recipeIngredient|ingredients)$", re.I)}
         )
         ingredients = unique_nonempty(prop_value(x) for x in ingredient_nodes)
 
-        instruction_nodes = root.find_all(
+        instruction_nodes = root.find_all(None,
             attrs={"itemprop": re.compile(r"^(recipeInstructions|instructions)$", re.I)}
         )
         steps: list[str] = []
@@ -567,7 +573,7 @@ def heading_matches(text: str, options: tuple[str, ...]) -> bool:
     return any(t == x or t.startswith(x + " ") for x in options)
 
 
-def find_heading(soup: BeautifulSoup, options: tuple[str, ...]) -> Tag | None:
+def find_heading(soup: Tag, options: tuple[str, ...]) -> Tag | None:
     candidates: list[tuple[int, int, Tag]] = []
     for tag in soup.find_all(["h1", "h2", "h3", "h4", "h5", "h6", "strong", "b"]):
         txt = visible_text(tag)
@@ -639,7 +645,7 @@ def find_recipe_container(soup: BeautifulSoup) -> Tag | None:
     candidates: list[tuple[int, Tag]] = []
     for tag in soup.find_all(["article", "section", "div", "main"]):
         marker = " ".join([
-            tag.get("id") or "",
+            str(tag.get("id") or ""),
             " ".join(tag.get("class") or []),
         ])
         if patterns.search(marker):
@@ -669,8 +675,8 @@ def heuristic_sections_from_container(container: Tag) -> tuple[list[str], list[s
 
     ing_nodes = container.find_all(
         lambda t: isinstance(t, Tag)
-        and (
-            ing_re.search(t.get("id") or "")
+        and bool(
+            ing_re.search(str(t.get("id") or ""))
             or ing_re.search(" ".join(t.get("class") or []))
         )
     )
@@ -682,8 +688,8 @@ def heuristic_sections_from_container(container: Tag) -> tuple[list[str], list[s
 
     inst_nodes = container.find_all(
         lambda t: isinstance(t, Tag)
-        and (
-            inst_re.search(t.get("id") or "")
+        and bool(
+            inst_re.search(str(t.get("id") or ""))
             or inst_re.search(" ".join(t.get("class") or []))
         )
     )
@@ -869,6 +875,11 @@ def extract_from_html(html_text: str, source_url: str | None) -> Recipe | None:
     candidates: list[Recipe] = []
 
     candidates.extend(extract_jsonld(soup, source_url))
+    if looks_like_recipe_roundup(soup, candidates, source_url):
+        return None
+    complete = [recipe for recipe in candidates if recipe.title and recipe.ingredients and recipe.instructions]
+    if complete:
+        return choose_best(complete)
     candidates.extend(extract_extruct(html_text, source_url))
     candidates.extend(extract_itemprops(soup, source_url))
 
@@ -899,21 +910,44 @@ def extract_recipe(
     auto_render_js: bool = True,
     timeout: int = DEFAULT_TIMEOUT,
 ) -> Recipe:
-    """Fetch and extract one recipe using Scrapling for the entire network path.
-
-    ``render_js`` and ``auto_render_js`` are retained as compatibility arguments
-    for the existing batch runner, but Scrapling's StealthyFetcher is always used
-    and always provides browser/JavaScript rendering.
-    """
-    html_text, final_url = fetch_with_scrapling(url, timeout=timeout)
+    """Static extraction first; browser fallback only for missing/broken content."""
+    started = time.perf_counter()
+    fetcher = fetch_with_scrapling if render_js else fetch_static
+    html_text, final_url = fetcher(url, timeout=timeout)
+    fetch_ms = (time.perf_counter() - started) * 1000
+    extraction_start = time.perf_counter()
     recipe = extract_from_html(html_text, final_url)
-
-    if recipe is None:
+    extract_ms = (time.perf_counter() - extraction_start) * 1000
+    browser_used = render_js
+    browser_ms = fetch_ms if render_js else 0.0
+    # Static collections/access challenges are rejected, not worked around.
+    soup = BeautifulSoup(html_text, "lxml")
+    challenge = bool(re.search(r"captcha|verify you are human|access denied", soup.get_text(" "), re.I))
+    roundup = looks_like_recipe_roundup(soup, extract_jsonld(soup, final_url), final_url)
+    if challenge and recipe is None:
+        raise ValueError("FETCH_BLOCKED: source requires human verification")
+    if roundup:
+        raise ValueError("VALIDATION_FAILED: recipe collection")
+    if not (recipe and recipe.title and recipe.ingredients and recipe.instructions) and auto_render_js and not render_js:
+        browser_start = time.perf_counter()
+        remaining = timeout - (browser_start - started) if timeout > 0 else 0
+        if timeout > 0 and remaining <= 0:
+            raise TimeoutError("FETCH_TIMEOUT: extraction budget exhausted before browser fallback")
+        browser_timeout = max(1, math.ceil(remaining)) if timeout > 0 else 0
+        html_text, final_url = fetch_with_scrapling(url, timeout=browser_timeout)
+        recipe = extract_from_html(html_text, final_url)
+        browser_ms = (time.perf_counter() - browser_start) * 1000
+        browser_used = True
+    if recipe is None or not recipe.title or not recipe.ingredients or not recipe.instructions:
         raise ValueError("No recipe-like content could be extracted from this page.")
 
     recipe.source_url = final_url
     recipe.confidence = score_recipe(recipe)
-    recipe.warnings.append("Page fetched with Scrapling StealthyFetcher.")
+    recipe.canonical_url = page_canonical_url(html_text, final_url)
+    recipe.browser_fallback_used = browser_used
+    method = "jsonld" if recipe.extraction_method == "json-ld" else "html"
+    recipe.metadata.update(extraction_method=f"{method}_{'browser' if browser_used else 'static'}",
+                           timings={"fetch_ms": fetch_ms, "extract_ms": extract_ms, "browser_fallback_ms": browser_ms})
 
     if not recipe.ingredients:
         recipe.warnings.append("No ingredient list was found.")
@@ -939,12 +973,12 @@ def main() -> int:
     parser.add_argument(
         "--render-js",
         action="store_true",
-        help="Compatibility flag; Scrapling browser rendering is always used",
+        help="Force browser extraction instead of static HTTP",
     )
     parser.add_argument(
         "--no-auto-render-js",
         action="store_true",
-        help="Compatibility flag; Scrapling remains the only network fetcher",
+        help="Disable browser fallback when static extraction fails",
     )
     parser.add_argument(
         "--html-file",
@@ -953,7 +987,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--timeout", type=int, default=DEFAULT_TIMEOUT,
-        help="Scrapling browser timeout in seconds; 0 disables it (default: 0)",
+        help="Per-fetch timeout in seconds (default: 60); 0 disables it",
     )
     parser.add_argument(
         "--compact",
@@ -965,6 +999,7 @@ def main() -> int:
         action="store_true",
         help=argparse.SUPPRESS,
     )
+    parser.add_argument("--canonical", action="store_true", help="Emit source-preserving CanonicalRecipe JSON")
     args = parser.parse_args()
 
     try:
@@ -976,14 +1011,22 @@ def main() -> int:
         else:
             if not re.match(r"^https?://", args.source, re.I):
                 raise ValueError("SOURCE must be an http(s) URL unless --html-file is used.")
-            recipe = extract_recipe(
+            from .conversion import extract_canonical
+            canonical = extract_canonical(
                 args.source,
                 render_js=args.render_js,
                 auto_render_js=not args.no_auto_render_js,
                 timeout=args.timeout,
             )
 
-        payload = recipe_to_dict(recipe, include_debug=args.debug_metadata)
+        from .canonical import canonicalize
+        if args.html_file:
+            assert recipe is not None
+            canonical = canonicalize(recipe)
+        payload = canonical.model_dump() if args.canonical else canonical.product_json()
+        if args.debug_metadata and not args.canonical:
+            payload["_debug"] = {"extraction_method": canonical.metadata.get("parser_method"), **canonical.metadata}
+            payload["_canonical"] = canonical.model_dump()
         text = json.dumps(
             payload,
             ensure_ascii=False,

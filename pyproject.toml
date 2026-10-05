@@ -26,6 +26,7 @@ all = ["recipe-scraper[fetch,rewrite,gui,dev]"]
 
 [project.scripts]
 recipe-scraper = "recipe_scraper.extractor:main"
+recipe-pipeline = "recipe_scraper.stage_cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

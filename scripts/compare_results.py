@@ -27,6 +27,7 @@ from PyQt6.QtWidgets import (
     QSpinBox,
     QSplitter,
     QTabWidget,
+    QTextBrowser,
     QVBoxLayout,
     QWidget,
 )
@@ -35,16 +36,21 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 LATEST_DIR = PROJECT_ROOT / "benchmarks" / "results" / "latest"
 REWRITTEN_DIR = PROJECT_ROOT / "benchmarks" / "results" / "rewritten"
 BENCHMARK_SCRIPT = PROJECT_ROOT / "benchmarks" / "run.py"
-REWRITE_SCRIPT = PROJECT_ROOT / "scripts" / "test_openai.py"
+REWRITE_SCRIPT = PROJECT_ROOT / "scripts" / "postprocess_saved.py"
+CANONICAL_DIR = PROJECT_ROOT / "benchmarks/results/canonical"
+SEMANTIC_DIR = PROJECT_ROOT / "benchmarks/results/semantic"
 BENCHMARK_SUMMARY = LATEST_DIR / "batch_results.csv"
 PROGRESS_LINE = re.compile(r"^\[(\d+)/(\d+)\]\s+(.+)$")
 GRAPH_SCRIPT = PROJECT_ROOT / "scripts" / "graph_recipe.py"
 GRAPH_DIR = PROJECT_ROOT / "benchmarks" / "results" / "graphs"
 
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
-from recipe_scraper.graph_pipeline import load_cached_graph, source_ingredient_lines  # noqa: E402
+from recipe_scraper.canonical import canonical_from_json  # noqa: E402
+from recipe_scraper.graph_pipeline import load_cached_graph  # noqa: E402
 from recipe_scraper.graph_render import graph_debug_text, render_svg  # noqa: E402
 from recipe_scraper.llm import graph_model  # noqa: E402
+from recipe_scraper.presentation import render_table  # noqa: E402
+from recipe_scraper.semantic_pipeline import load_semantic  # noqa: E402
 
 
 def load_recipe(path: Path | None) -> dict[str, Any] | str:
@@ -153,7 +159,7 @@ class ResultsWindow(QMainWindow):
         self.source_label.setObjectName("source")
         self.latest_heading = QLabel("LATEST")
         self.latest_heading.setObjectName("columnHeading")
-        self.rewritten_heading = QLabel("REWRITTEN")
+        self.rewritten_heading = QLabel("PRESENTATION")
         self.rewritten_heading.setObjectName("columnHeading")
         self.latest_ingredients = QWidget()
         self.latest_steps = QWidget()
@@ -162,7 +168,7 @@ class ResultsWindow(QMainWindow):
 
         latest_panel = self.make_recipe_column("Latest", self.latest_heading, self.latest_ingredients, self.latest_steps)
         rewritten_panel = self.make_recipe_column(
-            "Rewritten", self.rewritten_heading, self.rewritten_ingredients, self.rewritten_steps
+            "Presentation", self.rewritten_heading, self.rewritten_ingredients, self.rewritten_steps
         )
 
         header = QVBoxLayout()
@@ -173,7 +179,7 @@ class ResultsWindow(QMainWindow):
         self.run_button = QPushButton("Run full pipeline")
         self.run_button.clicked.connect(self.run_benchmark)
         self.postprocess_button = QPushButton("Post-process saved results")
-        self.postprocess_button.setToolTip("Normalize and rewrite JSON files already in the latest results directory")
+        self.postprocess_button.setToolTip("Infer semantics from saved source recipes and compile their presentation")
         self.postprocess_button.clicked.connect(self.run_postprocess)
         start_label = QLabel("Start at")
         self.start_row = QSpinBox()
@@ -216,11 +222,11 @@ class ResultsWindow(QMainWindow):
         self._stage = "idle"
         self._extraction_failures = 0
         self._summary_written = False
-        self._rewrite_status: dict[str, str] = {}
+        self._semantic_status: dict[str, str] = {}
 
         self.graph_button = QPushButton("Generate graph")
         self.graph_button.clicked.connect(self.generate_selected_graph)
-        self.graph_status = QLabel("Select a rewritten recipe")
+        self.graph_status = QLabel("Select a source recipe")
         self.graph_svg = QSvgWidget()
         self.graph_scroll = QScrollArea()
         self.graph_scroll.setWidget(self.graph_svg)
@@ -233,7 +239,12 @@ class ResultsWindow(QMainWindow):
         graph_row.addWidget(self.graph_status, 1)
         graph_layout.addLayout(graph_row)
         graph_layout.addWidget(self.graph_scroll, 1)
+        self.graph_debug.setVisible(False)
+        debug_button = QPushButton("Show stage details")
+        debug_button.clicked.connect(lambda: self.graph_debug.setVisible(not self.graph_debug.isVisible()))
+        graph_layout.addWidget(debug_button)
         graph_layout.addWidget(self.graph_debug, 0)
+        self.table_view = QTextBrowser()
         self.graph_process = QProcess(self)
         self.graph_process.setWorkingDirectory(str(PROJECT_ROOT))
         self.graph_process.finished.connect(self.graph_finished)
@@ -249,6 +260,7 @@ class ResultsWindow(QMainWindow):
         tabs = QTabWidget()
         tabs.addTab(results_splitter, "Recipe")
         tabs.addTab(graph_panel, "Graph")
+        tabs.addTab(self.table_view, "Material table")
         main_splitter.addWidget(tabs)
         main_splitter.setStretchFactor(0, 0)
         main_splitter.setStretchFactor(1, 1)
@@ -302,17 +314,19 @@ class ResultsWindow(QMainWindow):
         for filename in filenames:
             latest_path = latest_files.get(filename)
             rewritten_path = rewritten_files.get(filename)
-            rewrite_status = self._rewrite_status.get(filename)
+            rewrite_status = self._semantic_status.get(filename)
             if rewrite_status and rewrite_status != "success":
                 rewritten_path = None
             self.paths[filename] = (latest_path, rewritten_path)
             suffix = (
-                f"  [rewrite {rewrite_status}]" if rewrite_status and rewrite_status != "success"
+                f"  [semantic {rewrite_status}]" if rewrite_status and rewrite_status != "success"
                 else "" if latest_path and rewritten_path
-                else "  [latest only]" if latest_path else "  [rewritten only]"
+                else "  [latest only]" if latest_path else "  [presentation only]"
             )
             self.recipe_list.addItem(Path(filename).stem + suffix)
-            self.recipe_list.item(self.recipe_list.count() - 1).setData(Qt.ItemDataRole.UserRole, filename)
+            item = self.recipe_list.item(self.recipe_list.count() - 1)
+            if item is not None:
+                item.setData(Qt.ItemDataRole.UserRole, filename)
 
         if not filenames:
             self.recipe_list.addItem("No JSON results found")
@@ -333,7 +347,7 @@ class ResultsWindow(QMainWindow):
         self._total = 0
         self._extraction_failures = 0
         self._summary_written = False
-        self._rewrite_status.clear()
+        self._semantic_status.clear()
         self.benchmark_log.clear()
         self.progress_bar.setRange(0, 0)
         self.status_label.setText("Starting extraction benchmark...")
@@ -353,20 +367,20 @@ class ResultsWindow(QMainWindow):
         """Run normalization and rewriting over existing latest result files."""
         if self.benchmark_process.state() != QProcess.ProcessState.NotRunning:
             return
-        if not self.rewrite_environment_ready():
+        if not self.semantic_environment_ready():
             return
         files = sorted(LATEST_DIR.glob("*.json"))
         if not files:
             self.status_label.setText(f"No saved recipe JSON files in {LATEST_DIR}")
             self.benchmark_log.appendPlainText(f"No saved recipe JSON files in {LATEST_DIR}")
             return
-        self._stage = "rewrite"
+        self._stage = "semantic"
         self._stdout_buffer = ""
         self._completed = 0
         self._failures = 0
         self._total = len(files)
         self._extraction_failures = 0
-        self._rewrite_status = {path.name: "pending" for path in files}
+        self._semantic_status = {path.name: "pending" for path in files}
         self.benchmark_log.clear()
         self.progress_bar.setRange(0, self._total)
         self.progress_bar.setValue(0)
@@ -385,7 +399,7 @@ class ResultsWindow(QMainWindow):
         self.start_row.setEnabled(enabled)
         self.recipe_count.setEnabled(enabled)
 
-    def rewrite_environment_ready(self) -> bool:
+    def semantic_environment_ready(self) -> bool:
         missing = [
             name for name in ("ingredient_parser", "dotenv", "openai")
             if importlib.util.find_spec(name) is None
@@ -394,7 +408,7 @@ class ResultsWindow(QMainWindow):
             return True
         self._stage = "idle"
         self.set_processing_controls_enabled(True)
-        self.status_label.setText("Rewrite unavailable: Python dependencies missing")
+        self.status_label.setText("Semantic inference unavailable: Python dependencies missing")
         self.benchmark_log.appendPlainText(
             f"Missing Python modules: {', '.join(missing)}\n"
             f"GUI Python: {sys.executable}\n"
@@ -404,7 +418,7 @@ class ResultsWindow(QMainWindow):
         return False
 
     def read_benchmark_output(self) -> None:
-        self._stdout_buffer += bytes(self.benchmark_process.readAllStandardOutput()).decode(
+        self._stdout_buffer += self.benchmark_process.readAllStandardOutput().data().decode(
             "utf-8", errors="replace"
         )
         while "\n" in self._stdout_buffer:
@@ -412,7 +426,7 @@ class ResultsWindow(QMainWindow):
             self.handle_benchmark_line(line.rstrip("\r"))
 
     def read_benchmark_error(self) -> None:
-        message = bytes(self.benchmark_process.readAllStandardError()).decode("utf-8", errors="replace")
+        message = self.benchmark_process.readAllStandardError().data().decode("utf-8", errors="replace")
         self.benchmark_log.insertPlainText(message)
         self.benchmark_log.ensureCursorVisible()
 
@@ -425,7 +439,7 @@ class ResultsWindow(QMainWindow):
             self._total = int(total)
             self.progress_bar.setRange(0, self._total)
             self.progress_bar.setValue(self._completed)
-            action = "Extracting" if self._stage == "extract" else "Rewriting"
+            action = "Extracting" if self._stage == "extract" else "Inferring"
             self.status_label.setText(f"{action} {index}/{total}: {name}")
         elif self._stage == "extract" and line.lstrip().startswith(("SUCCESS |", "FAILED |")):
             self._completed += 1
@@ -437,16 +451,16 @@ class ResultsWindow(QMainWindow):
             self.load_recipes()
         elif self._stage == "extract" and line.startswith("Summary:"):
             self._summary_written = True
-        elif self._stage == "rewrite" and (" -> " in line or line.startswith("FAILED:")):
+        elif self._stage == "semantic" and (" -> " in line or line.startswith("FAILED:")):
             self._completed += 1
             failed = line.startswith("FAILED:")
             self._failures += failed
             filename = line.split(": ", 1)[1].split(":", 1)[0] if failed else line.split(" -> ", 1)[0]
-            if filename in self._rewrite_status:
-                self._rewrite_status[filename] = "failed" if failed else "success"
+            if filename in self._semantic_status:
+                self._semantic_status[filename] = "failed" if failed else "success"
             self.progress_bar.setValue(self._completed)
             self.status_label.setText(
-                f"Rewritten {self._completed}/{self._total} · {self._failures} failed"
+                f"Inferred {self._completed}/{self._total} · {self._failures} failed"
             )
             self.load_recipes()
 
@@ -460,35 +474,35 @@ class ResultsWindow(QMainWindow):
         if self._stage == "extract":
             self._extraction_failures = self._failures
             if self._summary_written and self._completed > self._failures:
-                self.start_rewrite()
+                self.start_semantic()
                 return
             self._stage = "idle"
             self.set_processing_controls_enabled(True)
             self.status_label.setText(
-                "Extraction finished with no recipes to rewrite" if self._summary_written
+                "Extraction finished with no recipes to infer" if self._summary_written
                 else f"Extraction stopped (exit code {exit_code})"
             )
         else:
-            pending = [name for name, status in self._rewrite_status.items() if status == "pending"]
+            pending = [name for name, status in self._semantic_status.items() if status == "pending"]
             for name in pending:
-                self._rewrite_status[name] = "failed"
+                self._semantic_status[name] = "failed"
             self._failures += len(pending)
-            rewrite_successes = sum(status == "success" for status in self._rewrite_status.values())
+            rewrite_successes = sum(status == "success" for status in self._semantic_status.values())
             self._stage = "idle"
             self.set_processing_controls_enabled(True)
             self.load_recipes()
             self.status_label.setText(
-                f"Pipeline finished: {rewrite_successes} rewritten, "
-                f"{self._failures} rewrite failures, {self._extraction_failures} extraction failures"
-                if self._total else f"Rewrite stopped (exit code {exit_code})"
+                f"Pipeline finished: {rewrite_successes} converted, "
+                f"{self._failures} semantic failures, {self._extraction_failures} extraction failures"
+                if self._total else f"Inference stopped (exit code {exit_code})"
             )
 
-    def start_rewrite(self) -> None:
-        if not self.rewrite_environment_ready():
+    def start_semantic(self) -> None:
+        if not self.semantic_environment_ready():
             return
         try:
             with BENCHMARK_SUMMARY.open(encoding="utf-8-sig", newline="") as file:
-                self._rewrite_status = {
+                self._semantic_status = {
                     Path(row["json_file"]).name: "pending"
                     for row in csv.DictReader(file)
                     if row.get("status") == "success" and row.get("json_file")
@@ -499,14 +513,14 @@ class ResultsWindow(QMainWindow):
             self._stage = "idle"
             self.set_processing_controls_enabled(True)
             return
-        self._stage = "rewrite"
+        self._stage = "semantic"
         self._stdout_buffer = ""
         self._completed = 0
         self._failures = 0
         self._total = 0
         self.progress_bar.setRange(0, 0)
-        self.benchmark_log.appendPlainText("\nNormalizing ingredients and rewriting instructions...")
-        self.status_label.setText("Starting ingredient normalization and LLM rewrite...")
+        self.benchmark_log.appendPlainText("\nInferring source semantics and compiling presentation...")
+        self.status_label.setText("Starting semantic inference...")
         self.load_recipes()
         self.benchmark_process.start(
             sys.executable,
@@ -520,7 +534,7 @@ class ResultsWindow(QMainWindow):
         if error == QProcess.ProcessError.FailedToStart:
             self.set_processing_controls_enabled(True)
 
-    def closeEvent(self, event: QCloseEvent) -> None:
+    def closeEvent(self, event: QCloseEvent | None) -> None:
         if self.benchmark_process.state() != QProcess.ProcessState.NotRunning:
             self.benchmark_process.kill()
             self.benchmark_process.waitForFinished(2000)
@@ -545,9 +559,9 @@ class ResultsWindow(QMainWindow):
         link = link or (rewritten.get("link") if isinstance(rewritten, dict) else None)
         self.source_label.setText(str(link or ""))
         self.latest_heading.setText("LATEST" if latest_path else "LATEST · MISSING")
-        rewrite_status = self._rewrite_status.get(filename)
+        rewrite_status = self._semantic_status.get(filename)
         self.rewritten_heading.setText(
-            "REWRITTEN" if rewritten_path else f"REWRITTEN · {rewrite_status.upper()}"
+            "PRESENTATION" if rewritten_path else f"PRESENTATION · {rewrite_status.upper()}"
             if rewrite_status else "REWRITTEN · MISSING"
         )
         self.update_column(self.latest_ingredients, self.latest_steps, latest)
@@ -557,40 +571,51 @@ class ResultsWindow(QMainWindow):
     def show_graph(self, filename: str, latest: dict[str, Any] | str, rewritten: dict[str, Any] | str) -> None:
         self.graph_svg.load(QByteArray())
         self.graph_debug.clear()
-        if not isinstance(rewritten, dict):
-            self.graph_status.setText("No rewritten recipe available")
+        self.table_view.clear()
+        canonical_path = CANONICAL_DIR / filename
+        source = load_recipe(canonical_path) if canonical_path.exists() else latest
+        if not isinstance(source, dict):
+            self.graph_status.setText("No source recipe available")
             self.graph_button.setEnabled(False)
             return
         self.graph_button.setEnabled(self.graph_process.state() == QProcess.ProcessState.NotRunning)
-        original = source_ingredient_lines(latest) if isinstance(latest, dict) else None
         try:
-            cached = load_cached_graph(GRAPH_DIR / filename, rewritten, original)
+            cached = load_cached_graph(GRAPH_DIR / filename, source)
         except ValueError as exc:
-            self.graph_status.setText(f"Graph input invalid: {exc}")
+            self.graph_status.setText(f"Graph source invalid: {exc}")
             return
         if cached is None:
-            self.graph_status.setText("No current graph cached. Select Generate graph.")
+            self.graph_status.setText("No current semantics cached. Select Generate graph.")
             return
         graph, warnings = cached
-        svg = render_svg(graph)
-        self.graph_svg.load(QByteArray(svg.encode("utf-8")))
-        self.graph_svg.setFixedSize(self.graph_svg.renderer().defaultSize())
-        self.graph_debug.setPlainText(graph_debug_text(graph) + "\n" + "\n".join(warnings))
-        self.graph_status.setText(f"{len(graph.nodes)} nodes · {len(graph.edges)} edges · {len(warnings)} warnings")
+        self.graph_svg.load(QByteArray(render_svg(graph).encode("utf-8")))
+        renderer = self.graph_svg.renderer()
+        if renderer is not None:
+            self.graph_svg.setFixedSize(renderer.defaultSize())
+        canonical = canonical_from_json(source)
+        inference = load_semantic(canonical, (GRAPH_DIR / filename).with_suffix(".semantic.json"))
+        if inference is not None:
+            table = render_table(canonical, inference.semantic)
+            self.table_view.setHtml(table or "<p>This material flow uses the general graph view.</p>")
+            self.graph_debug.setPlainText(json.dumps({"canonical": canonical.model_dump(),
+                "semantic": inference.semantic.model_dump(), "issues": [issue.model_dump() for issue in inference.issues],
+                "provenance": inference.provenance, "cache_hit": True}, ensure_ascii=False, indent=2)
+                + "\n" + graph_debug_text(graph))
+        self.graph_status.setText(f"{len(canonical.ingredients)} ingredients ? {len(warnings)} warnings ? cached semantics")
 
     def generate_selected_graph(self) -> None:
         selected = self.recipe_list.currentItem()
         if selected is None or self.graph_process.state() != QProcess.ProcessState.NotRunning:
             return
         filename = selected.data(Qt.ItemDataRole.UserRole)
-        latest_path, rewritten_path = self.paths.get(filename, (None, None))
-        if rewritten_path is None:
+        latest_path, _rewritten_path = self.paths.get(filename, (None, None))
+        canonical_path = CANONICAL_DIR / filename
+        source = canonical_path if canonical_path.exists() else latest_path
+        if source is None:
             return
-        arguments = ["-u", str(GRAPH_SCRIPT), str(rewritten_path), "--output", str(GRAPH_DIR / filename)]
-        if latest_path:
-            arguments.extend(["--source", str(latest_path)])
+        arguments = ["-u", str(GRAPH_SCRIPT), str(source), "--output", str(GRAPH_DIR / filename)]
         self.graph_button.setEnabled(False)
-        self.graph_status.setText(f"Generating graph with {graph_model()}...")
+        self.graph_status.setText(f"Inferring material flow with {graph_model()}...")
         self.graph_process.start(sys.executable, arguments)
 
     def graph_finished(self, exit_code: int, _status: QProcess.ExitStatus) -> None:
@@ -602,7 +627,7 @@ class ResultsWindow(QMainWindow):
         if exit_code == 0:
             self.show_graph(filename, load_recipe(latest_path), load_recipe(rewritten_path))
         else:
-            error = bytes(self.graph_process.readAllStandardError()).decode("utf-8", errors="replace")
+            error = self.graph_process.readAllStandardError().data().decode("utf-8", errors="replace")
             self.graph_status.setText(error.strip()[-300:] or "Graph generation failed")
             self.graph_button.setEnabled(True)
 
@@ -614,7 +639,7 @@ class ResultsWindow(QMainWindow):
             layout.setContentsMargins(0, 0, 0, 0)
         while layout.count():
             item = layout.takeAt(0)
-            widget = item.widget()
+            widget = item.widget() if item is not None else None
             if widget is not None:
                 widget.deleteLater()
         layout.addWidget(content)

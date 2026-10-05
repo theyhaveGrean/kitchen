@@ -1,44 +1,47 @@
 # Architecture
 
-Recipe Scraper is a staged Python package. The pipeline coordinates fetching, extraction, normalization, validation, ingredient processing, instruction rewriting, and serialization. Each stage communicates through source-independent recipe models. For runtime behavior, see [pipeline.md](pipeline.md).
-
-## Modules and boundaries
-
-The package is organized around these responsibilities:
-
-| Area | Responsibility |
-| --- | --- |
-| `fetch/` | Retrieve HTML with configured timeouts and report network failures. |
-| `extractor.py` and `parsers/` | Select usable Schema.org Recipe data or deterministic DOM extraction. |
-| `models.py` | Define the internal recipe model. |
-| `normalize.py` and `structured_ingredients.py` | Deduplicate, parse ingredients, and produce product JSON. |
-| `validation.py` | Reject likely roundup pages. |
-| `llm.py` | Centralize OpenAI client, model configuration, rewriting, and structured graph calls. |
-| `graph.py` / `graph_pipeline.py` | Define and validate graph data; generate and cache it. |
-| `graph_display.py` | Collapse semantic product nodes into display operation links. |
-| `graph_layout.py` | Convert display graphs into deterministic TRN process geometry. |
-| `graph_render.py` | Draw the TRN layout as SVG without API calls. |
-
-The CLI calls the public pipeline API and handles input/output and exit behavior. Scripts are for development workflows; reusable logic belongs in `src/recipe_scraper/`.
-
-Dependencies flow from the CLI to the pipeline and from the pipeline to stage modules. Lower-level modules must not import the CLI or pipeline. Fetching does not interpret recipes; extraction does not depend on OpenAI; the LLM layer does not fetch pages; serialization does not extract data.
-
-The comparison workflow is coordinated by `scripts/compare_results.py` and `scripts/test_openai.py`; `llm.py` owns OpenAI calls. Graph validation, storage, and rendering remain independent of that workflow.
-
-## Data flow
+The LLM produces a minimal `SemanticRecipe`. Application code validates it and deterministically compiles it into `RecipeGraph` and presentation formats. Source recipes are authoritative; prose rewriting never precedes or controls semantic inference.
 
 ```text
-extractor CLI → fetch → extraction → normalization / ingredient parsing → recipe JSON
-comparison GUI → benchmark extraction → rewrite script → LLM module → rewritten JSON
-                                                 → graph validator/cache → graph renderer
+URL -> static fetch/extract -> CanonicalRecipe -> extraction cache
+                                  |
+                         compact semantic inference
+                                  |
+                         deterministic validation
+                                  |
+                   one repair only when invalid
+                                  |
+                         semantic cache + provenance
+                                  |
+              +-------------------+------------------+
+              |                   |                  |
+        graph compiler       source prose       material table
+              |
+       existing TRN layout/SVG
 ```
 
-Keep transformations explicit and independently testable. Deterministic parsing, validation, deduplication, arithmetic, and unit conversion stay in code. OpenAI SDK calls go through `llm.py`, using `OPENAI_API_KEY`, optional `OPENAI_MODEL` for rewriting, and optional `OPENAI_GRAPH_MODEL` for graph generation.
+## Modules and dependency direction
 
-Extractors may retain raw ingredient lines internally. Product serialization parses cleaned lines into `quantity`, `unit`, `ingredient`, and `preparation_type`; post-processing scripts also support saved legacy JSON with string ingredients. Keep diagnostics—such as extractor, failure stage, timings, and token usage—separate from product data.
+| Module | Responsibility |
+| --- | --- |
+| `fetch/web.py` | Static HTTP and optional Scrapling browser fetch; no recipe interpretation or AI. |
+| `extractor.py`, `parsers/` | JSON-LD-first extraction, structured metadata and DOM fallbacks. Parser-family import surfaces re-export extraction helpers. |
+| `models.py` | Internal extraction transport model. |
+| `canonical.py` | Preserve source lines, stable ingredient IDs, one-based source steps; advisory ingredient parsing and legacy product imports. |
+| `structured_ingredients.py`, `ingredient_cleanup.py` | Deterministic ingredient parsing/normalization; source originals are retained independently. |
+| `semantic.py` | Compact AI response schema and version constants. |
+| `llm.py` | Only OpenAI SDK boundary; configurable primary/repair tiers and optional downstream prose rewriting. |
+| `semantic_validation.py`, `semantic_topology.py` | Source-grounded structured issues, referential integrity, terminal/DAG/laminar analysis. |
+| `semantic_pipeline.py` | Independent semantic caching, bounded validation-based repair, controlled failure and provenance. |
+| `graph_compile.py` | Zero-API ingredient/operation/intermediate/final node and edge construction. |
+| `graph.py`, `graph_measurements.py` | Compiled graph models/invariants and deterministic measurement parsing/normalization. |
+| `graph_pipeline.py` | Compatibility facade for existing graph consumers; calls semantic inference and the compiler, never direct graph inference. |
+| `graph_display.py`, `graph_layout.py`, `graph_render.py` | Deterministic TRN geometry and grayscale SVG. |
+| `presentation.py`, `prose_pipeline.py` | Conservative source prose, optional separately cached AI prose with fidelity fallback, compact laminar material tables. |
+| `cache.py` | SHA-256 stage keys, conservative URL normalization, same-host page canonical URLs, atomic writes. |
+| `conversion.py` | Extraction/semantic/presentation stage coordination and timings. |
+| `stage_cli.py` | Stage-specific commands; graph and validation work offline. |
 
-## Errors and tests
+Models and deterministic utilities do not call pipelines or UI. `conversion.py` coordinates stages. Rendering never depends on API access. Canonical data is not mutated by inference; generated labels, source text, and ingredients are looked up by the compiler. Details of [schemas](schema.md), [runtime behavior](pipeline.md), [graph rendering](graph.md), and [benchmarking](benchmarking.md) live in their respective documents.
 
-Preserve the stage and useful category of failures, such as `FETCH_TIMEOUT`, `FETCH_BLOCKED`, `NO_RECIPE_FOUND`, `VALIDATION_FAILED`, or `LLM_FAILED`. Avoid collapsing structured failures into generic errors.
-
-Tests should follow module boundaries: unit tests cover components, integration tests use saved fixtures, and regression tests preserve observed fixes. Live websites and model calls belong in explicit benchmarks or evaluations, not the deterministic test suite. Keep public APIs small and avoid exposing implementation details accidentally.
+The comparison GUI remains PyQt6; there is no Streamlit application. It displays source and downstream presentation, a compiled graph, and a material table. Stage details are opt-in. `scripts/postprocess_saved.py` replaces mandatory rewrite-first processing; `scripts/test_openai.py` is only a command alias.

@@ -1,0 +1,1271 @@
+[
+  {
+    "case": "pancakes",
+    "recipe": {
+      "title": "Pancakes",
+      "link": "https://example.test/pancakes",
+      "ingredients": [
+        "1 cup flour",
+        "1 cup milk"
+      ],
+      "recipe": [
+        "Mix flour and milk.",
+        "Cook the batter until golden."
+      ]
+    },
+    "semantic": {
+      "operations": [
+        {
+          "id": "op_001",
+          "step_index": 1,
+          "action": "mix",
+          "inputs": [
+            "ing_001",
+            "ing_002"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_002",
+          "step_index": 2,
+          "action": "cook",
+          "inputs": [
+            "op_001"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": "until golden",
+          "portions": []
+        }
+      ],
+      "prep_actions": [],
+      "unresolved_references": []
+    }
+  },
+  {
+    "case": "cake_branches",
+    "recipe": {
+      "title": "Cake Branches",
+      "link": "https://example.test/cake_branches",
+      "ingredients": [
+        "1 cup flour",
+        "1 cup sugar",
+        "1 cup milk",
+        "1 egg"
+      ],
+      "recipe": [
+        "Mix flour and sugar.",
+        "Whisk milk and egg.",
+        "Fold wet mixture into dry mixture.",
+        "Bake at 350 F for 30 minutes."
+      ]
+    },
+    "semantic": {
+      "operations": [
+        {
+          "id": "op_001",
+          "step_index": 1,
+          "action": "mix",
+          "inputs": [
+            "ing_001",
+            "ing_002"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_002",
+          "step_index": 2,
+          "action": "whisk",
+          "inputs": [
+            "ing_003",
+            "ing_004"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_003",
+          "step_index": 3,
+          "action": "fold",
+          "inputs": [
+            "op_001",
+            "op_002"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_004",
+          "step_index": 4,
+          "action": "bake",
+          "inputs": [
+            "op_003"
+          ],
+          "output_name": null,
+          "temperature": "350 F",
+          "duration": "30 minutes",
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        }
+      ],
+      "prep_actions": [],
+      "unresolved_references": []
+    }
+  },
+  {
+    "case": "pasta_sauce",
+    "recipe": {
+      "title": "Pasta Sauce",
+      "link": "https://example.test/pasta_sauce",
+      "ingredients": [
+        "200 g pasta",
+        "1 cup tomatoes",
+        "1 tbsp oil"
+      ],
+      "recipe": [
+        "Boil pasta until tender.",
+        "Simmer tomatoes with oil.",
+        "Toss pasta with sauce."
+      ]
+    },
+    "semantic": {
+      "operations": [
+        {
+          "id": "op_001",
+          "step_index": 1,
+          "action": "boil",
+          "inputs": [
+            "ing_001"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": "until tender",
+          "portions": []
+        },
+        {
+          "id": "op_002",
+          "step_index": 2,
+          "action": "simmer",
+          "inputs": [
+            "ing_002",
+            "ing_003"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_003",
+          "step_index": 3,
+          "action": "toss",
+          "inputs": [
+            "op_001",
+            "op_002"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        }
+      ],
+      "prep_actions": [],
+      "unresolved_references": []
+    }
+  },
+  {
+    "case": "marinade",
+    "recipe": {
+      "title": "Marinade",
+      "link": "https://example.test/marinade",
+      "ingredients": [
+        "1 lb chicken",
+        "2 tbsp soy sauce",
+        "1 tbsp lemon juice"
+      ],
+      "recipe": [
+        "Mix soy sauce and lemon juice.",
+        "Coat chicken in marinade.",
+        "Chill for 30 minutes.",
+        "Roast at 400 F until cooked through."
+      ]
+    },
+    "semantic": {
+      "operations": [
+        {
+          "id": "op_001",
+          "step_index": 1,
+          "action": "mix",
+          "inputs": [
+            "ing_002",
+            "ing_003"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_002",
+          "step_index": 2,
+          "action": "coat",
+          "inputs": [
+            "ing_001",
+            "op_001"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_003",
+          "step_index": 3,
+          "action": "chill",
+          "inputs": [
+            "op_002"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": "30 minutes",
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_004",
+          "step_index": 4,
+          "action": "roast",
+          "inputs": [
+            "op_003"
+          ],
+          "output_name": null,
+          "temperature": "400 F",
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": "until cooked through",
+          "portions": []
+        }
+      ],
+      "prep_actions": [],
+      "unresolved_references": []
+    }
+  },
+  {
+    "case": "soup",
+    "recipe": {
+      "title": "Soup",
+      "link": "https://example.test/soup",
+      "ingredients": [
+        "1 carrot",
+        "2 cups water"
+      ],
+      "recipe": [
+        "Chop carrot.",
+        "Simmer carrot in water until tender."
+      ]
+    },
+    "semantic": {
+      "operations": [
+        {
+          "id": "op_001",
+          "step_index": 1,
+          "action": "chop",
+          "inputs": [
+            "ing_001"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_002",
+          "step_index": 2,
+          "action": "simmer",
+          "inputs": [
+            "op_001",
+            "ing_002"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": "until tender",
+          "portions": []
+        }
+      ],
+      "prep_actions": [],
+      "unresolved_references": []
+    }
+  },
+  {
+    "case": "dough_rise",
+    "recipe": {
+      "title": "Dough Rise",
+      "link": "https://example.test/dough_rise",
+      "ingredients": [
+        "2 cups flour",
+        "1 cup water"
+      ],
+      "recipe": [
+        "Mix flour and water.",
+        "Knead dough.",
+        "Let it rise for 1 hour.",
+        "Bake at 400 F for 30 minutes."
+      ]
+    },
+    "semantic": {
+      "operations": [
+        {
+          "id": "op_001",
+          "step_index": 1,
+          "action": "mix",
+          "inputs": [
+            "ing_001",
+            "ing_002"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_002",
+          "step_index": 2,
+          "action": "knead",
+          "inputs": [
+            "op_001"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_003",
+          "step_index": 3,
+          "action": "proof",
+          "inputs": [
+            "op_002"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": "1 hour",
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_004",
+          "step_index": 4,
+          "action": "bake",
+          "inputs": [
+            "op_003"
+          ],
+          "output_name": null,
+          "temperature": "400 F",
+          "duration": "30 minutes",
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        }
+      ],
+      "prep_actions": [],
+      "unresolved_references": []
+    }
+  },
+  {
+    "case": "divided_ingredient",
+    "recipe": {
+      "title": "Divided Ingredient",
+      "link": "https://example.test/divided_ingredient",
+      "ingredients": [
+        "1 cup rice",
+        "2 tbsp butter, divided",
+        "1 clove garlic"
+      ],
+      "recipe": [
+        "Toast rice in half the butter.",
+        "Cook rice until tender.",
+        "Cook garlic in the remaining butter.",
+        "Fold garlic into rice."
+      ]
+    },
+    "semantic": {
+      "operations": [
+        {
+          "id": "op_001",
+          "step_index": 1,
+          "action": "toast",
+          "inputs": [
+            "ing_001",
+            "ing_002"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": [
+            {
+              "ref": "ing_002",
+              "text": "half"
+            }
+          ]
+        },
+        {
+          "id": "op_002",
+          "step_index": 2,
+          "action": "cook",
+          "inputs": [
+            "op_001"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": "until tender",
+          "portions": []
+        },
+        {
+          "id": "op_003",
+          "step_index": 3,
+          "action": "cook",
+          "inputs": [
+            "ing_003",
+            "ing_002"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": [
+            {
+              "ref": "ing_002",
+              "text": "remaining"
+            }
+          ]
+        },
+        {
+          "id": "op_004",
+          "step_index": 4,
+          "action": "fold",
+          "inputs": [
+            "op_002",
+            "op_003"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        }
+      ],
+      "prep_actions": [],
+      "unresolved_references": []
+    }
+  },
+  {
+    "case": "reserved_liquid",
+    "recipe": {
+      "title": "Reserved Liquid",
+      "link": "https://example.test/reserved_liquid",
+      "ingredients": [
+        "200 g pasta",
+        "2 cups water",
+        "1 oz cheese"
+      ],
+      "recipe": [
+        "Boil pasta in water.",
+        "Drain and keep the reserved pasta water.",
+        "Toss pasta with cheese and reserved pasta water."
+      ]
+    },
+    "semantic": {
+      "operations": [
+        {
+          "id": "op_001",
+          "step_index": 1,
+          "action": "boil",
+          "inputs": [
+            "ing_001",
+            "ing_002"
+          ],
+          "output_name": "pasta and cooking water",
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_002",
+          "step_index": 2,
+          "action": "drain",
+          "inputs": [
+            "op_001"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_003",
+          "step_index": 3,
+          "action": "toss",
+          "inputs": [
+            "op_002",
+            "op_001",
+            "ing_003"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": [
+            {
+              "ref": "op_001",
+              "text": "reserved pasta water"
+            }
+          ]
+        }
+      ],
+      "prep_actions": [],
+      "unresolved_references": []
+    }
+  },
+  {
+    "case": "garnish",
+    "recipe": {
+      "title": "Garnish",
+      "link": "https://example.test/garnish",
+      "ingredients": [
+        "1 cup yogurt",
+        "1 cup berries"
+      ],
+      "recipe": [
+        "Stir yogurt.",
+        "Garnish yogurt with berries."
+      ]
+    },
+    "semantic": {
+      "operations": [
+        {
+          "id": "op_001",
+          "step_index": 1,
+          "action": "stir",
+          "inputs": [
+            "ing_001"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_002",
+          "step_index": 2,
+          "action": "garnish",
+          "inputs": [
+            "op_001",
+            "ing_002"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        }
+      ],
+      "prep_actions": [],
+      "unresolved_references": []
+    }
+  },
+  {
+    "case": "pan_size",
+    "recipe": {
+      "title": "Pan Size",
+      "link": "https://example.test/pan_size",
+      "ingredients": [
+        "1 cup flour",
+        "1 cup milk"
+      ],
+      "recipe": [
+        "Line a 9x5-inch loaf pan.",
+        "Mix flour and milk.",
+        "Bake in the 9x5-inch loaf pan at 350 F for 20 minutes."
+      ]
+    },
+    "semantic": {
+      "operations": [
+        {
+          "id": "op_001",
+          "step_index": 2,
+          "action": "mix",
+          "inputs": [
+            "ing_001",
+            "ing_002"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_002",
+          "step_index": 3,
+          "action": "bake",
+          "inputs": [
+            "op_001"
+          ],
+          "output_name": null,
+          "temperature": "350 F",
+          "duration": "20 minutes",
+          "heat_level": null,
+          "equipment": [
+            "9x5-inch loaf pan"
+          ],
+          "completion_condition": null,
+          "portions": []
+        }
+      ],
+      "prep_actions": [
+        {
+          "step_index": 1,
+          "action": "line",
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "ingredients": []
+        }
+      ],
+      "unresolved_references": []
+    }
+  },
+  {
+    "case": "multi_action",
+    "recipe": {
+      "title": "Multi Action",
+      "link": "https://example.test/multi_action",
+      "ingredients": [
+        "1 cup flour",
+        "1 cup milk"
+      ],
+      "recipe": [
+        "Whisk flour and milk, then bake for 20 minutes."
+      ]
+    },
+    "semantic": {
+      "operations": [
+        {
+          "id": "op_001",
+          "step_index": 1,
+          "action": "whisk",
+          "inputs": [
+            "ing_001",
+            "ing_002"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_002",
+          "step_index": 1,
+          "action": "bake",
+          "inputs": [
+            "op_001"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": "20 minutes",
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        }
+      ],
+      "prep_actions": [],
+      "unresolved_references": []
+    }
+  },
+  {
+    "case": "pronouns",
+    "recipe": {
+      "title": "Pronouns",
+      "link": "https://example.test/pronouns",
+      "ingredients": [
+        "1 cup flour",
+        "1 cup milk"
+      ],
+      "recipe": [
+        "Mix flour with milk.",
+        "Let it rest for 10 minutes."
+      ]
+    },
+    "semantic": {
+      "operations": [
+        {
+          "id": "op_001",
+          "step_index": 1,
+          "action": "mix",
+          "inputs": [
+            "ing_001",
+            "ing_002"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_002",
+          "step_index": 2,
+          "action": "rest",
+          "inputs": [
+            "op_001"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": "10 minutes",
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        }
+      ],
+      "prep_actions": [],
+      "unresolved_references": []
+    }
+  },
+  {
+    "case": "late_component",
+    "recipe": {
+      "title": "Late Component",
+      "link": "https://example.test/late_component",
+      "ingredients": [
+        "1 cup tomatoes",
+        "1 lb tofu"
+      ],
+      "recipe": [
+        "Simmer tomatoes into sauce.",
+        "Fry tofu.",
+        "Pour sauce over tofu."
+      ]
+    },
+    "semantic": {
+      "operations": [
+        {
+          "id": "op_001",
+          "step_index": 1,
+          "action": "simmer",
+          "inputs": [
+            "ing_001"
+          ],
+          "output_name": "sauce",
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_002",
+          "step_index": 2,
+          "action": "fry",
+          "inputs": [
+            "ing_002"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_003",
+          "step_index": 3,
+          "action": "pour",
+          "inputs": [
+            "op_001",
+            "op_002"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        }
+      ],
+      "prep_actions": [],
+      "unresolved_references": []
+    }
+  },
+  {
+    "case": "optional_ingredient",
+    "recipe": {
+      "title": "Optional Ingredient",
+      "link": "https://example.test/optional_ingredient",
+      "ingredients": [
+        "1 cup yogurt",
+        "mint, optional for serving"
+      ],
+      "recipe": [
+        "Stir yogurt and serve."
+      ]
+    },
+    "semantic": {
+      "operations": [
+        {
+          "id": "op_001",
+          "step_index": 1,
+          "action": "stir",
+          "inputs": [
+            "ing_001"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        }
+      ],
+      "prep_actions": [],
+      "unresolved_references": []
+    }
+  },
+  {
+    "case": "temperature_only",
+    "recipe": {
+      "title": "Temperature Only",
+      "link": "https://example.test/temperature_only",
+      "ingredients": [
+        "1 potato"
+      ],
+      "recipe": [
+        "Bake potato at 350 F until tender."
+      ]
+    },
+    "semantic": {
+      "operations": [
+        {
+          "id": "op_001",
+          "step_index": 1,
+          "action": "bake",
+          "inputs": [
+            "ing_001"
+          ],
+          "output_name": null,
+          "temperature": "350 F",
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": "until tender",
+          "portions": []
+        }
+      ],
+      "prep_actions": [],
+      "unresolved_references": []
+    }
+  },
+  {
+    "case": "duration_only",
+    "recipe": {
+      "title": "Duration Only",
+      "link": "https://example.test/duration_only",
+      "ingredients": [
+        "1 potato"
+      ],
+      "recipe": [
+        "Boil potato for 15 minutes."
+      ]
+    },
+    "semantic": {
+      "operations": [
+        {
+          "id": "op_001",
+          "step_index": 1,
+          "action": "boil",
+          "inputs": [
+            "ing_001"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": "15 minutes",
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        }
+      ],
+      "prep_actions": [],
+      "unresolved_references": []
+    }
+  },
+  {
+    "case": "no_bake",
+    "recipe": {
+      "title": "No Bake",
+      "link": "https://example.test/no_bake",
+      "ingredients": [
+        "1 cup berries",
+        "1 cup yogurt"
+      ],
+      "recipe": [
+        "Mix berries and yogurt until smooth.",
+        "Chill."
+      ]
+    },
+    "semantic": {
+      "operations": [
+        {
+          "id": "op_001",
+          "step_index": 1,
+          "action": "mix",
+          "inputs": [
+            "ing_001",
+            "ing_002"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": "until smooth",
+          "portions": []
+        },
+        {
+          "id": "op_002",
+          "step_index": 2,
+          "action": "chill",
+          "inputs": [
+            "op_001"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        }
+      ],
+      "prep_actions": [],
+      "unresolved_references": []
+    }
+  },
+  {
+    "case": "one_pot",
+    "recipe": {
+      "title": "One Pot",
+      "link": "https://example.test/one_pot",
+      "ingredients": [
+        "1 carrot",
+        "1 cup tomatoes"
+      ],
+      "recipe": [
+        "Chop carrot.",
+        "Simmer carrot and tomatoes in a Dutch oven for 20 minutes."
+      ]
+    },
+    "semantic": {
+      "operations": [
+        {
+          "id": "op_001",
+          "step_index": 1,
+          "action": "chop",
+          "inputs": [
+            "ing_001"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_002",
+          "step_index": 2,
+          "action": "simmer",
+          "inputs": [
+            "op_001",
+            "ing_002"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": "20 minutes",
+          "heat_level": null,
+          "equipment": [
+            "Dutch oven"
+          ],
+          "completion_condition": null,
+          "portions": []
+        }
+      ],
+      "prep_actions": [],
+      "unresolved_references": []
+    }
+  },
+  {
+    "case": "protein_assembly",
+    "recipe": {
+      "title": "Protein Assembly",
+      "link": "https://example.test/protein_assembly",
+      "ingredients": [
+        "1 cup tomatoes",
+        "1 lb chicken",
+        "1 cup rice"
+      ],
+      "recipe": [
+        "Simmer tomatoes into sauce.",
+        "Roast chicken.",
+        "Boil rice.",
+        "Assemble sauce, chicken and rice."
+      ]
+    },
+    "semantic": {
+      "operations": [
+        {
+          "id": "op_001",
+          "step_index": 1,
+          "action": "simmer",
+          "inputs": [
+            "ing_001"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_002",
+          "step_index": 2,
+          "action": "roast",
+          "inputs": [
+            "ing_002"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_003",
+          "step_index": 3,
+          "action": "boil",
+          "inputs": [
+            "ing_003"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_004",
+          "step_index": 4,
+          "action": "assemble",
+          "inputs": [
+            "op_001",
+            "op_002",
+            "op_003"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        }
+      ],
+      "prep_actions": [],
+      "unresolved_references": []
+    }
+  },
+  {
+    "case": "preheat_pan",
+    "recipe": {
+      "title": "Preheat Pan",
+      "link": "https://example.test/preheat_pan",
+      "ingredients": [
+        "1 cup flour",
+        "1 cup milk",
+        "1 tsp oil for greasing"
+      ],
+      "recipe": [
+        "Preheat oven to 350 F.",
+        "Grease a 9x9-inch pan with oil.",
+        "Mix flour and milk.",
+        "Bake for 10 to 15 minutes until golden brown."
+      ]
+    },
+    "semantic": {
+      "operations": [
+        {
+          "id": "op_001",
+          "step_index": 3,
+          "action": "mix",
+          "inputs": [
+            "ing_001",
+            "ing_002"
+          ],
+          "output_name": null,
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "portions": []
+        },
+        {
+          "id": "op_002",
+          "step_index": 4,
+          "action": "bake",
+          "inputs": [
+            "op_001"
+          ],
+          "output_name": null,
+          "temperature": "350 F",
+          "duration": "10 to 15 minutes",
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": "until golden brown",
+          "portions": []
+        }
+      ],
+      "prep_actions": [
+        {
+          "step_index": 1,
+          "action": "preheat",
+          "temperature": "350 F",
+          "duration": null,
+          "heat_level": null,
+          "equipment": [],
+          "completion_condition": null,
+          "ingredients": []
+        },
+        {
+          "step_index": 2,
+          "action": "grease",
+          "temperature": null,
+          "duration": null,
+          "heat_level": null,
+          "equipment": [
+            "9x9-inch pan"
+          ],
+          "completion_condition": null,
+          "ingredients": [
+            "ing_003"
+          ]
+        }
+      ],
+      "unresolved_references": []
+    }
+  }
+]

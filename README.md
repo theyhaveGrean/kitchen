@@ -1,60 +1,57 @@
 # Recipe Scraper
 
-Recipe Scraper turns recipe URLs into consistent JSON for downstream kitchen applications. It prefers deterministic extraction and normalization, using an LLM only for instruction rewriting. See [pipeline](docs/pipeline.md), [schema](docs/schema.md), [architecture](docs/architecture.md), and [benchmarking](docs/benchmarking.md) for details.
+A source-preserving recipe pipeline for kitchen displays. Static JSON-LD extraction and ingredient parsing are deterministic. One compact model call normally infers cooking semantics; code validates it and compiles graphs, source prose, and grayscale material tables.
 
-The comparison workflow can also use GPT-5.6 Luna to turn a rewritten recipe into a validated, cached cooking graph. The app renders that graph from JSON; see [recipe graphs](docs/graph.md).
-
-## Output
-
-```json
-{
-  "title": "Recipe title",
-  "link": "https://example.com/recipe",
-  "ingredients": [
-    {"quantity": "1", "unit": "cup", "ingredient": "flour", "preparation_type": null}
-  ],
-  "recipe": ["Preheat oven to 350°F.", "Mix flour and bake until golden."]
-}
+```text
+URL -> CanonicalRecipe -> SemanticRecipe -> graph / prose / table
+       extraction cache    inference cache    deterministic rendering
 ```
 
-## Install and configure
+See [pipeline](docs/pipeline.md), [schemas](docs/schema.md), [architecture](docs/architecture.md), [graphs](docs/graph.md), [decisions](docs/decisions.md), and [benchmarking](docs/benchmarking.md).
+
+## Setup
 
 ```bash
 python -m pip install -r requirements.txt
 scrapling install
-```
-
-Ingredient parsing uses `ingredient_parser_nlp` and NLTK tagger data. For offline use, download the tagger once:
-
-```bash
 python -c "import nltk; nltk.download('averaged_perceptron_tagger_eng')"
 ```
 
-LLM rewriting requires `OPENAI_API_KEY`; `OPENAI_MODEL` optionally selects the model. Keep `.env` out of version control.
+Static extraction does not need a browser. Scrapling is used only for enabled browser fallback. `OPENAI_API_KEY` is required for semantic inference. `OPENAI_SEMANTIC_MODEL` and `OPENAI_SEMANTIC_REASONING` configure the primary tier; `OPENAI_REPAIR_MODEL` and `OPENAI_REPAIR_REASONING` configure the bounded repair tier. Legacy `OPENAI_GRAPH_MODEL` remains a primary-model fallback. Keep `.env` gitignored.
 
-## Run
+## Commands
+
+The original four-field product output remains available:
 
 ```bash
-recipe-scraper "https://example.com/recipe"
 recipe-scraper "https://example.com/recipe" -o recipe.json
+python scripts/extract_recipe.py URL --canonical -o canonical.json
 ```
 
-From a checkout, use `python scripts/extract_recipe.py URL`.
+Independent stages support saved sources without repeatedly scraping:
 
-## Development
+```bash
+recipe-pipeline extract URL -o canonical.json
+python scripts/infer_semantic_recipe.py canonical.json -o conversion.json
+python scripts/validate_semantic_recipe.py conversion.json
+python scripts/build_graph.py conversion.json -o graph.json --svg graph.svg --table recipe.html
+python scripts/convert_recipe.py URL -o conversion.json --svg graph.svg
+python scripts/postprocess_saved.py --input-dir benchmarks/results/latest --output-dir benchmarks/results/rewritten
+```
 
-Run deterministic tests with `pytest`; they do not require live recipe websites. Before committing, run:
+Use `--html-file` with `recipe-pipeline extract` or the conversion script for local HTML. `--refresh-extraction` and `--refresh-semantic` bypass their respective caches independently. Optional `--llm-prose` rewriting occurs only after valid semantics and falls back to source if it loses details. Default prose and graph/table rendering require no second model call.
+
+The PyQt comparison GUI is `python scripts/compare_results.py`. Its source, presentation, graph, and material-table views share the canonical/semantic pipeline. Stage diagnostics are hidden until requested.
+
+## Verification
 
 ```bash
 pytest
 ruff check .
 mypy .
+python benchmarks/run.py benchmarks/datasets/torture_50.csv --fixtures-only
+python benchmarks/semantic.py
+python benchmarks/semantic.py --live --limit 10 --refresh
 ```
 
-The standard live benchmark is `python benchmarks/run.py`. Run the torture set with:
-
-```bash
-python benchmarks/run.py benchmarks/datasets/torture_50.csv --output-dir benchmarks/results/torture
-```
-
-Benchmark output goes under `benchmarks/results/` and is not committed. See [benchmarks/README.md](benchmarks/README.md) for the comparison GUI and saved-result workflow.
+Ordinary tests and offline semantic benchmarks use saved fixtures. Live APIs require explicit test/benchmark selection. Results and caches stay in ignored `benchmarks/results/`.

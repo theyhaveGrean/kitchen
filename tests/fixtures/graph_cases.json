@@ -36,6 +36,10 @@
     "recipe": {"title": "Glazed Tofu", "link": "https://example.test/tofu", "ingredients": [{"quantity": "1", "unit": "lb", "ingredient": "tofu", "preparation_type": "cubed"}, {"quantity": "3", "unit": "tbsp", "ingredient": "soy sauce", "preparation_type": null}, {"quantity": "1", "unit": "tbsp", "ingredient": "honey", "preparation_type": null}], "recipe": ["Whisk soy sauce and honey into a glaze. Reserve half.", "Toss the tofu with the remaining glaze and fry until crisp.", "Drizzle the reserved glaze over the tofu and serve."]}
   },
   {
+    "case": "structured_parameters",
+    "recipe": {"title": "Baked Batter", "link": "https://example.test/batter", "ingredients": [{"quantity": "1", "unit": "cup", "ingredient": "flour", "preparation_type": null}, {"quantity": "1", "unit": "cup", "ingredient": "milk", "preparation_type": null}], "recipe": ["Mix the flour and milk in a mixing bowl until smooth.", "Pour into a 9×9-inch baking pan. Bake at 350–375°F for 10–15 minutes until golden brown."]}
+  },
+  {
     "case": "ambiguous_reference",
     "recipe": {"title": "Ambiguous Vegetables", "link": "https://example.test/ambiguous", "ingredients": [{"quantity": "1", "unit": null, "ingredient": "onion", "preparation_type": null}, {"quantity": "1", "unit": null, "ingredient": "carrot", "preparation_type": null}], "recipe": ["Chop the onion and carrot separately.", "Set one aside and cook the other until soft.", "Combine them and serve."]}
   }

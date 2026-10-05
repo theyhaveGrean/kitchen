@@ -9,6 +9,9 @@ class Recipe:
     """Internal extraction model. The public JSON schema is intentionally smaller."""
 
     source_url: str | None = None
+    canonical_url: str | None = None
+    browser_fallback_used: bool = False
+    metadata: dict[str, Any] = field(default_factory=dict)
     title: str | None = None
     description: str | None = None
     author: str | None = None

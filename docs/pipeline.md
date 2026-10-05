@@ -1,41 +1,64 @@
 # Recipe Processing Pipeline
 
-The pipeline converts a recipe URL into the canonical JSON described in [schema.md](schema.md). All extraction paths converge on one source-independent recipe representation.
-
 ```text
-URL → fetch → extract → normalize/deduplicate → validate
-    → normalize and parse ingredients → rewrite instructions
-    → structured graph generation → graph validation → cache/render
+URL -> extraction cache lookup -> static HTTP -> JSON-LD Recipe
+                                    |
+                         other metadata / HTML fallback
+                                    |
+                     browser only if static content fails
+                                    |
+                         CanonicalRecipe -> cache
+                                    |
+                       one compact semantic model call
+                                    |
+                     validation -> optional one repair
+                                    |
+                         valid SemanticRecipe -> cache
+                                    |
+                   graph compile / prose / material table
 ```
 
-## Fetch and extract
+## Extraction and source fidelity
 
-Fetch retrieves page HTML, follows redirects, applies configured timeouts and headers, and uses browser fetching where needed. It distinguishes network failures from extraction failures. Retries and timeouts must be explicit and bounded; never bypass anti-bot protections or extend limits silently to improve benchmark results.
+`extract_canonical` caches by normalized URL, extractor version, and canonical schema version. Tracking parameters and fragments do not create extra entries; recipe query values remain distinct. Same-host page canonical URLs are stored and cached as aliases. Extraction records expire after 24 hours by default (`RECIPE_EXTRACTION_CACHE_TTL`), and explicit refresh bypasses them. Prompt/model changes never invalidate extraction.
 
-Prefer usable Schema.org `Recipe` JSON-LD, including common arrays, `@graph`, nested objects, and multiple script blocks. If structured data is missing, malformed, or insufficient, use deterministic HTML extraction. Keep site-specific handling isolated and add regression coverage. Extract at least the title, source URL, ingredients, and instructions; keep diagnostics out of public recipe data.
+Static HTTP is first. Complete JSON-LD recipes return without running fallback parsers or a browser. Broken/unavailable JSON-LD can use microdata/RDFa, itemprops, Scrapling DOM parsing, and HTML heuristics. Browser fallback only runs when static extraction is incomplete and is enabled. The default network budget remains 60 seconds; the browser receives the remaining budget. Explicit `--render-js` forces a browser; `--no-auto-render-js` disables fallback. HTTP access denials and human-verification pages are failures, not reasons to bypass protections. Cloudflare challenge solving is disabled.
 
-## Normalize and validate
+Diagnostics distinguish `jsonld_static`, `jsonld_browser`, `html_static`, and `html_browser`, retain the parser family, and record browser usage/timings. Saved HTML fixtures need no network.
 
-Normalize representation without changing meaning: flatten instruction structures, convert objects to text, remove empty entries, and clean whitespace and punctuation. Remove only clear duplicates (for example, after whitespace and case normalization). Similar entries with meaningful differences must remain: `1 cup flour` and `1 cup cake flour` are distinct.
+Canonicalization preserves original ingredient text and source instructions, apart from deterministic text cleanup and conservative duplicate removal. Ingredient Parser is advisory: a parsing failure retains the original line and null parsed fields. Quantities, units, preparation notes, divided/reserved uses, optional serving ingredients, and source equipment are never replaced by model output.
 
-Validate after extraction and deterministic cleanup. Require a non-empty title and source URL, at least one ingredient and instruction, and no empty or exact duplicate entries. Report failures with useful stage categories, such as `NO_RECIPE_FOUND`, `EXTRACTION_FAILED`, or `VALIDATION_FAILED`.
+## Semantic inference and repair
 
-## Ingredient processing
+Inference reads compact original ingredient lines with `ing_001` IDs and numbered source instructions. It does not read rewritten prose or whole webpage HTML. The model returns material actions, references to canonical ingredients/earlier operations, optional material output names, source parameter phrases, equipment, completion criteria, portion wording, and separate non-material prep actions. It does not emit graph nodes, edges, labels, coordinates, ingredient copies, or source-instruction copies.
 
-Ingredient Parser handles sentence normalization, parsing, and post-processing. The pipeline removes shopping annotations that the parser may leave in names, then uses its batch API for ingredient lists. Its Pint-backed `convert_to` converts whole larger-unit equivalents (for example, teaspoons to tablespoons, grams to kilograms, and milliliters to liters). Fractions remain fractional; ranges, approximate amounts, and unrecognized units keep their original measurements. Do not infer missing quantities, ingredient density, or mass-to-volume conversions.
+Deterministic validation returns structured issues. Success normally uses one call. Schema or semantic failure allows one correction using the source, prior parsed semantics if available, structured issues, and the repair tier. Valid structure should remain intact. There are at most two inference attempts; transport failures do not trigger a semantic repair, and SDK transport retries are disabled. Failed validation never creates a semantic cache or graph.
 
-Serialization maps parsed results into `quantity`, `unit`, `ingredient`, and `preparation_type`, retaining preparation details and meaningful notes such as `to taste`, `divided`, and `for garnish`. It omits incidental comments and parser metadata. Post-processing scripts accept legacy saved JSON with string ingredients. `scripts/normalize_ingredients.py INPUT_DIR OUTPUT_DIR` normalizes saved results; `scripts/test_openai.py` applies the same ingredient stage when writing rewrites.
+The defaults are `gpt-5.6-luna` with `low` reasoning, then the same model with `medium` reasoning for repair. Configuration is explicit:
 
-## Rewrite and final validation
+| Environment variable | Meaning |
+| --- | --- |
+| `OPENAI_API_KEY` | Server-side API secret; never logged or committed. |
+| `OPENAI_SEMANTIC_MODEL` | Primary inference model; legacy `OPENAI_GRAPH_MODEL` is a fallback. |
+| `OPENAI_SEMANTIC_REASONING` | Primary reasoning effort. |
+| `OPENAI_REPAIR_MODEL` | Repair model, defaulting to the primary model. |
+| `OPENAI_REPAIR_REASONING` | Repair reasoning effort. |
+| `OPENAI_MODEL` | Optional downstream prose model only. |
+| `RECIPE_CACHE_DIR` | Independent stage cache root (default `benchmarks/results/cache`). |
+| `RECIPE_EXTRACTION_CACHE_TTL` | Extraction TTL in seconds. |
 
-The rewrite stage may use an LLM to make instructions concise and direct. Preserve ingredients, quantities, temperatures, durations, equipment, required actions, meaningful conditions, and order. Remove editorial filler and repetition; do not invent ingredients, measurements, times, temperatures, tools, techniques, substitutions, or safety claims.
+## Compilation and presentation
 
-The current rewrite script checks that output is a JSON array of strings. It does not yet compare cooking details against the source or fall back when they are lost. All OpenAI calls go through the LLM module, configured with `OPENAI_API_KEY` and optional `OPENAI_MODEL`.
+The compiler copies canonical ingredients, derives action labels, recovers exact instructions via step indices, parses numeric parameters, generates material outputs and final dish, and derives all material edges. Prep/environment actions become separate header bars without guessed dependency edges. Prep supplies remain in canonical ingredient rows; they are accounted for in semantic validation but do not create equipment products.
 
-## Output, diagnostics, and evaluation
+The default prose presentation conservatively formats source steps without a model call. This deliberately retains clauses absent from a compact graph. `--llm-prose` optionally runs downstream rewriting with an independent cache and conservative fidelity checks; invalid or lossy output falls back to the source. Graph presentation does not depend on rewriting.
 
-Serialize only the four schema fields: `title`, `link`, `ingredients`, and `recipe`. Keep fetch method, extractor, failure stage, timings, duplicate counts, model, and token usage in internal diagnostics or benchmark output.
+Laminar, merge-oriented flows can use a material table with ingredient rows and merged action cells. Reserved/split/nonlaminar flows retain the general TRN graph; no forced merges or artificial cooking actions are introduced to fit a table.
 
-The comparison workflow passes each rewritten recipe to GPT-5.6 Luna for semantic graph generation, then validates and caches graph JSON separately from product JSON. See [graph.md](graph.md). The standalone extraction command produces the four-field recipe without rewriting or graph generation.
+## Failure and diagnostics
 
-Use saved fixtures for unit, integration, and regression tests; normal tests must not call live websites or models. Evaluate changes with the relevant benchmark: fetch changes by fetch outcomes and latency, extraction changes by success and output structure, and rewrite changes by preservation, prose quality, token use, and cost. See [benchmarking.md](benchmarking.md).
+`SemanticInferenceFailure` includes attempt count, structured issues, and the last parsed output. The conversion CLI emits the canonical recipe and source presentation on failure; saved post-processing writes a failure sidecar and retains the source presentation. The UI can always show available source data. Multiple terminal material streams currently fail explicitly; separate independent dishes should be ingested separately rather than fabricated into one final graph.
+
+Stage timings include fetch, extraction, browser fallback, ingredient parsing, inference, validation, repair, graph compilation, prose presentation, and total time. Provenance includes model, reasoning, prompt/schema versions, creation time, validation status, repairs, canonical source hash, and available token usage. Expensive historical usage is retained in cache provenance; cache-hit timings are current lookup/validation timings.
+
+For development commands see [README](../README.md); for evaluation see [benchmarking](benchmarking.md).

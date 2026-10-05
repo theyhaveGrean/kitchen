@@ -134,9 +134,9 @@ def parse_ingredients(lines: list[str]) -> list[StructuredIngredient]:
     return [_serialize_ingredient(item, line) for item, line in zip(parsed, cleaned, strict=True)]
 
 
-def ingredient_to_line(item: Mapping[str, str | None]) -> str:
+def ingredient_to_line(item: Mapping[str, object]) -> str:
     """Reconstruct an ingredient for legacy text normalizers."""
-    prefix = " ".join(value for value in (item["quantity"], item["unit"]) if value)
-    line = " ".join(value for value in (prefix, item["ingredient"]) if value)
+    prefix = " ".join(str(value) for value in (item["quantity"], item["unit"]) if value)
+    line = " ".join(str(value) for value in (prefix, item["ingredient"]) if value)
     preparation = item.get("preparation_type") or item.get("preparation")
     return f"{line}, {preparation}" if preparation else line
